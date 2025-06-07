@@ -953,7 +953,9 @@
         </div>
     </div>
 
-    <script>
+<script>
+
+
         // Configuration
         const API_BASE_URL = 'https://conversation-trainer-production.up.railway.app';
 
@@ -967,8 +969,9 @@
             isConnected: false
         };
 
-        // Custom character data
+        // Custom data storage
         let customCharacterData = null;
+        let customScenarioData = null;
 
         // Initialize Application
         document.addEventListener('DOMContentLoaded', function() {
@@ -983,45 +986,93 @@
         }
 
         function setupEventListeners() {
-            // Selection handling
+            console.log('📝 Setting up event listeners...');
+
+            // CORE SELECTION HANDLING (Role, Scenario, Personality)
             document.querySelectorAll('.option-card').forEach(card => {
+                // Skip custom options (they have their own handlers)
+                if (card.id === 'customCharacterOption' || card.id === 'customScenarioOption') {
+                    return;
+                }
                 card.addEventListener('click', handleSelection);
             });
 
-            // Button handlers
+            // BUTTON HANDLERS
             document.getElementById('startConversation').addEventListener('click', startConversation);
             document.getElementById('endConversation').addEventListener('click', endConversation);
             document.getElementById('sendButton').addEventListener('click', sendMessage);
 
-            // Custom character modal handlers
-            document.getElementById('customCharacterOption').addEventListener('click', function(e) {
-                e.stopPropagation();
-                showCustomCharacterModal();
-            });
-            document.getElementById('cancelCustomCharacter').addEventListener('click', cancelCustomCharacter);
-            document.getElementById('saveCustomCharacter').addEventListener('click', saveCustomCharacter);
-
-            // Input handlers
-            const messageInput = document.getElementById('messageInput');
-            messageInput.addEventListener('keydown', handleInputKeydown);
-            messageInput.addEventListener('input', autoResizeTextarea);
-
-            // Modal overlay click to close
-            document.getElementById('customCharacterModal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    cancelCustomCharacter();
-                }
-            });
-        }
-
-        function handleSelection(event) {
-            const card = event.currentTarget;
-
-            // Skip if this is the custom character option
-            if (card.id === 'customCharacterOption') {
-                return;
+            // CUSTOM CHARACTER HANDLERS
+            const customCharacterOption = document.getElementById('customCharacterOption');
+            if (customCharacterOption) {
+                customCharacterOption.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    showCustomCharacterModal();
+                });
             }
 
+            const cancelCustomCharacter = document.getElementById('cancelCustomCharacter');
+            if (cancelCustomCharacter) {
+                cancelCustomCharacter.addEventListener('click', cancelCustomCharacter);
+            }
+
+            const saveCustomCharacter = document.getElementById('saveCustomCharacter');
+            if (saveCustomCharacter) {
+                saveCustomCharacter.addEventListener('click', saveCustomCharacter);
+            }
+
+            // CUSTOM SCENARIO HANDLERS
+            const customScenarioOption = document.getElementById('customScenarioOption');
+            if (customScenarioOption) {
+                customScenarioOption.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    showCustomScenarioModal();
+                });
+            }
+
+            const cancelCustomScenario = document.getElementById('cancelCustomScenario');
+            if (cancelCustomScenario) {
+                cancelCustomScenario.addEventListener('click', cancelCustomScenario);
+            }
+
+            const saveCustomScenario = document.getElementById('saveCustomScenario');
+            if (saveCustomScenario) {
+                saveCustomScenario.addEventListener('click', saveCustomScenario);
+            }
+
+            // INPUT HANDLERS
+            const messageInput = document.getElementById('messageInput');
+            if (messageInput) {
+                messageInput.addEventListener('keydown', handleInputKeydown);
+                messageInput.addEventListener('input', autoResizeTextarea);
+            }
+
+            // MODAL OVERLAY HANDLERS
+            const customCharacterModal = document.getElementById('customCharacterModal');
+            if (customCharacterModal) {
+                customCharacterModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        cancelCustomCharacter();
+                    }
+                });
+            }
+
+            const customScenarioModal = document.getElementById('customScenarioModal');
+            if (customScenarioModal) {
+                customScenarioModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        cancelCustomScenario();
+                    }
+                });
+            }
+
+            console.log('✅ All event listeners set up');
+        }
+
+        // CORE SELECTION HANDLER (Role, Scenario, Personality)
+        function handleSelection(event) {
+            console.log('🎯 Selection handler called');
+            const card = event.currentTarget;
             const parent = card.parentElement;
 
             // Remove selection from siblings
@@ -1030,24 +1081,36 @@
             // Add selection to clicked card
             card.classList.add('selected');
 
-            // Update state
+            // Update state based on data attributes
             if (card.dataset.role) {
                 appState.selectedRole = card.dataset.role;
+                console.log('👤 Selected role:', appState.selectedRole);
             } else if (card.dataset.scenario) {
                 appState.selectedScenario = card.dataset.scenario;
+                console.log('📋 Selected scenario:', appState.selectedScenario);
             } else if (card.dataset.personality) {
                 appState.selectedPersonality = card.dataset.personality;
+                console.log('🎭 Selected personality:', appState.selectedPersonality);
             }
 
             updateStartButton();
         }
 
+        // CUSTOM CHARACTER FUNCTIONS
         function showCustomCharacterModal() {
-            document.getElementById('customCharacterModal').style.display = 'block';
+            console.log('🛠️ Opening custom character modal');
+            const modal = document.getElementById('customCharacterModal');
+            if (modal) {
+                modal.style.display = 'block';
+            }
         }
 
         function cancelCustomCharacter() {
-            document.getElementById('customCharacterModal').style.display = 'none';
+            console.log('❌ Cancelling custom character');
+            const modal = document.getElementById('customCharacterModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
             clearCustomCharacterForm();
         }
 
@@ -1089,6 +1152,7 @@
             // Update start button
             updateStartButton();
 
+            console.log('✅ Custom character created:', name);
             alert('Custom character created! You can now start a practice session.');
         }
 
@@ -1098,6 +1162,79 @@
             document.getElementById('customMotivations').value = '';
         }
 
+        // CUSTOM SCENARIO FUNCTIONS
+        function showCustomScenarioModal() {
+            console.log('🎯 Opening custom scenario modal');
+            const modal = document.getElementById('customScenarioModal');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
+
+        function cancelCustomScenario() {
+            console.log('❌ Cancelling custom scenario');
+            const modal = document.getElementById('customScenarioModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            clearCustomScenarioForm();
+        }
+
+        function saveCustomScenario() {
+            const title = document.getElementById('customScenarioTitle').value.trim();
+            const context = document.getElementById('customScenarioContext').value.trim();
+            const objective = document.getElementById('customScenarioObjective').value.trim();
+            const challenges = document.getElementById('customScenarioChallenges').value.trim();
+            const type = document.getElementById('customScenarioType').value;
+
+            if (!title || !context || !objective) {
+                alert('Please provide at least a title, context, and your objective.');
+                return;
+            }
+
+            // Store the custom scenario data
+            customScenarioData = {
+                title: title,
+                context: context,
+                objective: objective,
+                challenges: challenges,
+                type: type,
+                created: new Date().toISOString()
+            };
+
+            // Update the UI to show selection
+            const customOption = document.getElementById('customScenarioOption');
+            customOption.classList.add('selected');
+            customOption.querySelector('.option-title').textContent = title;
+            customOption.querySelector('.option-description').textContent = `Custom scenario: ${context.substring(0, 100)}...`;
+
+            // Remove selection from other scenario options
+            document.querySelectorAll('[data-scenario="budget_cuts"], [data-scenario="angry_resident"]').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Update app state
+            appState.selectedScenario = 'custom_scenario';
+
+            // Close modal
+            document.getElementById('customScenarioModal').style.display = 'none';
+
+            // Update start button
+            updateStartButton();
+
+            console.log('✅ Custom scenario created:', title);
+            alert('Custom scenario created! You can now start a practice session.');
+        }
+
+        function clearCustomScenarioForm() {
+            document.getElementById('customScenarioTitle').value = '';
+            document.getElementById('customScenarioContext').value = '';
+            document.getElementById('customScenarioObjective').value = '';
+            document.getElementById('customScenarioChallenges').value = '';
+            document.getElementById('customScenarioType').value = 'budget_review';
+        }
+
+        // REQUEST DATA BUILDING
         function getRequestData() {
             const baseData = {
                 user_name: `${appState.selectedRole}_user`,
@@ -1119,18 +1256,28 @@
 
             return baseData;
         }
+
         function buildCustomScenarioDescription(scenarioData) {
             return `${scenarioData.title}
 
-        CONTEXT: ${scenarioData.context}
+CONTEXT: ${scenarioData.context}
 
-        YOUR OBJECTIVE: ${scenarioData.objective}
+YOUR OBJECTIVE: ${scenarioData.objective}
 
-        EXPECTED CHALLENGES: ${scenarioData.challenges}
+EXPECTED CHALLENGES: ${scenarioData.challenges}
 
-        MEETING TYPE: ${scenarioData.type}`;
+MEETING TYPE: ${scenarioData.type}`;
         }
 
+        function getScenarioDescription(scenarioKey) {
+            const scenarios = {
+                'budget_cuts': 'You need to discuss budget reductions with your team while maintaining morale and finding creative solutions.',
+                'angry_resident': 'Handle a frustrated ratepayer who is upset about service levels and rate increases.'
+            };
+            return scenarios[scenarioKey] || 'Practice conversation scenario';
+        }
+
+        // START BUTTON MANAGEMENT
         function updateStartButton() {
             const startBtn = document.getElementById('startConversation');
             const isReady = appState.selectedRole && appState.selectedScenario && appState.selectedPersonality;
@@ -1144,8 +1291,11 @@
             } else {
                 startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
             }
+
+            console.log('🎛️ Start button updated - Ready:', isReady, 'Connected:', appState.isConnected);
         }
 
+        // API CONNECTION TESTING
         async function testAPIConnection() {
             try {
                 console.log('🔍 Testing API connection...');
@@ -1189,6 +1339,7 @@
             }
         }
 
+        // CONVERSATION MANAGEMENT
         async function startConversation() {
             try {
                 console.log('🎯 Starting conversation with:', appState);
@@ -1243,14 +1394,6 @@
                 startBtn.disabled = false;
                 startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
             }
-        }
-
-        function getScenarioDescription(scenarioKey) {
-            const scenarios = {
-                'budget_cuts': 'You need to discuss budget reductions with your team while maintaining morale and finding creative solutions.',
-                'angry_resident': 'Handle a frustrated ratepayer who is upset about service levels and rate increases.'
-            };
-            return scenarios[scenarioKey] || 'Practice conversation scenario';
         }
 
         async function sendMessage() {
@@ -1319,6 +1462,49 @@
             }
         }
 
+        function endConversation() {
+            if (confirm('Are you sure you want to end this practice session?')) {
+                document.getElementById('chatScreen').style.display = 'none';
+                document.getElementById('setupScreen').style.display = 'block';
+
+                document.getElementById('messagesArea').innerHTML = '';
+
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+
+                // Reset custom character if it was selected
+                if (appState.selectedPersonality === 'custom_character') {
+                    const customCharacterOption = document.getElementById('customCharacterOption');
+                    customCharacterOption.querySelector('.option-title').textContent = '🛠️ Create Custom Colleague';
+                    customCharacterOption.querySelector('.option-description').textContent = 'Design a virtual version of someone from your workplace. Perfect for practicing specific challenging conversations.';
+                }
+
+                // Reset custom scenario if it was selected
+                if (appState.selectedScenario === 'custom_scenario') {
+                    const customScenarioOption = document.getElementById('customScenarioOption');
+                    customScenarioOption.querySelector('.option-title').textContent = '🎯 Create Custom Scenario';
+                    customScenarioOption.querySelector('.option-description').textContent = 'Design your specific meeting situation. Perfect for practicing upcoming real conversations.';
+                }
+
+                appState.selectedRole = null;
+                appState.selectedScenario = null;
+                appState.selectedPersonality = null;
+                appState.currentConversation = null;
+                appState.conversationHistory = [];
+                customCharacterData = null;
+                customScenarioData = null;
+
+                const messageInput = document.getElementById('messageInput');
+                messageInput.value = '';
+                messageInput.disabled = true;
+                document.getElementById('sendButton').disabled = true;
+
+                updateStartButton();
+            }
+        }
+
+        // CHAT UI FUNCTIONS
         function updateChatHeader() {
             const personalities = {
                 'skeptical_councillor': {
@@ -1415,48 +1601,6 @@
             textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
         }
 
-        function endConversation() {
-            if (confirm('Are you sure you want to end this practice session?')) {
-                document.getElementById('chatScreen').style.display = 'none';
-                document.getElementById('setupScreen').style.display = 'block';
-
-                document.getElementById('messagesArea').innerHTML = '';
-
-                document.querySelectorAll('.option-card').forEach(card => {
-                    card.classList.remove('selected');
-                });
-
-                // Reset custom character if it was selected
-                if (appState.selectedPersonality === 'custom_character') {
-                    const customCharacterOption = document.getElementById('customCharacterOption');
-                    customCharacterOption.querySelector('.option-title').textContent = '🛠️ Create Custom Colleague';
-                    customCharacterOption.querySelector('.option-description').textContent = 'Design a virtual version of someone from your workplace. Perfect for practicing specific challenging conversations.';
-                }
-
-                // Reset custom scenario if it was selected
-                if (appState.selectedScenario === 'custom_scenario') {
-                    const customScenarioOption = document.getElementById('customScenarioOption');
-                    customScenarioOption.querySelector('.option-title').textContent = '🎯 Create Custom Scenario';
-                    customScenarioOption.querySelector('.option-description').textContent = 'Design your specific meeting situation. Perfect for practicing upcoming real conversations.';
-                }
-
-                appState.selectedRole = null;
-                appState.selectedScenario = null;
-                appState.selectedPersonality = null;
-                appState.currentConversation = null;
-                appState.conversationHistory = [];
-                customCharacterData = null;
-                customScenarioData = null; // NEW: Reset custom scenario
-
-                const messageInput = document.getElementById('messageInput');
-                messageInput.value = '';
-                messageInput.disabled = true;
-                document.getElementById('sendButton').disabled = true;
-
-                updateStartButton();
-            }
-        }
-
         function showConnectionError() {
             const statusIndicator = document.querySelector('.status-indicator');
             statusIndicator.innerHTML = '<div style="width: 8px; height: 8px; background: #dc2626; border-radius: 50%;"></div><span>Service Offline</span>';
@@ -1465,91 +1609,7 @@
             statusIndicator.style.color = '#dc2626';
         }
 
-        console.log('🎨 Professional Conversation Trainer with Custom Characters Loaded');
-        // Custom scenario data
-        let customScenarioData = null;
-
-        // UPDATE your existing setupEventListeners function to include:
-        function setupEventListeners() {
-            // ... existing event listeners ...
-
-            // Custom scenario modal handlers
-            document.getElementById('customScenarioOption').addEventListener('click', function(e) {
-                e.stopPropagation();
-                showCustomScenarioModal();
-            });
-            document.getElementById('cancelCustomScenario').addEventListener('click', cancelCustomScenario);
-            document.getElementById('saveCustomScenario').addEventListener('click', saveCustomScenario);
-
-            // Modal overlay click to close (add this to existing modal handlers)
-            document.getElementById('customScenarioModal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    cancelCustomScenario();
-                }
-            });
-        }
-
-        function showCustomScenarioModal() {
-            document.getElementById('customScenarioModal').style.display = 'block';
-        }
-
-        function cancelCustomScenario() {
-            document.getElementById('customScenarioModal').style.display = 'none';
-            clearCustomScenarioForm();
-        }
-
-        function saveCustomScenario() {
-            const title = document.getElementById('customScenarioTitle').value.trim();
-            const context = document.getElementById('customScenarioContext').value.trim();
-            const objective = document.getElementById('customScenarioObjective').value.trim();
-            const challenges = document.getElementById('customScenarioChallenges').value.trim();
-            const type = document.getElementById('customScenarioType').value;
-
-            if (!title || !context || !objective) {
-                alert('Please provide at least a title, context, and your objective.');
-                return;
-            }
-
-            // Store the custom scenario data
-            customScenarioData = {
-                title: title,
-                context: context,
-                objective: objective,
-                challenges: challenges,
-                type: type,
-                created: new Date().toISOString()
-            };
-
-            // Update the UI to show selection
-            const customOption = document.getElementById('customScenarioOption');
-            customOption.classList.add('selected');
-            customOption.querySelector('.option-title').textContent = title;
-            customOption.querySelector('.option-description').textContent = `Custom scenario: ${context.substring(0, 100)}...`;
-
-            // Remove selection from other scenario options
-            document.querySelectorAll('[data-scenario="budget_cuts"], [data-scenario="angry_resident"]').forEach(card => {
-                card.classList.remove('selected');
-            });
-
-            // Update app state
-            appState.selectedScenario = 'custom_scenario';
-
-            // Close modal
-            document.getElementById('customScenarioModal').style.display = 'none';
-
-            // Update start button
-            updateStartButton();
-
-            alert('Custom scenario created! You can now start a practice session.');
-        }
-
-        function clearCustomScenarioForm() {
-            document.getElementById('customScenarioTitle').value = '';
-            document.getElementById('customScenarioContext').value = '';
-            document.getElementById('customScenarioObjective').value = '';
-            document.getElementById('customScenarioChallenges').value = '';
-            document.getElementById('customScenarioType').value = 'budget_review';
-        }
-    </script>
+        console.log('🎨 Professional Conversation Trainer with Custom Characters & Scenarios Loaded');
+</script>
 </body>
 </html>
