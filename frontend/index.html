@@ -7,8 +7,8 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-        /* IMPROVED LAYOUT FIXES */
-        .chat-container {
+        /* IMPROVED LAYOUT FIXES - Only apply when chat is active */
+        .chat-container.active {
             display: flex !important;
             flex-direction: column !important;
             width: 100% !important;
@@ -261,7 +261,7 @@
 
         /* Chat Interface */
         .chat-container {
-            display: none;
+            display: none; /* Initially hidden */
             background: white;
             border-radius: 16px;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -1408,8 +1408,12 @@ MEETING TYPE: ${scenarioData.type}`;
                     debugLog('Conversation started successfully');
 
                     // Show chat screen
+                    debugLog('Switching to chat screen');
                     document.getElementById('setupScreen').style.display = 'none';
-                    document.getElementById('chatScreen').style.display = 'flex';
+                    const chatScreen = document.getElementById('chatScreen');
+                    chatScreen.style.display = 'flex';
+                    chatScreen.classList.add('active');
+                    debugLog('Chat screen should now be visible');
 
                     const messagesArea = document.getElementById('messagesArea');
                     messagesArea.innerHTML = '';
@@ -1510,7 +1514,9 @@ MEETING TYPE: ${scenarioData.type}`;
             if (confirm('Are you sure you want to end this practice session?')) {
                 debugLog('Ending conversation');
 
-                document.getElementById('chatScreen').style.display = 'none';
+                const chatScreen = document.getElementById('chatScreen');
+                chatScreen.style.display = 'none';
+                chatScreen.classList.remove('active');
                 document.getElementById('setupScreen').style.display = 'block';
 
                 document.getElementById('messagesArea').innerHTML = '';
