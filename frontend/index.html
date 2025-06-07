@@ -209,14 +209,14 @@
             line-height: 1.4;
         }
 
-        /* Chat Interface */
+        /* Chat Interface - IMPROVED SPACING */
         .chat-container {
             display: none;
             background: white;
             border-radius: 16px;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             border: 1px solid #f1f5f9;
-            height: 70vh;
+            height: 75vh;
             overflow: hidden;
         }
 
@@ -258,17 +258,18 @@
 
         .messages-area {
             flex: 1;
-            padding: 1.5rem;
+            padding: 2rem;
             overflow-y: auto;
-            height: calc(70vh - 140px);
+            height: calc(75vh - 200px);
             background: #fafbfc;
         }
 
+        /* IMPROVED MESSAGE SPACING */
         .message {
             display: flex;
-            margin-bottom: 1rem;
+            margin-bottom: 1.75rem; /* Increased from 1rem */
             align-items: flex-end;
-            gap: 0.75rem;
+            gap: 1rem; /* Increased from 0.75rem */
         }
 
         .message.user {
@@ -276,15 +277,15 @@
         }
 
         .message-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 36px; /* Slightly larger */
+            height: 36px;
+            border-radius: 10px; /* More rounded */
             background: #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.875rem;
-            font-weight: 500;
+            font-size: 0.9rem; /* Slightly larger */
+            font-weight: 600; /* Increased weight */
             color: #64748b;
             flex-shrink: 0;
         }
@@ -299,13 +300,14 @@
             color: white;
         }
 
+        /* IMPROVED MESSAGE CONTENT */
         .message-content {
-            max-width: 70%;
+            max-width: 75%; /* Increased from 70% */
             background: white;
             border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 0.875rem 1rem;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border-radius: 16px; /* More rounded */
+            padding: 1.25rem 1.5rem; /* Increased padding significantly */
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08); /* Slightly stronger shadow */
             position: relative;
         }
 
@@ -315,26 +317,29 @@
             border-color: #3b82f6;
         }
 
+        /* IMPROVED MESSAGE TEXT */
         .message-text {
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 1rem; /* Increased from 0.95rem */
+            line-height: 1.7; /* Increased from 1.5 for better readability */
+            word-spacing: 0.05em; /* Added word spacing */
+            letter-spacing: 0.01em; /* Added letter spacing */
         }
 
         .message-time {
-            font-size: 0.75rem;
+            font-size: 0.8rem; /* Increased from 0.75rem */
             opacity: 0.7;
-            margin-top: 0.5rem;
+            margin-top: 0.75rem; /* Increased from 0.5rem */
         }
 
         .input-area {
-            padding: 1.5rem 2rem;
+            padding: 2rem; /* Increased from 1.5rem */
             border-top: 1px solid #f1f5f9;
             background: white;
         }
 
         .input-container {
             display: flex;
-            gap: 0.75rem;
+            gap: 1rem; /* Increased from 0.75rem */
             align-items: flex-end;
         }
 
@@ -342,10 +347,11 @@
             flex: 1;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
-            padding: 0.875rem 1rem;
-            font-size: 0.95rem;
+            padding: 1rem 1.25rem; /* Increased padding */
+            font-size: 1rem; /* Increased from 0.95rem */
+            line-height: 1.5;
             resize: none;
-            min-height: 44px;
+            min-height: 48px; /* Increased from 44px */
             max-height: 120px;
             outline: none;
             transition: border-color 0.2s ease;
@@ -362,15 +368,15 @@
             color: white;
             border: none;
             border-radius: 12px;
-            padding: 0.875rem 1.25rem;
-            font-size: 0.95rem;
+            padding: 1rem 1.5rem; /* Increased padding */
+            font-size: 1rem; /* Increased from 0.95rem */
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            min-width: 80px;
+            min-width: 90px; /* Increased from 80px */
             justify-content: center;
         }
 
@@ -441,35 +447,35 @@
             border-color: #cbd5e1;
         }
 
-        /* Typing Indicator */
+        /* IMPROVED TYPING INDICATOR */
         .typing-indicator {
             display: none;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem; /* Increased spacing */
         }
 
         .typing-message {
             display: flex;
             align-items: flex-end;
-            gap: 0.75rem;
+            gap: 1rem; /* Increased from 0.75rem */
         }
 
         .typing-content {
             background: white;
             border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 0.875rem 1rem;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border-radius: 16px; /* Match message styling */
+            padding: 1.25rem 1.5rem; /* Match message padding */
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
         }
 
         .typing-dots {
             display: flex;
-            gap: 4px;
+            gap: 6px; /* Increased from 4px */
             align-items: center;
         }
 
         .typing-dots span {
-            width: 8px;
-            height: 8px;
+            width: 10px; /* Increased from 8px */
+            height: 10px;
             border-radius: 50%;
             background: #cbd5e1;
             animation: typing 1.4s infinite ease-in-out;
@@ -488,6 +494,19 @@
                 transform: scale(1);
                 opacity: 1;
             }
+        }
+
+        /* IMPROVED SYSTEM MESSAGES */
+        .system-message {
+            text-align: center;
+            padding: 1.5rem; /* Increased from 1rem */
+            color: #64748b;
+            font-size: 0.9rem; /* Increased from 0.875rem */
+            font-style: italic;
+            margin: 1rem 0; /* Added margin */
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
         }
 
         /* Responsive Design */
@@ -512,7 +531,15 @@
             }
 
             .message-content {
-                max-width: 85%;
+                max-width: 90%; /* Increased from 85% */
+            }
+
+            .messages-area {
+                padding: 1.5rem; /* Slightly reduced on mobile */
+            }
+
+            .input-area {
+                padding: 1.5rem; /* Slightly reduced on mobile */
             }
         }
 
@@ -652,7 +679,34 @@
                 </div>
 
                 <div class="messages-area" id="messagesArea">
-                    <!-- Messages will be inserted here -->
+                    <!-- Example messages to show improved spacing -->
+                    <div class="system-message">
+                        Practice session started. Your conversation partner is ready.
+                    </div>
+
+                    <div class="message ai">
+                        <div class="message-avatar">RC</div>
+                        <div class="message-content">
+                            <div class="message-text">Hello, my name is Robert Chen. I'm a longtime resident and business owner here in the community. I've been paying rates to this council for over 15 years now, and I have to say I'm quite frustrated with the recent rate increases and the service levels we're receiving.</div>
+                            <div class="message-time">2:30 PM</div>
+                        </div>
+                    </div>
+
+                    <div class="message user">
+                        <div class="message-avatar">You</div>
+                        <div class="message-content">
+                            <div class="message-text">Good afternoon Mr Chen, thank you for coming in today. I understand your concerns about the rate increases, and I appreciate you taking the time to speak with us directly. Could you tell me more specifically about which service areas you feel aren't meeting your expectations?</div>
+                            <div class="message-time">2:32 PM</div>
+                        </div>
+                    </div>
+
+                    <div class="message ai">
+                        <div class="message-avatar">RC</div>
+                        <div class="message-content">
+                            <div class="message-text">Well, let me give you some concrete examples. The road maintenance in our area has been absolutely terrible - there are potholes that have been there for months. Our bins are often missed during collection, and when I call the council, I get transferred between departments with no real resolution. Yet you're asking us to pay more for these same poor services?</div>
+                            <div class="message-time">2:34 PM</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="typing-indicator" id="typingIndicator">
@@ -670,8 +724,8 @@
 
                 <div class="input-area">
                     <div class="input-container">
-                        <textarea class="message-input" id="messageInput" placeholder="Type your response..." rows="1" disabled></textarea>
-                        <button class="send-button" id="sendButton" disabled>
+                        <textarea class="message-input" id="messageInput" placeholder="Type your response..." rows="1"></textarea>
+                        <button class="send-button" id="sendButton">
                             <span>Send</span>
                         </button>
                     </div>
@@ -856,6 +910,10 @@ async function startConversation() {
             document.getElementById('setupScreen').style.display = 'none';
             document.getElementById('chatScreen').style.display = 'flex';
 
+            // Clear example messages and add real ones
+            const messagesArea = document.getElementById('messagesArea');
+            messagesArea.innerHTML = '';
+
             // Enable input
             document.getElementById('messageInput').disabled = false;
             document.getElementById('sendButton').disabled = false;
@@ -992,7 +1050,7 @@ function updateChatHeader() {
 function addSystemMessage(content) {
     const messagesArea = document.getElementById('messagesArea');
     const messageDiv = document.createElement('div');
-    messageDiv.style.cssText = 'text-align: center; padding: 1rem; color: #64748b; font-size: 0.875rem; font-style: italic;';
+    messageDiv.className = 'system-message';
     messageDiv.textContent = content;
     messagesArea.appendChild(messageDiv);
     scrollToBottom();
@@ -1097,7 +1155,7 @@ function showConnectionError() {
 }
 
 // Initialize on load
-console.log('🎨 Professional Conversation Trainer with Live AI Integration Loaded');
+console.log('🎨 Professional Conversation Trainer with Improved Spacing Loaded');
     </script>
 </body>
 </html>
