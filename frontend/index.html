@@ -13,6 +13,9 @@
             box-sizing: border-box;
         }
 
+        // Make deleteColleague available globally for onclick handlers
+        window.deleteColleague = deleteColleague;
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #f8fafc;
@@ -1170,9 +1173,9 @@
                 ❌ Error starting conversation
             </div>
 
-            <!-- localStorage Notice -->
-            <div class="success-message" style="background: #fffbeb; border-color: #fbbf24; color: #92400e;">
-                ℹ️ <strong>Note:</strong> Colleague saving will work when deployed to GitHub Pages. This demo environment doesn't support persistent storage.
+            <!-- localStorage Success Notice -->
+            <div class="success-message" style="background: #f0fdf4; border-color: #16a34a; color: #166534; display: block;" id="storageNotice">
+                💾 <strong>Colleague Storage Active:</strong> Your custom colleagues will be saved automatically and persist across browser sessions.
             </div>
         </main>
     </div>
@@ -2339,6 +2342,19 @@ MEETING TYPE: ${scenarioData.type}`;
 
         function initializeApp() {
             debugLog('🚀 Initializing Professional Conversation Trainer');
+
+            // Initialize localStorage
+            clearStorageIfNeeded();
+            loadSavedColleaguesFromStorage();
+
+            // Hide storage notice after a few seconds
+            setTimeout(() => {
+                const storageNotice = document.getElementById('storageNotice');
+                if (storageNotice) {
+                    storageNotice.style.display = 'none';
+                }
+            }, 5000);
+
             setupEventListeners();
             testAPIConnection();
             loadAvailableOptions();
@@ -2351,7 +2367,8 @@ MEETING TYPE: ${scenarioData.type}`;
                     setupScreen: setupScreen ? 'exists' : 'MISSING',
                     chatScreen: chatScreen ? 'exists' : 'MISSING',
                     setupDisplay: setupScreen ? window.getComputedStyle(setupScreen).display : 'N/A',
-                    chatDisplay: chatScreen ? window.getComputedStyle(chatScreen).display : 'N/A'
+                    chatDisplay: chatScreen ? window.getComputedStyle(chatScreen).display : 'N/A',
+                    savedColleagues: savedColleagues.length
                 });
             }, 1000);
         }
