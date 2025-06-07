@@ -7,45 +7,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-        /* IMPROVED LAYOUT FIXES - Only apply when chat is active */
-        .chat-container.active {
-            display: flex !important;
-            flex-direction: column !important;
-            width: 100% !important;
-            max-width: none !important;
-            height: 75vh !important;
-        }
-
-        .messages-area {
-            flex: 1 !important;
-            width: 100% !important;
-            padding: 1.5rem !important;
-            overflow-y: auto !important;
-            background: #fafbfc !important;
-        }
-
-        .message-content {
-            max-width: 70% !important;
-            min-width: 250px !important;
-            padding: 1rem 1.25rem !important;
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-        }
-
-        .message-text {
-            font-size: 0.95rem !important;
-            line-height: 1.6 !important;
-            margin: 0 !important;
-            white-space: pre-wrap !important;
-        }
-
-        .message {
-            margin-bottom: 1.5rem !important;
-            display: flex !important;
-            align-items: flex-end !important;
-            gap: 0.75rem !important;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -146,6 +107,15 @@
             margin: 0 auto;
             padding: 2rem;
             width: 100%;
+        }
+
+        /* Setup Screen */
+        .setup-screen {
+            display: block;
+        }
+
+        .setup-screen.hidden {
+            display: none !important;
         }
 
         .setup-container {
@@ -259,14 +229,20 @@
             line-height: 1.4;
         }
 
-        /* Chat Interface */
-        .chat-container {
-            display: none; /* Initially hidden */
+        /* Chat Screen */
+        .chat-screen {
+            display: none;
             background: white;
             border-radius: 16px;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             border: 1px solid #f1f5f9;
+            height: 75vh;
             overflow: hidden;
+            flex-direction: column;
+        }
+
+        .chat-screen.active {
+            display: flex !important;
         }
 
         .chat-header {
@@ -276,6 +252,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .chat-info {
@@ -308,6 +285,20 @@
             color: #64748b;
         }
 
+        .messages-area {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background: #fafbfc;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 1.5rem;
+            align-items: flex-end;
+            gap: 0.75rem;
+        }
+
         .message.user {
             flex-direction: row-reverse;
         }
@@ -336,18 +327,30 @@
             color: white;
         }
 
+        .message-content {
+            max-width: 70%;
+            min-width: 250px;
+            padding: 1rem 1.25rem;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+            position: relative;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
         .message.user .message-content {
             background: #3b82f6;
             color: white;
             border-color: #3b82f6;
         }
 
-        .message-content {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
-            position: relative;
+        .message-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+            white-space: pre-wrap;
         }
 
         .message-time {
@@ -360,6 +363,7 @@
             padding: 2rem;
             border-top: 1px solid #f1f5f9;
             background: white;
+            flex-shrink: 0;
         }
 
         .input-container {
@@ -542,26 +546,7 @@
             border: 1px solid #e2e8f0;
         }
 
-        /* Debug Panel */
-        .debug-panel {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #1e293b;
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            max-width: 300px;
-            display: none;
-            z-index: 1000;
-        }
-
-        .debug-panel.show {
-            display: block;
-        }
-
-        /* Custom Character Modal */
+        /* Modals */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -675,31 +660,49 @@
             background: #2563eb;
         }
 
-        /* Success States */
+        /* Messages */
+        .success-message, .error-message {
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            display: none;
+        }
+
         .success-message {
             background: #f0fdf4;
             border: 1px solid #bbf7d0;
             color: #166534;
-            padding: 1rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            font-size: 0.95rem;
-            display: none;
         }
 
-        /* Error States */
         .error-message {
             background: #fef2f2;
             border: 1px solid #fecaca;
             color: #dc2626;
-            padding: 1rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            font-size: 0.95rem;
-            display: none;
         }
 
-        /* Responsive Design */
+        /* Debug Panel */
+        .debug-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1e293b;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            max-width: 300px;
+            display: none;
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .debug-panel.show {
+            display: block;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .setup-container {
                 grid-template-columns: 1fr;
@@ -721,11 +724,11 @@
             }
 
             .message-content {
-                max-width: 90% !important;
+                max-width: 90%;
             }
 
             .messages-area {
-                padding: 1rem !important;
+                padding: 1rem;
             }
 
             .input-area {
@@ -764,7 +767,7 @@
         <!-- Main Content -->
         <main class="main-content">
             <!-- Setup Screen -->
-            <div id="setupScreen">
+            <div id="setupScreen" class="setup-screen">
                 <div class="setup-container">
                     <!-- Role Selection -->
                     <div class="setup-panel">
@@ -807,7 +810,6 @@
                                 <div class="option-title">Challenging Resident Interaction</div>
                                 <div class="option-description">Handle frustrated ratepayer complaints about service levels, rate increases, and council decisions.</div>
                             </div>
-                            <!-- NEW: Custom scenario option -->
                             <div class="option-card" data-scenario="custom_scenario" id="customScenarioOption">
                                 <div class="option-title">🎯 Create Custom Scenario</div>
                                 <div class="option-description">Design your specific meeting situation. Perfect for practicing upcoming real conversations.</div>
@@ -815,42 +817,43 @@
                         </div>
                     </div>
 
-                <!-- AI Personality Selection -->
-                <div class="setup-panel">
-                    <div class="panel-header">
-                        <div class="panel-icon personality">🎭</div>
-                        <h2 class="panel-title">AI Conversation Partner</h2>
+                    <!-- AI Personality Selection -->
+                    <div class="setup-panel">
+                        <div class="panel-header">
+                            <div class="panel-icon personality">🎭</div>
+                            <h2 class="panel-title">AI Conversation Partner</h2>
+                        </div>
+                        <div class="selection-grid">
+                            <div class="option-card" data-personality="skeptical_councillor">
+                                <div class="option-title">Councillor Margaret Stevens</div>
+                                <div class="option-description">Experienced councillor known for thorough questioning, budget scrutiny, and representing ratepayer interests. Expects detailed justifications and fiscal responsibility.</div>
+                            </div>
+                            <div class="option-card" data-personality="frustrated_resident">
+                                <div class="option-title">Robert Chen - Local Business Owner</div>
+                                <div class="option-description">Long-term resident and business owner who feels underserved by council. Articulate but frustrated, expects value for rates and responsive service.</div>
+                            </div>
+                            <div class="option-card" data-personality="custom_character" id="customCharacterOption">
+                                <div class="option-title">🛠️ Create Custom Colleague</div>
+                                <div class="option-description">Design a virtual version of someone from your workplace. Perfect for practicing specific challenging conversations.</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="selection-grid">
-                        <div class="option-card" data-personality="skeptical_councillor">
-                            <div class="option-title">Councillor Margaret Stevens</div>
-                            <div class="option-description">Experienced councillor known for thorough questioning, budget scrutiny, and representing ratepayer interests. Expects detailed justifications and fiscal responsibility.</div>
-                        </div>
-                        <div class="option-card" data-personality="frustrated_resident">
-                            <div class="option-title">Robert Chen - Local Business Owner</div>
-                            <div class="option-description">Long-term resident and business owner who feels underserved by council. Articulate but frustrated, expects value for rates and responsive service.</div>
-                        </div>
-                        <div class="option-card" data-personality="custom_character" id="customCharacterOption">
-                            <div class="option-title">🛠️ Create Custom Colleague</div>
-                            <div class="option-description">Design a virtual version of someone from your workplace. Perfect for practicing specific challenging conversations.</div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Action Panel -->
-                <div class="action-panel">
-                    <button class="start-button" id="startConversation" disabled>
-                        <span>🚀</span>
-                        <span>Begin Practice Session</span>
-                    </button>
-                    <p style="margin-top: 1rem; color: #64748b; font-size: 0.875rem;">
-                        Select your role, scenario, and AI partner to start practicing
-                    </p>
+                    <!-- Action Panel -->
+                    <div class="action-panel">
+                        <button class="start-button" id="startConversation" disabled>
+                            <span>🚀</span>
+                            <span>Begin Practice Session</span>
+                        </button>
+                        <p style="margin-top: 1rem; color: #64748b; font-size: 0.875rem;">
+                            Select your role, scenario, and AI partner to start practicing
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <!-- Chat Screen -->
-            <div class="chat-container" id="chatScreen">
+            <div id="chatScreen" class="chat-screen">
                 <div class="chat-header">
                     <div class="chat-info">
                         <div class="participant-avatar" id="participantAvatar">CS</div>
@@ -901,7 +904,7 @@
         </main>
     </div>
 
-    <!-- Debug Panel for troubleshooting -->
+    <!-- Debug Panel -->
     <div class="debug-panel" id="debugPanel">
         <div><strong>Debug Info:</strong></div>
         <div id="debugContent">Loading...</div>
@@ -937,7 +940,7 @@
     </div>
 
     <!-- Custom Scenario Modal -->
-    <div class="modal-overlay" id="customScenarioModal" style="display: none;">
+    <div class="modal-overlay" id="customScenarioModal">
         <div class="modal-content" style="max-width: 600px;">
             <div class="modal-header">
                 <h3 class="modal-title">Create Your Custom Scenario</h3>
@@ -1004,32 +1007,96 @@
 
         // Debug logging function
         function debugLog(message, data = null) {
-            console.log(`🔍 [DEBUG] ${message}`, data);
+            const timestamp = new Date().toLocaleTimeString();
+            console.log(`🔍 [${timestamp}] ${message}`, data || '');
 
             // Update debug panel
             const debugPanel = document.getElementById('debugPanel');
             const debugContent = document.getElementById('debugContent');
 
             if (debugPanel && debugContent) {
-                const timestamp = new Date().toLocaleTimeString();
-                debugContent.innerHTML = `
-                    <div>[${timestamp}] ${message}</div>
-                    ${data ? `<div style="font-size: 0.7rem; margin-top: 0.5rem;">${JSON.stringify(data, null, 2).substring(0, 200)}...</div>` : ''}
-                `;
+                let debugText = `[${timestamp}] ${message}`;
+                if (data) {
+                    debugText += `<br><small>${JSON.stringify(data).substring(0, 100)}...</small>`;
+                }
+                debugContent.innerHTML = debugText;
 
                 // Show debug panel temporarily
                 debugPanel.classList.add('show');
                 setTimeout(() => {
                     debugPanel.classList.remove('show');
-                }, 3000);
+                }, 4000);
+            }
+        }
+
+        // Screen switching functions with extensive debugging
+        function switchToChat() {
+            debugLog('🎬 SWITCHING TO CHAT SCREEN');
+
+            try {
+                // Get elements
+                const setupScreen = document.getElementById('setupScreen');
+                const chatScreen = document.getElementById('chatScreen');
+
+                debugLog('📍 Found elements', {
+                    setupScreen: setupScreen ? 'found' : 'NOT FOUND',
+                    chatScreen: chatScreen ? 'found' : 'NOT FOUND'
+                });
+
+                if (!setupScreen || !chatScreen) {
+                    throw new Error('Missing required screen elements');
+                }
+
+                // Hide setup screen
+                debugLog('🚫 Hiding setup screen');
+                setupScreen.style.display = 'none';
+                setupScreen.classList.add('hidden');
+
+                // Show chat screen
+                debugLog('✅ Showing chat screen');
+                chatScreen.style.display = 'flex';
+                chatScreen.classList.add('active');
+
+                // Force layout recalculation
+                chatScreen.offsetHeight;
+
+                debugLog('🎯 Screen switch completed successfully');
+                debugLog('📏 Chat screen computed style', {
+                    display: window.getComputedStyle(chatScreen).display,
+                    visibility: window.getComputedStyle(chatScreen).visibility,
+                    height: window.getComputedStyle(chatScreen).height
+                });
+
+                return true;
+
+            } catch (error) {
+                debugLog('❌ Error switching screens', error);
+                showErrorMessage(`Screen switching error: ${error.message}`);
+                return false;
+            }
+        }
+
+        function switchToSetup() {
+            debugLog('🏠 Switching back to setup screen');
+
+            const setupScreen = document.getElementById('setupScreen');
+            const chatScreen = document.getElementById('chatScreen');
+
+            if (chatScreen) {
+                chatScreen.style.display = 'none';
+                chatScreen.classList.remove('active');
+            }
+
+            if (setupScreen) {
+                setupScreen.style.display = 'block';
+                setupScreen.classList.remove('hidden');
             }
         }
 
         // ============================================
-        // FUNCTION DEFINITIONS (DEFINED FIRST!)
+        // CUSTOM CHARACTER FUNCTIONS
         // ============================================
 
-        // CUSTOM CHARACTER FUNCTIONS
         function showCustomCharacterModal() {
             debugLog('Opening custom character modal');
             const modal = document.getElementById('customCharacterModal');
@@ -1059,7 +1126,6 @@
                     return;
                 }
 
-                // Store the custom character data
                 customCharacterData = {
                     name: name,
                     personality: personality,
@@ -1069,7 +1135,6 @@
 
                 debugLog('Custom character data created', customCharacterData);
 
-                // Update the UI to show selection
                 const customOption = document.getElementById('customCharacterOption');
                 if (customOption) {
                     customOption.classList.add('selected');
@@ -1077,19 +1142,14 @@
                     customOption.querySelector('.option-description').textContent = `Custom character: ${personality.substring(0, 100)}...`;
                 }
 
-                // Remove selection from other personality options
                 document.querySelectorAll('[data-personality="skeptical_councillor"], [data-personality="frustrated_resident"]').forEach(card => {
                     card.classList.remove('selected');
                 });
 
-                // Update app state
                 appState.selectedPersonality = 'custom_character';
                 debugLog('App state updated', appState);
 
-                // Close modal
                 document.getElementById('customCharacterModal').style.display = 'none';
-
-                // Update start button
                 updateStartButton();
 
                 debugLog('Custom character created successfully', name);
@@ -1107,7 +1167,10 @@
             document.getElementById('customMotivations').value = '';
         }
 
+        // ============================================
         // CUSTOM SCENARIO FUNCTIONS
+        // ============================================
+
         function showCustomScenarioModal() {
             debugLog('Opening custom scenario modal');
             const modal = document.getElementById('customScenarioModal');
@@ -1143,9 +1206,6 @@
                     return;
                 }
 
-                debugLog('Validation passed, creating scenario data');
-
-                // Store the custom scenario data
                 customScenarioData = {
                     title: title,
                     context: context,
@@ -1157,46 +1217,32 @@
 
                 debugLog('Scenario data created', customScenarioData);
 
-                // Update the UI to show selection
                 const customOption = document.getElementById('customScenarioOption');
-                debugLog('Found custom option element', customOption);
-
                 if (customOption) {
                     customOption.classList.add('selected');
                     customOption.querySelector('.option-title').textContent = title;
                     customOption.querySelector('.option-description').textContent = `Custom scenario: ${context.substring(0, 100)}...`;
-                    debugLog('Updated custom option UI');
                 }
 
-                // Remove selection from other scenario options
                 document.querySelectorAll('[data-scenario="budget_cuts"], [data-scenario="angry_resident"]').forEach(card => {
                     card.classList.remove('selected');
                 });
-                debugLog('Removed other selections');
 
-                // Update app state
                 appState.selectedScenario = 'custom_scenario';
                 debugLog('Updated app state', appState);
 
-                // Close modal
                 const modal = document.getElementById('customScenarioModal');
                 if (modal) {
                     modal.style.display = 'none';
-                    debugLog('Closed modal');
-                } else {
-                    debugLog('Could not find modal to close');
                 }
 
-                // Update start button
                 updateStartButton();
-                debugLog('Updated start button');
-
                 debugLog('Custom scenario created successfully', title);
                 showSuccessMessage('Custom scenario created! You can now start a practice session.');
 
             } catch (error) {
                 debugLog('Error in saveCustomScenario', error);
-                showErrorMessage('There was an error creating the scenario. Check the console for details.');
+                showErrorMessage('There was an error creating the scenario.');
             }
         }
 
@@ -1208,19 +1254,18 @@
             document.getElementById('customScenarioType').value = 'budget_review';
         }
 
-        // CORE SELECTION HANDLER (Role, Scenario, Personality)
+        // ============================================
+        // CORE SELECTION HANDLER
+        // ============================================
+
         function handleSelection(event) {
             debugLog('Selection handler called');
             const card = event.currentTarget;
             const parent = card.parentElement;
 
-            // Remove selection from siblings
             parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-
-            // Add selection to clicked card
             card.classList.add('selected');
 
-            // Update state based on data attributes
             if (card.dataset.role) {
                 appState.selectedRole = card.dataset.role;
                 debugLog('Selected role', appState.selectedRole);
@@ -1235,7 +1280,10 @@
             updateStartButton();
         }
 
+        // ============================================
         // REQUEST DATA BUILDING
+        // ============================================
+
         function getRequestData() {
             debugLog('Building request data');
             const baseData = {
@@ -1243,13 +1291,11 @@
                 personality_type: appState.selectedPersonality
             };
 
-            // Handle custom character
             if (appState.selectedPersonality === 'custom_character' && customCharacterData) {
                 baseData.custom_character = customCharacterData;
                 debugLog('Added custom character data');
             }
 
-            // Handle custom scenario
             if (appState.selectedScenario === 'custom_scenario' && customScenarioData) {
                 baseData.custom_scenario = customScenarioData;
                 baseData.scenario = buildCustomScenarioDescription(customScenarioData);
@@ -1283,7 +1329,10 @@ MEETING TYPE: ${scenarioData.type}`;
             return scenarios[scenarioKey] || 'Practice conversation scenario';
         }
 
+        // ============================================
         // START BUTTON MANAGEMENT
+        // ============================================
+
         function updateStartButton() {
             const startBtn = document.getElementById('startConversation');
             const isReady = appState.selectedRole && appState.selectedScenario && appState.selectedPersonality;
@@ -1301,7 +1350,10 @@ MEETING TYPE: ${scenarioData.type}`;
             debugLog('Start button updated', { ready: isReady, connected: appState.isConnected });
         }
 
+        // ============================================
         // MESSAGE FUNCTIONS
+        // ============================================
+
         function showSuccessMessage(message) {
             const successMsg = document.getElementById('successMessage');
             if (successMsg) {
@@ -1324,7 +1376,10 @@ MEETING TYPE: ${scenarioData.type}`;
             }
         }
 
+        // ============================================
         // API CONNECTION TESTING
+        // ============================================
+
         async function testAPIConnection() {
             try {
                 debugLog('Testing API connection');
@@ -1365,8 +1420,13 @@ MEETING TYPE: ${scenarioData.type}`;
             }
         }
 
+        // ============================================
         // CONVERSATION MANAGEMENT
+        // ============================================
+
         async function startConversation() {
+            debugLog('🚀 START CONVERSATION CALLED');
+
             try {
                 debugLog('Starting conversation with state', appState);
 
@@ -1385,7 +1445,7 @@ MEETING TYPE: ${scenarioData.type}`;
                     body: JSON.stringify(requestData)
                 });
 
-                debugLog('Response status', response.status);
+                debugLog('Response received', { status: response.status, ok: response.ok });
 
                 if (!response.ok) {
                     const errorText = await response.text();
@@ -1397,6 +1457,8 @@ MEETING TYPE: ${scenarioData.type}`;
                 debugLog('Start conversation response', data);
 
                 if (data.success) {
+                    debugLog('✅ API responded successfully, setting up conversation');
+
                     appState.currentConversation = data;
                     appState.conversationHistory = [{
                         sender: data.personality_name,
@@ -1405,32 +1467,40 @@ MEETING TYPE: ${scenarioData.type}`;
                         sender_type: 'ai_personality'
                     }];
 
-                    debugLog('Conversation started successfully');
+                    debugLog('🎬 About to switch to chat screen');
 
-                    // Show chat screen
-                    debugLog('Switching to chat screen');
-                    document.getElementById('setupScreen').style.display = 'none';
-                    const chatScreen = document.getElementById('chatScreen');
-                    chatScreen.style.display = 'flex';
-                    chatScreen.classList.add('active');
-                    debugLog('Chat screen should now be visible');
+                    // Switch to chat screen
+                    const switchSuccess = switchToChat();
+
+                    if (!switchSuccess) {
+                        throw new Error('Failed to switch to chat screen');
+                    }
+
+                    // Initialize chat interface
+                    debugLog('🎨 Initializing chat interface');
 
                     const messagesArea = document.getElementById('messagesArea');
-                    messagesArea.innerHTML = '';
+                    if (messagesArea) {
+                        messagesArea.innerHTML = '';
+                    }
 
-                    document.getElementById('messageInput').disabled = false;
-                    document.getElementById('sendButton').disabled = false;
+                    const messageInput = document.getElementById('messageInput');
+                    const sendButton = document.getElementById('sendButton');
+
+                    if (messageInput) messageInput.disabled = false;
+                    if (sendButton) sendButton.disabled = false;
 
                     updateChatHeader();
                     addSystemMessage('Practice session started. Your conversation partner is ready.');
                     addAIMessage(data.opening_message);
 
-                    debugLog('Chat interface initialized');
+                    debugLog('🎉 Conversation started successfully - chat should be visible');
+
                 } else {
                     throw new Error(data.error || 'Failed to start conversation');
                 }
             } catch (error) {
-                debugLog('Error starting conversation', error);
+                debugLog('❌ Error starting conversation', error);
                 showErrorMessage(`Unable to start conversation: ${error.message}`);
 
                 const startBtn = document.getElementById('startConversation');
@@ -1514,31 +1584,27 @@ MEETING TYPE: ${scenarioData.type}`;
             if (confirm('Are you sure you want to end this practice session?')) {
                 debugLog('Ending conversation');
 
-                const chatScreen = document.getElementById('chatScreen');
-                chatScreen.style.display = 'none';
-                chatScreen.classList.remove('active');
-                document.getElementById('setupScreen').style.display = 'block';
+                switchToSetup();
 
                 document.getElementById('messagesArea').innerHTML = '';
-
                 document.querySelectorAll('.option-card').forEach(card => {
                     card.classList.remove('selected');
                 });
 
-                // Reset custom character if it was selected
+                // Reset custom options
                 if (appState.selectedPersonality === 'custom_character') {
                     const customCharacterOption = document.getElementById('customCharacterOption');
                     customCharacterOption.querySelector('.option-title').textContent = '🛠️ Create Custom Colleague';
                     customCharacterOption.querySelector('.option-description').textContent = 'Design a virtual version of someone from your workplace. Perfect for practicing specific challenging conversations.';
                 }
 
-                // Reset custom scenario if it was selected
                 if (appState.selectedScenario === 'custom_scenario') {
                     const customScenarioOption = document.getElementById('customScenarioOption');
                     customScenarioOption.querySelector('.option-title').textContent = '🎯 Create Custom Scenario';
                     customScenarioOption.querySelector('.option-description').textContent = 'Design your specific meeting situation. Perfect for practicing upcoming real conversations.';
                 }
 
+                // Reset state
                 appState.selectedRole = null;
                 appState.selectedScenario = null;
                 appState.selectedPersonality = null;
@@ -1557,7 +1623,10 @@ MEETING TYPE: ${scenarioData.type}`;
             }
         }
 
+        // ============================================
         // CHAT UI FUNCTIONS
+        // ============================================
+
         function updateChatHeader() {
             const personalities = {
                 'skeptical_councillor': {
@@ -1663,15 +1732,14 @@ MEETING TYPE: ${scenarioData.type}`;
         }
 
         // ============================================
-        // EVENT LISTENERS SETUP (FUNCTIONS DEFINED ABOVE!)
+        // EVENT LISTENERS SETUP
         // ============================================
 
         function setupEventListeners() {
             debugLog('Setting up event listeners');
 
-            // CORE SELECTION HANDLING (Role, Scenario, Personality)
+            // CORE SELECTION HANDLING
             document.querySelectorAll('.option-card').forEach(card => {
-                // Skip custom options (they have their own handlers)
                 if (card.id === 'customCharacterOption' || card.id === 'customScenarioOption') {
                     return;
                 }
@@ -1755,10 +1823,22 @@ MEETING TYPE: ${scenarioData.type}`;
         // ============================================
 
         function initializeApp() {
-            debugLog('Initializing Professional Conversation Trainer');
+            debugLog('🚀 Initializing Professional Conversation Trainer');
             setupEventListeners();
             testAPIConnection();
             loadAvailableOptions();
+
+            // Test screen elements exist
+            setTimeout(() => {
+                const setupScreen = document.getElementById('setupScreen');
+                const chatScreen = document.getElementById('chatScreen');
+                debugLog('🔍 Screen elements check', {
+                    setupScreen: setupScreen ? 'exists' : 'MISSING',
+                    chatScreen: chatScreen ? 'exists' : 'MISSING',
+                    setupDisplay: setupScreen ? window.getComputedStyle(setupScreen).display : 'N/A',
+                    chatDisplay: chatScreen ? window.getComputedStyle(chatScreen).display : 'N/A'
+                });
+            }, 1000);
         }
 
         // Initialize Application
@@ -1766,7 +1846,7 @@ MEETING TYPE: ${scenarioData.type}`;
             initializeApp();
         });
 
-        debugLog('Professional Conversation Trainer with Custom Characters & Scenarios Loaded');
+        debugLog('🎨 Professional Conversation Trainer Loaded');
 </script>
 </body>
 </html>
