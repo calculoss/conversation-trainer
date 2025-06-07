@@ -11,7 +11,21 @@ load_dotenv()
 
 class Config:
     """Application configuration"""
-    
+
+    def check_environment():
+        """Check if environment is properly configured"""
+        config = get_config()
+        validation = config.validate_config()
+
+        print("🔧 Environment Configuration Check:")
+        print(
+            f"   Claude API Key: {'✅ Set' if config.CLAUDE_API_KEY and config.CLAUDE_API_KEY != 'your_actual_claude_api_key_here' else '❌ Missing'}")
+        print(f"   🧪 DEBUG: API key starts with: {config.CLAUDE_API_KEY[:20] if config.CLAUDE_API_KEY else 'None'}...")
+        print(f"   🧪 DEBUG: API key length: {len(config.CLAUDE_API_KEY) if config.CLAUDE_API_KEY else 0}")
+        print(f"   🧪 DEBUG: All environment variables: {list(os.environ.keys())}")  # NEW LINE
+        print(f"   Debug Mode: {'✅ Enabled' if config.DEBUG else '🔒 Disabled'}")
+
+        # ... rest of function
     # Claude API Configuration
     CLAUDE_API_KEY = os.getenv('CLAUDE_API_KEY')
     
