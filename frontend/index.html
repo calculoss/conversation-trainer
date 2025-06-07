@@ -702,7 +702,275 @@
             display: block;
         }
 
-        /* Responsive */
+        /* Enhanced Custom Character Modal Styles */
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-description {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* DISC Personality Grid */
+        .disc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .disc-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            background: #fafbfc;
+            transition: all 0.2s ease;
+        }
+
+        .disc-card[data-disc="D"] {
+            border-color: #dc2626;
+            background: linear-gradient(135deg, #fef2f2, #fafbfc);
+        }
+
+        .disc-card[data-disc="I"] {
+            border-color: #d97706;
+            background: linear-gradient(135deg, #fffbeb, #fafbfc);
+        }
+
+        .disc-card[data-disc="S"] {
+            border-color: #16a34a;
+            background: linear-gradient(135deg, #f0fdf4, #fafbfc);
+        }
+
+        .disc-card[data-disc="C"] {
+            border-color: #2563eb;
+            background: linear-gradient(135deg, #eff6ff, #fafbfc);
+        }
+
+        .disc-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .disc-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+        }
+
+        .disc-card[data-disc="D"] .disc-icon {
+            background: #dc2626;
+        }
+
+        .disc-card[data-disc="I"] .disc-icon {
+            background: #d97706;
+        }
+
+        .disc-card[data-disc="S"] .disc-icon {
+            background: #16a34a;
+        }
+
+        .disc-card[data-disc="C"] .disc-icon {
+            background: #2563eb;
+        }
+
+        .disc-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #1e293b;
+        }
+
+        .disc-description {
+            font-size: 0.85rem;
+            color: #64748b;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .disc-intensity {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .disc-intensity label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #374151;
+            min-width: 60px;
+        }
+
+        .disc-slider {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .disc-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .disc-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .disc-value {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1e293b;
+            min-width: 35px;
+            text-align: right;
+        }
+
+        .personality-summary {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .personality-summary strong {
+            color: #1e40af;
+        }
+
+        #personalityText {
+            color: #1e40af;
+            font-weight: 500;
+        }
+
+        /* Saved Colleagues */
+        .saved-colleagues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .saved-colleague-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.75rem;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .saved-colleague-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .saved-colleague-card.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .saved-colleague-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .saved-colleague-role {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .saved-colleague-disc {
+            font-size: 0.75rem;
+            color: #3b82f6;
+            font-weight: 500;
+        }
+
+        .delete-colleague {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #dc2626;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 0.7rem;
+            display: none;
+        }
+
+        .saved-colleague-card:hover .delete-colleague {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .disc-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .saved-colleagues-grid {
+                grid-template-columns: 1fr;
+            }
+        }
         @media (max-width: 768px) {
             .setup-container {
                 grid-template-columns: 1fr;
@@ -901,6 +1169,11 @@
             <div class="error-message" id="errorMessage">
                 ❌ Error starting conversation
             </div>
+
+            <!-- localStorage Notice -->
+            <div class="success-message" style="background: #fffbeb; border-color: #fbbf24; color: #92400e;">
+                ℹ️ <strong>Note:</strong> Colleague saving will work when deployed to GitHub Pages. This demo environment doesn't support persistent storage.
+            </div>
         </main>
     </div>
 
@@ -910,31 +1183,189 @@
         <div id="debugContent">Loading...</div>
     </div>
 
-    <!-- Custom Character Modal -->
+    <!-- Enhanced Custom Character Modal -->
     <div class="modal-overlay" id="customCharacterModal">
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 700px; max-height: 90vh;">
             <div class="modal-header">
                 <h3 class="modal-title">Create Your Custom Colleague</h3>
+                <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.5rem;">Build a realistic virtual version of someone from your workplace</p>
             </div>
 
-            <div class="form-group">
-                <label class="form-label">Name & Role</label>
-                <input type="text" class="form-input" id="customName" placeholder="e.g., David Morrison - Senior Engineer">
+            <!-- Saved Colleagues Section -->
+            <div class="form-section" id="savedColleaguesSection" style="display: none;">
+                <h4 class="section-title">📁 Saved Colleagues</h4>
+                <div class="saved-colleagues-grid" id="savedColleaguesGrid">
+                    <!-- Saved colleagues will be populated here -->
+                </div>
+                <button type="button" class="btn btn-secondary" id="createNewColleague" style="width: 100%; margin-top: 1rem;">
+                    ➕ Create New Colleague
+                </button>
             </div>
 
-            <div class="form-group">
-                <label class="form-label">How do they typically behave in meetings?</label>
-                <textarea class="form-input form-textarea" id="customPersonality" placeholder="e.g., Direct, impatient, interrupts others, focuses only on engineering concerns, dismissive of other departments..."></textarea>
-            </div>
+            <!-- Character Creation Form -->
+            <div id="characterCreationForm">
+                <!-- Basic Information -->
+                <div class="form-section">
+                    <h4 class="section-title">👤 Basic Information</h4>
 
-            <div class="form-group">
-                <label class="form-label">What do they care about most?</label>
-                <textarea class="form-input form-textarea" id="customMotivations" placeholder="e.g., Getting things done quickly, protecting his team's budget, being seen as competent..."></textarea>
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 2;">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" id="customName" placeholder="e.g., David Morrison">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label class="form-label">Age Range</label>
+                            <select class="form-input" id="customAge">
+                                <option value="">Select age</option>
+                                <option value="20s">20s</option>
+                                <option value="30s">30s</option>
+                                <option value="40s">40s</option>
+                                <option value="50s">50s</option>
+                                <option value="60+">60+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label class="form-label">Job Title/Role</label>
+                            <input type="text" class="form-input" id="customRole" placeholder="e.g., Senior Engineer, Team Leader">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label class="form-label">Gender Pronouns</label>
+                            <select class="form-input" id="customGender">
+                                <option value="">Select pronouns</option>
+                                <option value="he/him">He/Him</option>
+                                <option value="she/her">She/Her</option>
+                                <option value="they/them">They/Them</option>
+                                <option value="prefer-not-to-say">Prefer not to say</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DISC Personality Profile -->
+                <div class="form-section">
+                    <h4 class="section-title">🧠 DISC Personality Profile</h4>
+                    <p class="section-description">Select their primary and secondary personality traits</p>
+
+                    <div class="disc-grid">
+                        <div class="disc-card" data-disc="D">
+                            <div class="disc-header">
+                                <div class="disc-icon">D</div>
+                                <div class="disc-title">Dominance</div>
+                            </div>
+                            <div class="disc-description">Direct, results-oriented, decisive, competitive, strong-willed</div>
+                            <div class="disc-intensity">
+                                <label>Intensity:</label>
+                                <input type="range" min="0" max="100" value="0" class="disc-slider" id="discD">
+                                <span class="disc-value">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="disc-card" data-disc="I">
+                            <div class="disc-header">
+                                <div class="disc-icon">I</div>
+                                <div class="disc-title">Influence</div>
+                            </div>
+                            <div class="disc-description">Outgoing, enthusiastic, optimistic, people-focused, persuasive</div>
+                            <div class="disc-intensity">
+                                <label>Intensity:</label>
+                                <input type="range" min="0" max="100" value="0" class="disc-slider" id="discI">
+                                <span class="disc-value">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="disc-card" data-disc="S">
+                            <div class="disc-header">
+                                <div class="disc-icon">S</div>
+                                <div class="disc-title">Steadiness</div>
+                            </div>
+                            <div class="disc-description">Patient, reliable, supportive, team-oriented, consistent</div>
+                            <div class="disc-intensity">
+                                <label>Intensity:</label>
+                                <input type="range" min="0" max="100" value="0" class="disc-slider" id="discS">
+                                <span class="disc-value">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="disc-card" data-disc="C">
+                            <div class="disc-header">
+                                <div class="disc-icon">C</div>
+                                <div class="disc-title">Conscientiousness</div>
+                            </div>
+                            <div class="disc-description">Analytical, detail-oriented, systematic, quality-focused, cautious</div>
+                            <div class="disc-intensity">
+                                <label>Intensity:</label>
+                                <input type="range" min="0" max="100" value="0" class="disc-slider" id="discC">
+                                <span class="disc-value">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="personality-summary" id="personalitySummary">
+                        <strong>Personality Summary:</strong> <span id="personalityText">Adjust the sliders above to see their personality profile</span>
+                    </div>
+                </div>
+
+                <!-- Workplace Behavior -->
+                <div class="form-section">
+                    <h4 class="section-title">🏢 Workplace Behavior</h4>
+
+                    <div class="form-group">
+                        <label class="form-label">How do they typically behave in meetings?</label>
+                        <textarea class="form-input form-textarea" id="customPersonality" placeholder="e.g., Speaks first, asks lots of questions, prefers data over opinions, interrupts when excited..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">What motivates them most?</label>
+                        <textarea class="form-input form-textarea" id="customMotivations" placeholder="e.g., Recognition for achievements, job security, team harmony, solving complex problems..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">What stresses them or makes them difficult?</label>
+                        <textarea class="form-input form-textarea" id="customStressors" placeholder="e.g., Tight deadlines, unclear instructions, being micromanaged, public criticism..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Communication Style -->
+                <div class="form-section">
+                    <h4 class="section-title">💬 Communication Style</h4>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Communication Pace</label>
+                            <select class="form-input" id="commPace">
+                                <option value="">Select pace</option>
+                                <option value="very-fast">Very Fast - Rapid-fire, impatient</option>
+                                <option value="fast">Fast - Quick responses, efficient</option>
+                                <option value="moderate">Moderate - Thoughtful, measured</option>
+                                <option value="slow">Slow - Deliberate, thorough</option>
+                                <option value="very-slow">Very Slow - Extremely cautious</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Directness Level</label>
+                            <select class="form-input" id="directness">
+                                <option value="">Select style</option>
+                                <option value="very-direct">Very Direct - Blunt, no sugar-coating</option>
+                                <option value="direct">Direct - Clear and straightforward</option>
+                                <option value="diplomatic">Diplomatic - Tactful approach</option>
+                                <option value="indirect">Indirect - Hints and implications</option>
+                                <option value="very-indirect">Very Indirect - Avoids confrontation</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="modal-actions">
                 <button class="btn btn-secondary" id="cancelCustomCharacter">Cancel</button>
-                <button class="btn btn-primary" id="saveCustomCharacter">Create Character</button>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-primary" id="saveCustomCharacter">
+                        💾 Save & Use Character
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -1285,17 +1716,21 @@
         // ============================================
 
         function getRequestData() {
-            debugLog('Building request data');
+            debugLog('Building enhanced request data');
             const baseData = {
                 user_name: `${appState.selectedRole}_user`,
                 personality_type: appState.selectedPersonality
             };
 
+            // Handle enhanced custom character
             if (appState.selectedPersonality === 'custom_character' && customCharacterData) {
                 baseData.custom_character = customCharacterData;
-                debugLog('Added custom character data');
+                // Build comprehensive personality prompt
+                baseData.personality_prompt = buildCharacterPersonalityPrompt(customCharacterData);
+                debugLog('Added enhanced custom character data with personality prompt');
             }
 
+            // Handle custom scenario
             if (appState.selectedScenario === 'custom_scenario' && customScenarioData) {
                 baseData.custom_scenario = customScenarioData;
                 baseData.scenario = buildCustomScenarioDescription(customScenarioData);
@@ -1305,7 +1740,7 @@
                 debugLog('Added standard scenario');
             }
 
-            debugLog('Request data built', baseData);
+            debugLog('Enhanced request data built', baseData);
             return baseData;
         }
 
@@ -1768,6 +2203,15 @@ MEETING TYPE: ${scenarioData.type}`;
             const saveCharacterBtn = document.getElementById('saveCustomCharacter');
             if (saveCharacterBtn) {
                 saveCharacterBtn.addEventListener('click', saveCustomCharacter);
+            }
+
+            // Create New Colleague button handler
+            const createNewColleagueBtn = document.getElementById('createNewColleague');
+            if (createNewColleagueBtn) {
+                createNewColleagueBtn.addEventListener('click', function() {
+                    clearCustomCharacterForm();
+                    showCharacterCreationForm();
+                });
             }
 
             // CUSTOM SCENARIO HANDLERS
