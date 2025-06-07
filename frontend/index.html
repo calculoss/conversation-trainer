@@ -1860,32 +1860,6 @@ MEETING TYPE: ${scenarioData.type}`;
         }
 
         // ============================================
-        // MESSAGE FUNCTIONS
-        // ============================================
-
-        function showSuccessMessage(message) {
-            const successMsg = document.getElementById('successMessage');
-            if (successMsg) {
-                successMsg.textContent = message;
-                successMsg.style.display = 'block';
-                setTimeout(() => {
-                    successMsg.style.display = 'none';
-                }, 4000);
-            }
-        }
-
-        function showErrorMessage(message) {
-            const errorMsg = document.getElementById('errorMessage');
-            if (errorMsg) {
-                errorMsg.textContent = message;
-                errorMsg.style.display = 'block';
-                setTimeout(() => {
-                    errorMsg.style.display = 'none';
-                }, 6000);
-            }
-        }
-
-        // ============================================
         // API CONNECTION TESTING
         // ============================================
 
