@@ -3,40 +3,963 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversation Trainer - App Interface</title>
+    <title>Conversation Trainer - Professional Development Platform</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            max-width: 800px; 
-            margin: 50px auto; 
-            padding: 20px; 
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .status { 
-            background-color: #e8f4fd; 
-            border: 1px solid #bee5eb; 
-            padding: 15px; 
-            border-radius: 5px; 
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: -2px;
+        }
+
+        .logo-text p {
+            font-size: 0.875rem;
+            color: #64748b;
+            font-weight: 400;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            color: #166534;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #16a34a;
+            border-radius: 50%;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .setup-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .setup-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            border: 1px solid #f1f5f9;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .panel-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .panel-icon.role { background: #eff6ff; color: #2563eb; }
+        .panel-icon.scenario { background: #f0fdf4; color: #16a34a; }
+        .panel-icon.personality { background: #fef3c7; color: #d97706; }
+
+        .panel-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .selection-grid {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .option-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .option-card:hover {
+            border-color: #cbd5e1;
+            background: #f1f5f9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-card.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .option-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 20px;
+            height: 20px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .option-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .option-description {
+            font-size: 0.875rem;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            border: 1px solid #f1f5f9;
+            height: 70vh;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #f1f5f9;
+            background: #f8fafc;
+        }
+
+        .chat-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .participant-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .chat-details h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 2px;
+        }
+
+        .chat-details p {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .messages-area {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            height: calc(70vh - 140px);
+            background: #fafbfc;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 1rem;
+            align-items: flex-end;
+            gap: 0.75rem;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #64748b;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .message.ai .message-avatar {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .message-content {
+            max-width: 70%;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.875rem 1rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .message.user .message-content {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .message-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+
+        .input-area {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #f1f5f9;
+            background: white;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-end;
+        }
+
+        .message-input {
+            flex: 1;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.875rem 1rem;
+            font-size: 0.95rem;
+            resize: none;
+            min-height: 44px;
+            max-height: 120px;
+            outline: none;
+            transition: border-color 0.2s ease;
+            font-family: inherit;
+        }
+
+        .message-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .send-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0.875rem 1.25rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 80px;
+            justify-content: center;
+        }
+
+        .send-button:hover:not(:disabled) {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .send-button:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Action Panel */
+        .action-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            border: 1px solid #f1f5f9;
+            text-align: center;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .start-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .start-button:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .secondary-button {
+            background: #f8fafc;
+            color: #64748b;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 0 0.5rem;
+        }
+
+        .secondary-button:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: none;
+            margin-bottom: 1rem;
+        }
+
+        .typing-message {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.75rem;
+        }
+
+        .typing-content {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.875rem 1rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0; }
+
+        @keyframes typing {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .setup-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .setup-panel {
+                padding: 1.5rem;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Success States */
+        .success-message {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <h1>🎯 Conversation Trainer - App Interface</h1>
-    
-    <div class="status">
-        <h2>✅ Frontend Successfully Created!</h2>
-        <p>You're now viewing the application development area.</p>
-        <p><strong>Next:</strong> We'll build the conversation practice interface here.</p>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">CT</div>
+                    <div class="logo-text">
+                        <h1>Conversation Trainer</h1>
+                        <p>NSW Local Government Professional Development</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span>Service Online</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Setup Screen -->
+            <div id="setupScreen">
+                <div class="setup-container">
+                    <!-- Role Selection -->
+                    <div class="setup-panel">
+                        <div class="panel-header">
+                            <div class="panel-icon role">👤</div>
+                            <h2 class="panel-title">Your Role</h2>
+                        </div>
+                        <div class="selection-grid">
+                            <div class="option-card" data-role="director">
+                                <div class="option-title">Director</div>
+                                <div class="option-description">Practice strategic leadership, mentoring conversations, and budget discussions with senior stakeholders.</div>
+                            </div>
+                            <div class="option-card" data-role="manager">
+                                <div class="option-title">Manager</div>
+                                <div class="option-description">Handle performance reviews, team conflicts, and operational discussions with staff and colleagues.</div>
+                            </div>
+                            <div class="option-card" data-role="customer-service">
+                                <div class="option-title">Customer Service Officer</div>
+                                <div class="option-description">Manage resident complaints, billing disputes, and challenging service-related conversations.</div>
+                            </div>
+                            <div class="option-card" data-role="project-manager">
+                                <div class="option-title">Project Manager</div>
+                                <div class="option-description">Navigate stakeholder negotiations, contractor management, and cross-departmental coordination.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scenario Selection -->
+                    <div class="setup-panel">
+                        <div class="panel-header">
+                            <div class="panel-icon scenario">📋</div>
+                            <h2 class="panel-title">Practice Scenario</h2>
+                        </div>
+                        <div class="selection-grid">
+                            <div class="option-card" data-scenario="budget_cuts">
+                                <div class="option-title">Budget Reduction Discussion</div>
+                                <div class="option-description">Practice explaining budget cuts while maintaining team morale and finding creative solutions to resource constraints.</div>
+                            </div>
+                            <div class="option-card" data-scenario="angry_resident">
+                                <div class="option-title">Challenging Resident Interaction</div>
+                                <div class="option-description">Handle frustrated ratepayer complaints about service levels, rate increases, and council decisions.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Personality Selection -->
+                <div class="setup-panel">
+                    <div class="panel-header">
+                        <div class="panel-icon personality">🎭</div>
+                        <h2 class="panel-title">AI Conversation Partner</h2>
+                    </div>
+                    <div class="selection-grid">
+                        <div class="option-card" data-personality="skeptical_councillor">
+                            <div class="option-title">Councillor Margaret Stevens</div>
+                            <div class="option-description">Experienced councillor known for thorough questioning, budget scrutiny, and representing ratepayer interests. Expects detailed justifications and fiscal responsibility.</div>
+                        </div>
+                        <div class="option-card" data-personality="frustrated_resident">
+                            <div class="option-title">Robert Chen - Local Business Owner</div>
+                            <div class="option-description">Long-term resident and business owner who feels underserved by council. Articulate but frustrated, expects value for rates and responsive service.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Panel -->
+                <div class="action-panel">
+                    <button class="start-button" id="startConversation" disabled>
+                        <span>🚀</span>
+                        <span>Begin Practice Session</span>
+                    </button>
+                    <p style="margin-top: 1rem; color: #64748b; font-size: 0.875rem;">
+                        Select your role, scenario, and AI partner to start practicing
+                    </p>
+                </div>
+            </div>
+
+            <!-- Chat Screen -->
+            <div class="chat-container" id="chatScreen">
+                <div class="chat-header">
+                    <div class="chat-info">
+                        <div class="participant-avatar" id="participantAvatar">CS</div>
+                        <div class="chat-details">
+                            <h3 id="participantName">Practice Session</h3>
+                            <p id="scenarioDescription">Preparing conversation...</p>
+                        </div>
+                    </div>
+                    <div style="margin-left: auto;">
+                        <button class="secondary-button" id="endConversation">End Session</button>
+                    </div>
+                </div>
+
+                <div class="messages-area" id="messagesArea">
+                    <!-- Messages will be inserted here -->
+                </div>
+
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-message">
+                        <div class="message-avatar">AI</div>
+                        <div class="typing-content">
+                            <div class="typing-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-area">
+                    <div class="input-container">
+                        <textarea class="message-input" id="messageInput" placeholder="Type your response..." rows="1" disabled></textarea>
+                        <button class="send-button" id="sendButton" disabled>
+                            <span>Send</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                ✅ Connected to conversation service successfully
+            </div>
+        </main>
     </div>
-    
-    <h3>🏛️ For NSW Local Government Professionals:</h3>
-    <ul>
-        <li><strong>Directors:</strong> Practice mentoring and resource constraint conversations</li>
-        <li><strong>Managers:</strong> Prepare for performance reviews and team discussions</li>  
-        <li><strong>Project Managers:</strong> Practice stakeholder and contractor negotiations</li>
-        <li><strong>Customer Service:</strong> Handle difficult resident conversations</li>
-        <li><strong>IT Support:</strong> Practice explaining technical issues clearly</li>
-    </ul>
-    
-    <p><a href="../">← Back to Main Site</a></p>
+
+    <script>
+        // Configuration
+        const API_BASE_URL = 'https://conversation-trainer-production.up.railway.app';
+
+        // Application State
+        let appState = {
+            selectedRole: null,
+            selectedScenario: null,
+            selectedPersonality: null,
+            currentConversation: null,
+            isConnected: false
+        };
+
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            console.log('🚀 Initializing Professional Conversation Trainer...');
+            setupEventListeners();
+            testAPIConnection();
+        }
+
+        function setupEventListeners() {
+            // Selection handling
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.addEventListener('click', handleSelection);
+            });
+
+            // Button handlers
+            document.getElementById('startConversation').addEventListener('click', startConversation);
+            document.getElementById('endConversation').addEventListener('click', endConversation);
+            document.getElementById('sendButton').addEventListener('click', sendMessage);
+
+            // Input handlers
+            const messageInput = document.getElementById('messageInput');
+            messageInput.addEventListener('keydown', handleInputKeydown);
+            messageInput.addEventListener('input', autoResizeTextarea);
+        }
+
+        function handleSelection(event) {
+            const card = event.currentTarget;
+            const parent = card.parentElement;
+
+            // Remove selection from siblings
+            parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+
+            // Add selection to clicked card
+            card.classList.add('selected');
+
+            // Update state
+            if (card.dataset.role) {
+                appState.selectedRole = card.dataset.role;
+            } else if (card.dataset.scenario) {
+                appState.selectedScenario = card.dataset.scenario;
+            } else if (card.dataset.personality) {
+                appState.selectedPersonality = card.dataset.personality;
+            }
+
+            updateStartButton();
+        }
+
+        function updateStartButton() {
+            const startBtn = document.getElementById('startConversation');
+            const isReady = appState.selectedRole && appState.selectedScenario && appState.selectedPersonality;
+
+            startBtn.disabled = !isReady || !appState.isConnected;
+
+            if (!appState.isConnected) {
+                startBtn.innerHTML = '<span>⚠️</span><span>Connecting to Service...</span>';
+            } else if (!isReady) {
+                startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+            } else {
+                startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+            }
+        }
+
+        async function testAPIConnection() {
+            try {
+                console.log('🔍 Testing API connection...');
+                const response = await fetch(`${API_BASE_URL}/health`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    appState.isConnected = true;
+                    document.getElementById('successMessage').style.display = 'block';
+                    console.log('✅ API connection successful:', data);
+
+                    // Hide success message after 3 seconds
+                    setTimeout(() => {
+                        document.getElementById('successMessage').style.display = 'none';
+                    }, 3000);
+                } else {
+                    throw new Error('API health check failed');
+                }
+            } catch (error) {
+                console.error('❌ API Connection Error:', error);
+                appState.isConnected = false;
+
+                // Show error state
+                const statusIndicator = document.querySelector('.status-indicator');
+                statusIndicator.innerHTML = '<div style="width: 8px; height: 8px; background: #dc2626; border-radius: 50%;"></div><span>Service Offline</span>';
+                statusIndicator.style.background = '#fef2f2';
+                statusIndicator.style.borderColor = '#fecaca';
+                statusIndicator.style.color = '#dc2626';
+            } finally {
+                updateStartButton();
+            }
+        }
+
+        function startConversation() {
+            console.log('🎯 Starting conversation with:', appState);
+
+            // Hide setup screen, show chat
+            document.getElementById('setupScreen').style.display = 'none';
+            document.getElementById('chatScreen').style.display = 'flex';
+
+            // Enable input
+            document.getElementById('messageInput').disabled = false;
+            document.getElementById('sendButton').disabled = false;
+
+            // Update chat header
+            updateChatHeader();
+
+            // Add welcome message
+            addSystemMessage('Welcome to your practice session. The AI conversation partner will introduce themselves momentarily...');
+
+            // TODO: Start actual API conversation
+            setTimeout(() => {
+                addAIMessage("Hello! I'm ready to begin our practice conversation. How can I help you today?");
+            }, 1500);
+        }
+
+        function updateChatHeader() {
+            const personalities = {
+                'skeptical_councillor': {
+                    name: 'Councillor Margaret Stevens',
+                    avatar: 'MS',
+                    description: 'Budget-focused councillor • Expects detailed justifications'
+                },
+                'frustrated_resident': {
+                    name: 'Robert Chen',
+                    avatar: 'RC',
+                    description: 'Local business owner • Concerned about service value'
+                }
+            };
+
+            const personality = personalities[appState.selectedPersonality];
+            if (personality) {
+                document.getElementById('participantAvatar').textContent = personality.avatar;
+                document.getElementById('participantName').textContent = personality.name;
+                document.getElementById('scenarioDescription').textContent = personality.description;
+            }
+        }
+
+        function addSystemMessage(content) {
+            const messagesArea = document.getElementById('messagesArea');
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = 'text-align: center; padding: 1rem; color: #64748b; font-size: 0.875rem; font-style: italic;';
+            messageDiv.textContent = content;
+            messagesArea.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function addUserMessage(content) {
+            addMessage('user', content, 'You');
+        }
+
+        function addAIMessage(content) {
+            const personalities = {
+                'skeptical_councillor': 'MS',
+                'frustrated_resident': 'RC'
+            };
+            const avatar = personalities[appState.selectedPersonality] || 'AI';
+            addMessage('ai', content, avatar);
+        }
+
+        function addMessage(type, content, avatar) {
+            const messagesArea = document.getElementById('messagesArea');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${avatar}</div>
+                <div class="message-content">
+                    <div class="message-text">${content}</div>
+                    <div class="message-time">${timestamp}</div>
+                </div>
+            `;
+
+            messagesArea.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+
+            if (message) {
+                addUserMessage(message);
+                input.value = '';
+                autoResizeTextarea(); // Reset height
+
+                // Show typing indicator
+                showTyping();
+
+                // TODO: Send to API and get AI response
+                setTimeout(() => {
+                    hideTyping();
+                    addAIMessage("Thank you for your message. I appreciate you taking the time to discuss this with me. How would you like to proceed?");
+                }, 2000);
+            }
+        }
+
+        function showTyping() {
+            document.getElementById('typingIndicator').style.display = 'block';
+            scrollToBottom();
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        function scrollToBottom() {
+            const messagesArea = document.getElementById('messagesArea');
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }
+
+        function handleInputKeydown(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function autoResizeTextarea() {
+            const textarea = document.getElementById('messageInput');
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+
+        function endConversation() {
+            if (confirm('Are you sure you want to end this practice session?')) {
+                // Reset to setup screen
+                document.getElementById('chatScreen').style.display = 'none';
+                document.getElementById('setupScreen').style.display = 'block';
+
+                // Clear messages
+                document.getElementById('messagesArea').innerHTML = '';
+
+                // Reset selections
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+
+                // Reset state
+                appState.selectedRole = null;
+                appState.selectedScenario = null;
+                appState.selectedPersonality = null;
+                appState.currentConversation = null;
+
+                // Reset input
+                const messageInput = document.getElementById('messageInput');
+                messageInput.value = '';
+                messageInput.disabled = true;
+                document.getElementById('sendButton').disabled = true;
+
+                updateStartButton();
+            }
+        }
+
+        // Initialize on load
+        console.log('🎨 Professional Conversation Trainer Interface Loaded');
+    </script>
 </body>
 </html>
