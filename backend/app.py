@@ -33,11 +33,22 @@ CORS(app)  # Allow frontend to talk to backend
 app.config['DEBUG'] = True
 
 # Initialize Claude integration
+# Load configuration
+from config import get_config, check_environment
+
+config = get_config()
+
+# Check environment on startup
+if not check_environment():
+    print("❌ Configuration errors found. Please fix before continuing.")
+
+# Initialize Claude integration with API key from config
 claude_client = None
 orchestrator = None
 
 try:
-    claude_client = ClaudeAPIClient()
+    try:
+    claude_client = ClaudeAPIClient(api_key=config.CLAUDE_API_KEY)
     orchestrator = ConversationOrchestrator(claude_client)
     print("✅ Claude integration initialized")
 except Exception as e:
