@@ -333,46 +333,85 @@ def start_conversation():
         }), 500
 
 
+# REPLACE the conversation_message function in your app.py with this fixed version:
+
 @app.route('/api/conversations/message', methods=['POST'])
 def conversation_message():
-    """UPDATED: Handle custom conversation messages"""
+    """Handle conversation messages - FIXED for Claude API"""
     try:
         data = request.json
+        print(f"📥 Message request received")
+
         user_message = data.get('user_message')
         personality_data = data.get('personality_data')
         conversation_history = data.get('conversation_history', [])
 
-        # Build conversation context
+        if not user_message or not personality_data:
+            return jsonify({
+                "success": False,
+                "error": "Missing user_message or personality_data"
+            }), 400
+
+        print(f"💬 User message: {user_message}")
+        print(f"🎭 Character: {personality_data.get('name', 'Unknown')}")
+
+        # Get character info
+        character_name = personality_data.get('name', 'AI Assistant')
         character_prompt = personality_data.get('prompt', '')
 
-        # Format conversation for Claude
-        messages = [
-            {"role": "user", "content": character_prompt}
-        ]
+        # FIXED: Build conversation context properly for Claude
+        # Start with character instructions
+        system_prompt = f"""You are {character_name}. {character_prompt}
 
-        # Add recent conversation history (last 6 messages)
-        for msg in conversation_history[-6:]:
+Continue this conversation naturally as {character_name}. Stay in character and respond based on your personality."""
+
+        # Build message history for Claude API
+        messages = []
+
+        # Add conversation history (recent messages only)
+        for msg in conversation_history[-4:]:  # Last 4 messages to avoid token limits
             if msg.get('sender_type') == 'ai_personality':
-                messages.append({"role": "assistant", "content": msg.get('content', '')})
-            else:
-                messages.append({"role": "user", "content": msg.get('content', '')})
+                messages.append({
+                    "role": "assistant",
+                    "content": msg.get('content', '')
+                })
+            elif msg.get('sender_type') == 'user':
+                messages.append({
+                    "role": "user",
+                    "content": msg.get('content', '')
+                })
 
-        # Add current user message
-        messages.append({"role": "user", "content": user_message})
+        # Add the current user message
+        messages.append({
+            "role": "user",
+            "content": user_message
+        })
 
-        # Get AI response
+        print(f"🔗 Sending {len(messages)} messages to Claude")
+
+        # Get AI response with FIXED request format
         api_key = os.getenv('CLAUDE_API_KEY')
+        if not api_key:
+            return jsonify({
+                "success": False,
+                "error": "Claude API key not configured"
+            }), 500
+
         headers = {
             'x-api-key': api_key,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'anthropic-version': '2023-06-01'  # ADDED: Required header
         }
 
+        # FIXED: Proper Claude API request format
         request_data = {
             "model": "claude-3-sonnet-20240229",
             "max_tokens": 300,
+            "system": system_prompt,  # FIXED: Use system parameter instead of user message
             "messages": messages
         }
 
+        print(f"🤖 Calling Claude API...")
         response = requests.post(
             'https://api.anthropic.com/v1/messages',
             headers=headers,
@@ -380,9 +419,12 @@ def conversation_message():
             timeout=30
         )
 
+        print(f"🤖 Claude API response status: {response.status_code}")
+
         if response.status_code == 200:
             result = response.json()
             ai_response = result['content'][0]['text']
+            print(f"✅ Got AI response: {ai_response[:50]}...")
 
             return jsonify({
                 "success": True,
@@ -390,13 +432,28 @@ def conversation_message():
                 "timestamp": datetime.now().isoformat()
             })
         else:
-            raise Exception(f"Claude API error: {response.status_code}")
+            # Log the exact error for debugging
+            error_text = response.text
+            print(f"❌ Claude API error {response.status_code}: {error_text}")
 
-    except Exception as e:
-        print(f"Error in conversation: {e}")
+            # Return a helpful error message
+            return jsonify({
+                "success": False,
+                "error": f"AI service temporarily unavailable (error {response.status_code})"
+            }), 500
+
+    except requests.exceptions.Timeout:
+        print(f"❌ Claude API timeout")
         return jsonify({
             "success": False,
-            "error": str(e)
+            "error": "AI service timeout - please try again"
+        }), 500
+
+    except Exception as e:
+        print(f"❌ Error in conversation message: {e}")
+        return jsonify({
+            "success": False,
+            "error": "Conversation service error - please try again"
         }), 500
 
 
