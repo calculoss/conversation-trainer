@@ -787,9 +787,13 @@
                                 <div class="option-title">Challenging Resident Interaction</div>
                                 <div class="option-description">Handle frustrated ratepayer complaints about service levels, rate increases, and council decisions.</div>
                             </div>
+                            <!-- NEW: Custom scenario option -->
+                            <div class="option-card" data-scenario="custom_scenario" id="customScenarioOption">
+                                <div class="option-title">🎯 Create Custom Scenario</div>
+                                <div class="option-description">Design your specific meeting situation. Perfect for practicing upcoming real conversations.</div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
                 <!-- AI Personality Selection -->
                 <div class="setup-panel">
@@ -898,6 +902,53 @@
             <div class="modal-actions">
                 <button class="btn btn-secondary" id="cancelCustomCharacter">Cancel</button>
                 <button class="btn btn-primary" id="saveCustomCharacter">Create Character</button>
+            </div>
+        </div>
+    </div>
+    <!-- Custom Scenario Modal -->
+    <div class="modal-overlay" id="customScenarioModal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Your Custom Scenario</h3>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Scenario Title</label>
+                <input type="text" class="form-input" id="customScenarioTitle" placeholder="e.g., Budget Approval Meeting - Q2 Infrastructure Spend">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Meeting Context & Background</label>
+                <textarea class="form-input form-textarea" id="customScenarioContext" placeholder="Describe the situation leading up to this meeting. What decisions need to be made? What's happened before? What are the stakes?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Your Role & Objective</label>
+                <textarea class="form-input form-textarea" id="customScenarioObjective" placeholder="What's your position in this meeting? What are you trying to achieve? What approach do you plan to take?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Expected Challenges</label>
+                <textarea class="form-input form-textarea" id="customScenarioChallenges" placeholder="What resistance or difficulties do you anticipate? What objections might come up?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Meeting Type</label>
+                <select class="form-input" id="customScenarioType">
+                    <option value="budget_review">Budget Review</option>
+                    <option value="project_planning">Project Planning</option>
+                    <option value="performance_discussion">Performance Discussion</option>
+                    <option value="policy_decision">Policy Decision</option>
+                    <option value="stakeholder_negotiation">Stakeholder Negotiation</option>
+                    <option value="crisis_management">Crisis Management</option>
+                    <option value="vendor_meeting">Vendor/Contractor Meeting</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancelCustomScenario">Cancel</button>
+                <button class="btn btn-primary" id="saveCustomScenario">Create Scenario</button>
             </div>
         </div>
     </div>
@@ -1048,20 +1099,36 @@
         }
 
         function getRequestData() {
+            const baseData = {
+                user_name: `${appState.selectedRole}_user`,
+                personality_type: appState.selectedPersonality
+            };
+
+            // Handle custom character
             if (appState.selectedPersonality === 'custom_character' && customCharacterData) {
-                return {
-                    user_name: `${appState.selectedRole}_user`,
-                    personality_type: 'custom_character',
-                    custom_character: customCharacterData,
-                    scenario: getScenarioDescription(appState.selectedScenario)
-                };
-            } else {
-                return {
-                    user_name: `${appState.selectedRole}_user`,
-                    personality_type: appState.selectedPersonality,
-                    scenario: getScenarioDescription(appState.selectedScenario)
-                };
+                baseData.custom_character = customCharacterData;
             }
+
+            // Handle custom scenario
+            if (appState.selectedScenario === 'custom_scenario' && customScenarioData) {
+                baseData.custom_scenario = customScenarioData;
+                baseData.scenario = buildCustomScenarioDescription(customScenarioData);
+            } else {
+                baseData.scenario = getScenarioDescription(appState.selectedScenario);
+            }
+
+            return baseData;
+        }
+        function buildCustomScenarioDescription(scenarioData) {
+            return `${scenarioData.title}
+
+        CONTEXT: ${scenarioData.context}
+
+        YOUR OBJECTIVE: ${scenarioData.objective}
+
+        EXPECTED CHALLENGES: ${scenarioData.challenges}
+
+        MEETING TYPE: ${scenarioData.type}`;
         }
 
         function updateStartButton() {
@@ -1361,9 +1428,16 @@
 
                 // Reset custom character if it was selected
                 if (appState.selectedPersonality === 'custom_character') {
-                    const customOption = document.getElementById('customCharacterOption');
-                    customOption.querySelector('.option-title').textContent = '🛠️ Create Custom Colleague';
-                    customOption.querySelector('.option-description').textContent = 'Design a virtual version of someone from your workplace. Perfect for practicing specific challenging conversations.';
+                    const customCharacterOption = document.getElementById('customCharacterOption');
+                    customCharacterOption.querySelector('.option-title').textContent = '🛠️ Create Custom Colleague';
+                    customCharacterOption.querySelector('.option-description').textContent = 'Design a virtual version of someone from your workplace. Perfect for practicing specific challenging conversations.';
+                }
+
+                // Reset custom scenario if it was selected
+                if (appState.selectedScenario === 'custom_scenario') {
+                    const customScenarioOption = document.getElementById('customScenarioOption');
+                    customScenarioOption.querySelector('.option-title').textContent = '🎯 Create Custom Scenario';
+                    customScenarioOption.querySelector('.option-description').textContent = 'Design your specific meeting situation. Perfect for practicing upcoming real conversations.';
                 }
 
                 appState.selectedRole = null;
@@ -1372,6 +1446,7 @@
                 appState.currentConversation = null;
                 appState.conversationHistory = [];
                 customCharacterData = null;
+                customScenarioData = null; // NEW: Reset custom scenario
 
                 const messageInput = document.getElementById('messageInput');
                 messageInput.value = '';
@@ -1391,6 +1466,90 @@
         }
 
         console.log('🎨 Professional Conversation Trainer with Custom Characters Loaded');
+        // Custom scenario data
+        let customScenarioData = null;
+
+        // UPDATE your existing setupEventListeners function to include:
+        function setupEventListeners() {
+            // ... existing event listeners ...
+
+            // Custom scenario modal handlers
+            document.getElementById('customScenarioOption').addEventListener('click', function(e) {
+                e.stopPropagation();
+                showCustomScenarioModal();
+            });
+            document.getElementById('cancelCustomScenario').addEventListener('click', cancelCustomScenario);
+            document.getElementById('saveCustomScenario').addEventListener('click', saveCustomScenario);
+
+            // Modal overlay click to close (add this to existing modal handlers)
+            document.getElementById('customScenarioModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    cancelCustomScenario();
+                }
+            });
+        }
+
+        function showCustomScenarioModal() {
+            document.getElementById('customScenarioModal').style.display = 'block';
+        }
+
+        function cancelCustomScenario() {
+            document.getElementById('customScenarioModal').style.display = 'none';
+            clearCustomScenarioForm();
+        }
+
+        function saveCustomScenario() {
+            const title = document.getElementById('customScenarioTitle').value.trim();
+            const context = document.getElementById('customScenarioContext').value.trim();
+            const objective = document.getElementById('customScenarioObjective').value.trim();
+            const challenges = document.getElementById('customScenarioChallenges').value.trim();
+            const type = document.getElementById('customScenarioType').value;
+
+            if (!title || !context || !objective) {
+                alert('Please provide at least a title, context, and your objective.');
+                return;
+            }
+
+            // Store the custom scenario data
+            customScenarioData = {
+                title: title,
+                context: context,
+                objective: objective,
+                challenges: challenges,
+                type: type,
+                created: new Date().toISOString()
+            };
+
+            // Update the UI to show selection
+            const customOption = document.getElementById('customScenarioOption');
+            customOption.classList.add('selected');
+            customOption.querySelector('.option-title').textContent = title;
+            customOption.querySelector('.option-description').textContent = `Custom scenario: ${context.substring(0, 100)}...`;
+
+            // Remove selection from other scenario options
+            document.querySelectorAll('[data-scenario="budget_cuts"], [data-scenario="angry_resident"]').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Update app state
+            appState.selectedScenario = 'custom_scenario';
+
+            // Close modal
+            document.getElementById('customScenarioModal').style.display = 'none';
+
+            // Update start button
+            updateStartButton();
+
+            alert('Custom scenario created! You can now start a practice session.');
+        }
+
+        function clearCustomScenarioForm() {
+            document.getElementById('customScenarioTitle').value = '';
+            document.getElementById('customScenarioContext').value = '';
+            document.getElementById('customScenarioObjective').value = '';
+            document.getElementById('customScenarioChallenges').value = '';
+            document.getElementById('customScenarioType').value = 'budget_review';
+        }
     </script>
 </body>
 </html>

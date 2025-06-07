@@ -60,11 +60,25 @@ except Exception as e:
 # CUSTOM CHARACTER FUNCTIONS (MOVED TO TOP LEVEL)
 # ============================================
 
-def create_custom_character_prompt(character_data, scenario_description):
-    """Create AI prompt for custom character"""
+def create_custom_character_prompt(character_data, scenario_description, custom_scenario=None):
+    """Create AI prompt for custom character with enhanced scenario support"""
     name = character_data.get('name', 'Custom Character')
     personality = character_data.get('personality', 'Professional colleague')
     motivations = character_data.get('motivations', 'Standard workplace goals')
+
+    # Build enhanced context if we have a custom scenario
+    if custom_scenario:
+        scenario_context = f"""
+MEETING CONTEXT:
+- Title: {custom_scenario.get('title', 'Custom Meeting')}
+- Background: {custom_scenario.get('context', 'Standard meeting context')}
+- User's Objective: {custom_scenario.get('objective', 'General discussion')}
+- Expected Challenges: {custom_scenario.get('challenges', 'Normal workplace dynamics')}
+- Meeting Type: {custom_scenario.get('type', 'General meeting')}
+
+SCENARIO DESCRIPTION: {scenario_description}"""
+    else:
+        scenario_context = f"SCENARIO: {scenario_description}"
 
     prompt = f"""You are roleplaying as {name} in a workplace conversation.
 
@@ -73,16 +87,17 @@ CHARACTER DETAILS:
 - Personality & Behavior: {personality}
 - What they care about: {motivations}
 
-SCENARIO: {scenario_description}
+{scenario_context}
 
-INSTRUCTIONS:
+ROLEPLAY INSTRUCTIONS:
 1. Stay completely in character as {name}
-2. Respond based on their personality and motivations
-3. Act like you're really in this workplace situation
-4. Be realistic - show their challenging behaviors if that's part of their personality
-5. Keep responses conversational and workplace-appropriate
+2. Respond based on your personality and motivations
+3. Be aware of the meeting context and react accordingly
+4. Show realistic workplace behaviors based on your character traits
+5. Challenge the user appropriately based on your character's nature and the scenario
+6. Remember your agenda and priorities in this specific meeting context
 
-Introduce yourself naturally and begin the conversation."""
+Begin the meeting naturally, acknowledging the context and your role."""
 
     return prompt
 
@@ -263,36 +278,58 @@ def get_personalities():
 
 @app.route('/api/conversations/start', methods=['POST'])
 def start_conversation():
-    """Start conversation with support for custom characters"""
+    """Start conversation with custom character and scenario support"""
     try:
         data = request.json
+        print(f"📥 Start conversation request: {data}")
+
         user_name = data.get('user_name', 'user')
         personality_type = data.get('personality_type')
         scenario = data.get('scenario', 'Practice conversation')
-        custom_character = data.get('custom_character')  # NEW: get custom character data
+        custom_character = data.get('custom_character')
+        custom_scenario = data.get('custom_scenario')  # NEW: get custom scenario data
 
         conversation_id = str(uuid.uuid4())
 
-        # Handle custom characters vs. preset characters
+        # Handle custom characters vs preset characters
         if personality_type == 'custom_character' and custom_character:
-            # Use custom character
+            print(f"🎭 Creating custom character: {custom_character.get('name')}")
             personality_name = custom_character.get('name', 'Custom Character')
-            character_prompt = create_custom_character_prompt(custom_character, scenario)
+            character_prompt = create_custom_character_prompt(custom_character, scenario, custom_scenario)
         else:
-            # Use preset characters (existing logic)
+            print(f"🎭 Using preset character: {personality_type}")
+            # Enhanced preset characters with custom scenario support
+            if custom_scenario:
+                scenario_context = f"""
+CUSTOM MEETING CONTEXT:
+- {custom_scenario.get('title', 'Meeting')}
+- Background: {custom_scenario.get('context', '')}
+- User's Goal: {custom_scenario.get('objective', '')}
+- Challenges: {custom_scenario.get('challenges', '')}
+
+{scenario}"""
+            else:
+                scenario_context = scenario
+
             personalities = {
                 'skeptical_councillor': {
                     'name': 'Councillor Margaret Stevens',
                     'prompt': f"""You are Councillor Margaret Stevens, a budget-focused local councillor. 
-                    You are skeptical, detail-oriented, and expect thorough justifications for spending. 
-                    Scenario: {scenario}
+                    You are skeptical, detail-oriented, and expect thorough justifications for spending.
+
+                    SCENARIO: {scenario_context}
+
+                    Stay in character and respond to the specific meeting context. Be particularly focused on budget implications and ratepayer value.
                     Introduce yourself and begin the conversation."""
                 },
                 'frustrated_resident': {
                     'name': 'Robert Chen',
                     'prompt': f"""You are Robert Chen, a local business owner frustrated with council services. 
                     You are articulate but frustrated, concerned about value for rates paid.
-                    Scenario: {scenario}
+
+                    SCENARIO: {scenario_context}
+
+                    Stay in character and respond to the specific meeting context. Focus on service delivery and value for money.
                     Introduce yourself and begin the conversation."""
                 }
             }
@@ -301,10 +338,11 @@ def start_conversation():
             personality_name = personality_data['name']
             character_prompt = personality_data['prompt']
 
-        # Get opening message from Claude
+        print(f"🤖 Getting opening message from Claude...")
         opening_message = get_ai_opening_message(character_prompt)
+        print(f"✅ Got opening message: {opening_message[:50]}...")
 
-        # Store conversation data
+        # Store conversation data (include custom scenario info)
         conversation_data = {
             'personality': {
                 'name': personality_name,
@@ -313,20 +351,29 @@ def start_conversation():
                 'custom_character': custom_character if personality_type == 'custom_character' else None
             },
             'scenario': scenario,
+            'custom_scenario': custom_scenario,  # NEW: store custom scenario
             'created_at': datetime.now().isoformat()
         }
 
-        return jsonify({
+        result = {
             "success": True,
             "conversation_id": conversation_id,
             "conversation_data": conversation_data,
             "personality_name": personality_name,
             "opening_message": opening_message,
             "timestamp": datetime.now().isoformat()
-        })
+        }
+
+        # Log successful creation
+        if custom_scenario:
+            print(f"✅ Started custom scenario: {custom_scenario.get('title', 'Untitled')}")
+        if custom_character:
+            print(f"✅ Started with custom character: {custom_character.get('name', 'Unnamed')}")
+
+        return jsonify(result)
 
     except Exception as e:
-        print(f"Error starting conversation: {e}")
+        print(f"❌ Error starting conversation: {e}")
         return jsonify({
             "success": False,
             "error": str(e)
@@ -465,11 +512,26 @@ Continue this conversation naturally as {character_name}. Stay in character and 
 def get_scenarios():
     """Get available practice scenarios"""
     try:
-        scenarios = []
-
-        # Add pre-built scenarios
-        scenarios.append(create_budget_cut_scenario())
-        scenarios.append(create_angry_resident_scenario())
+        scenarios = [
+            {
+                'id': 'budget_cuts',
+                'title': 'Budget Reduction Discussion',
+                'description': 'Practice explaining budget cuts while maintaining team morale',
+                'type': 'preset'
+            },
+            {
+                'id': 'angry_resident',
+                'title': 'Challenging Resident Interaction',
+                'description': 'Handle frustrated ratepayer complaints about service levels',
+                'type': 'preset'
+            },
+            {
+                'id': 'custom_scenario',
+                'title': 'Create Custom Scenario',
+                'description': 'Design your specific meeting situation',
+                'type': 'custom'
+            }
+        ]
 
         return jsonify({
             'success': True,
@@ -514,6 +576,39 @@ def internal_error(error):
         'message': 'Check server logs for details'
     }), 500
 
+
+@app.route('/api/scenarios/custom', methods=['POST'])
+def save_custom_scenario():
+    """Save a custom scenario for reuse"""
+    try:
+        data = request.json
+        scenario_data = data.get('scenario')
+
+        if not scenario_data:
+            return jsonify({
+                'success': False,
+                'error': 'No scenario data provided'
+            }), 400
+
+        # Add ID and timestamp
+        scenario_data['id'] = str(uuid.uuid4())
+        scenario_data['created_at'] = datetime.now().isoformat()
+
+        # For now, just return success (later we'll add persistent storage)
+        print(f"📋 Custom scenario saved: {scenario_data.get('title', 'Untitled')}")
+
+        return jsonify({
+            'success': True,
+            'scenario_id': scenario_data['id'],
+            'message': 'Custom scenario saved successfully'
+        })
+
+    except Exception as e:
+        print(f"❌ Error saving custom scenario: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
 
 # ============================================
 # RUN APPLICATION
