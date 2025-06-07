@@ -1002,7 +1002,7 @@
             document.getElementById('endConversation').addEventListener('click', endConversation);
             document.getElementById('sendButton').addEventListener('click', sendMessage);
 
-            // CUSTOM CHARACTER HANDLERS
+            // CUSTOM CHARACTER HANDLERS - FIXED
             const customCharacterOption = document.getElementById('customCharacterOption');
             if (customCharacterOption) {
                 customCharacterOption.addEventListener('click', function(e) {
@@ -1011,17 +1011,18 @@
                 });
             }
 
-            const cancelCustomCharacter = document.getElementById('cancelCustomCharacter');
-            if (cancelCustomCharacter) {
-                cancelCustomCharacter.addEventListener('click', cancelCustomCharacter);
+            // FIXED: Use function names directly, not variable names
+            const cancelCharacterBtn = document.getElementById('cancelCustomCharacter');
+            if (cancelCharacterBtn) {
+                cancelCharacterBtn.addEventListener('click', cancelCustomCharacter);
             }
 
-            const saveCustomCharacter = document.getElementById('saveCustomCharacter');
-            if (saveCustomCharacter) {
-                saveCustomCharacter.addEventListener('click', saveCustomCharacter);
+            const saveCharacterBtn = document.getElementById('saveCustomCharacter');
+            if (saveCharacterBtn) {
+                saveCharacterBtn.addEventListener('click', saveCustomCharacter);
             }
 
-            // CUSTOM SCENARIO HANDLERS
+            // CUSTOM SCENARIO HANDLERS - FIXED
             const customScenarioOption = document.getElementById('customScenarioOption');
             if (customScenarioOption) {
                 customScenarioOption.addEventListener('click', function(e) {
@@ -1030,14 +1031,15 @@
                 });
             }
 
-            const cancelCustomScenario = document.getElementById('cancelCustomScenario');
-            if (cancelCustomScenario) {
-                cancelCustomScenario.addEventListener('click', cancelCustomScenario);
+            // FIXED: Use function names directly, not variable names
+            const cancelScenarioBtn = document.getElementById('cancelCustomScenario');
+            if (cancelScenarioBtn) {
+                cancelScenarioBtn.addEventListener('click', cancelCustomScenario);
             }
 
-            const saveCustomScenario = document.getElementById('saveCustomScenario');
-            if (saveCustomScenario) {
-                saveCustomScenario.addEventListener('click', saveCustomScenario);
+            const saveScenarioBtn = document.getElementById('saveCustomScenario');
+            if (saveScenarioBtn) {
+                saveScenarioBtn.addEventListener('click', saveCustomScenario);
             }
 
             // INPUT HANDLERS
