@@ -47,7 +47,6 @@ claude_client = None
 orchestrator = None
 
 try:
-    try:
     claude_client = ClaudeAPIClient(api_key=config.CLAUDE_API_KEY)
     orchestrator = ConversationOrchestrator(claude_client)
     print("✅ Claude integration initialized")
@@ -327,8 +326,79 @@ def get_scenarios():
             'scenarios': scenarios,
             'count': len(scenarios)
         })
-        
+
     except Exception as e:
         return jsonify({
             'success': False,
-            'error': st
+            'error': str(e),
+            'scenarios': []
+        })
+
+    # ============================================
+    # ERROR HANDLERS
+    # ============================================
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+            'success': False,
+            'error': 'Endpoint not found',
+            'available_endpoints': [
+                '/',
+                '/health',
+                '/test-claude',
+                '/api/personalities',
+                '/api/scenarios',
+                '/api/conversations/start',
+                '/api/conversations/message'
+            ]
+        }), 404
+
+    @app.errorhandler(500)
+    def internal_error(error):
+        return jsonify({
+            'success': False,
+            'error': 'Internal server error',
+            'message': 'Check server logs for details'
+        }), 500
+
+    # ============================================
+    # RUN APPLICATION
+    # ============================================
+
+    if __name__ == '__main__':
+        print("🚀 Starting Conversation Trainer Backend v2.0...")
+        print("📍 Local development server")
+        print("🧠 AI personality conversations enabled")
+        print("🏛️ NSW Local Government scenarios loaded")
+        print("🔗 Frontend can connect to this API")
+        print()
+        print("Test endpoints:")
+        print("  GET  / - API information")
+        print("  GET  /health - Health check")
+        print("  GET  /test-claude - Test Claude connection")
+        print("  GET  /api/personalities - Available personalities")
+        print("  POST /api/conversations/start - Start conversation")
+        print()
+
+        # Run the Flask development server
+        app.run(
+            host='0.0.0.0',  # Allow external connections
+            port=5000,  # Standard Flask port
+            debug=True  # Show detailed errors
+        )
+    print("🧪 DEBUG: About to check if __name__ == '__main__'")
+    print(f"🧪 DEBUG: __name__ is: {__name__}")
+
+if __name__ == '__main__':
+    print("🧪 DEBUG: Inside main block!")
+    print("🚀 Starting Conversation Trainer Backend v2.0...")
+    # ... rest of the startup messages ...
+
+    print("🧪 DEBUG: About to call app.run()")
+    app.run(
+        host='0.0.0.0',
+        port=5000,
+        debug=True
+    )
+    print("🧪 DEBUG: app.run() finished (this shouldn't print)")

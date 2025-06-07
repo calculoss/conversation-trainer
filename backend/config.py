@@ -49,7 +49,10 @@ def check_environment():
     validation = config.validate_config()
     
     print("🔧 Environment Configuration Check:")
-    print(f"   Claude API Key: {'✅ Set' if config.CLAUDE_API_KEY and config.CLAUDE_API_KEY != 'your_actual_claude_api_key_here' else '❌ Missing'}")
+    print(
+        f"   Claude API Key: {'✅ Set' if config.CLAUDE_API_KEY and config.CLAUDE_API_KEY != 'your_actual_claude_api_key_here' else '❌ Missing'}")
+    print(f"   🧪 DEBUG: API key starts with: {config.CLAUDE_API_KEY[:20] if config.CLAUDE_API_KEY else 'None'}...")
+    print(f"   🧪 DEBUG: API key length: {len(config.CLAUDE_API_KEY) if config.CLAUDE_API_KEY else 0}")
     print(f"   Debug Mode: {'✅ Enabled' if config.DEBUG else '🔒 Disabled'}")
     
     if not validation['valid']:
