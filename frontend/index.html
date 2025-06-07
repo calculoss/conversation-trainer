@@ -7,29 +7,43 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-        /* CRITICAL LAYOUT FIXES */
+        /* IMPROVED LAYOUT FIXES */
         .chat-container {
             display: flex !important;
             flex-direction: column !important;
             width: 100% !important;
             max-width: none !important;
+            height: 75vh !important;
         }
 
         .messages-area {
             flex: 1 !important;
             width: 100% !important;
-            padding: 2rem !important;
+            padding: 1.5rem !important;
+            overflow-y: auto !important;
+            background: #fafbfc !important;
         }
 
         .message-content {
-            max-width: 75% !important;
-            min-width: 200px !important;
-            padding: 1.25rem 1.5rem !important;
+            max-width: 70% !important;
+            min-width: 250px !important;
+            padding: 1rem 1.25rem !important;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
         }
 
         .message-text {
-            font-size: 1rem !important;
-            line-height: 1.7 !important;
+            font-size: 0.95rem !important;
+            line-height: 1.6 !important;
+            margin: 0 !important;
+            white-space: pre-wrap !important;
+        }
+
+        .message {
+            margin-bottom: 1.5rem !important;
+            display: flex !important;
+            align-items: flex-end !important;
+            gap: 0.75rem !important;
         }
 
         * {
@@ -252,7 +266,6 @@
             border-radius: 16px;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             border: 1px solid #f1f5f9;
-            height: 75vh;
             overflow: hidden;
         }
 
@@ -295,21 +308,6 @@
             color: #64748b;
         }
 
-        .messages-area {
-            flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
-            height: calc(75vh - 200px);
-            background: #fafbfc;
-        }
-
-        .message {
-            display: flex;
-            margin-bottom: 1.75rem;
-            align-items: flex-end;
-            gap: 1rem;
-        }
-
         .message.user {
             flex-direction: row-reverse;
         }
@@ -338,33 +336,24 @@
             color: white;
         }
 
-        .message-content {
-            max-width: 75%;
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 1.25rem 1.5rem;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
-            position: relative;
-        }
-
         .message.user .message-content {
             background: #3b82f6;
             color: white;
             border-color: #3b82f6;
         }
 
-        .message-text {
-            font-size: 1rem;
-            line-height: 1.7;
-            word-spacing: 0.05em;
-            letter-spacing: 0.01em;
+        .message-content {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+            position: relative;
         }
 
         .message-time {
             font-size: 0.8rem;
             opacity: 0.7;
-            margin-top: 0.75rem;
+            margin-top: 0.5rem;
         }
 
         .input-area {
@@ -553,6 +542,25 @@
             border: 1px solid #e2e8f0;
         }
 
+        /* Debug Panel */
+        .debug-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1e293b;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            max-width: 300px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .debug-panel.show {
+            display: block;
+        }
+
         /* Custom Character Modal */
         .modal-overlay {
             display: none;
@@ -679,6 +687,18 @@
             display: none;
         }
 
+        /* Error States */
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            display: none;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .setup-container {
@@ -701,11 +721,11 @@
             }
 
             .message-content {
-                max-width: 90%;
+                max-width: 90% !important;
             }
 
             .messages-area {
-                padding: 1.5rem;
+                padding: 1rem !important;
             }
 
             .input-area {
@@ -874,7 +894,17 @@
             <div class="success-message" id="successMessage">
                 ✅ Connected to conversation service successfully
             </div>
+
+            <div class="error-message" id="errorMessage">
+                ❌ Error starting conversation
+            </div>
         </main>
+    </div>
+
+    <!-- Debug Panel for troubleshooting -->
+    <div class="debug-panel" id="debugPanel">
+        <div><strong>Debug Info:</strong></div>
+        <div id="debugContent">Loading...</div>
     </div>
 
     <!-- Custom Character Modal -->
@@ -905,6 +935,7 @@
             </div>
         </div>
     </div>
+
     <!-- Custom Scenario Modal -->
     <div class="modal-overlay" id="customScenarioModal" style="display: none;">
         <div class="modal-content" style="max-width: 600px;">
@@ -971,13 +1002,36 @@
         let customCharacterData = null;
         let customScenarioData = null;
 
+        // Debug logging function
+        function debugLog(message, data = null) {
+            console.log(`🔍 [DEBUG] ${message}`, data);
+
+            // Update debug panel
+            const debugPanel = document.getElementById('debugPanel');
+            const debugContent = document.getElementById('debugContent');
+
+            if (debugPanel && debugContent) {
+                const timestamp = new Date().toLocaleTimeString();
+                debugContent.innerHTML = `
+                    <div>[${timestamp}] ${message}</div>
+                    ${data ? `<div style="font-size: 0.7rem; margin-top: 0.5rem;">${JSON.stringify(data, null, 2).substring(0, 200)}...</div>` : ''}
+                `;
+
+                // Show debug panel temporarily
+                debugPanel.classList.add('show');
+                setTimeout(() => {
+                    debugPanel.classList.remove('show');
+                }, 3000);
+            }
+        }
+
         // ============================================
         // FUNCTION DEFINITIONS (DEFINED FIRST!)
         // ============================================
 
         // CUSTOM CHARACTER FUNCTIONS
         function showCustomCharacterModal() {
-            console.log('🛠️ Opening custom character modal');
+            debugLog('Opening custom character modal');
             const modal = document.getElementById('customCharacterModal');
             if (modal) {
                 modal.style.display = 'block';
@@ -985,7 +1039,7 @@
         }
 
         function cancelCustomCharacter() {
-            console.log('❌ Cancelling custom character');
+            debugLog('Cancelling custom character');
             const modal = document.getElementById('customCharacterModal');
             if (modal) {
                 modal.style.display = 'none';
@@ -994,46 +1048,57 @@
         }
 
         function saveCustomCharacter() {
-            console.log('💾 Saving custom character');
-            const name = document.getElementById('customName').value.trim();
-            const personality = document.getElementById('customPersonality').value.trim();
-            const motivations = document.getElementById('customMotivations').value.trim();
+            debugLog('Saving custom character');
+            try {
+                const name = document.getElementById('customName').value.trim();
+                const personality = document.getElementById('customPersonality').value.trim();
+                const motivations = document.getElementById('customMotivations').value.trim();
 
-            if (!name || !personality) {
-                alert('Please provide at least a name and personality description.');
-                return;
+                if (!name || !personality) {
+                    alert('Please provide at least a name and personality description.');
+                    return;
+                }
+
+                // Store the custom character data
+                customCharacterData = {
+                    name: name,
+                    personality: personality,
+                    motivations: motivations,
+                    type: 'custom'
+                };
+
+                debugLog('Custom character data created', customCharacterData);
+
+                // Update the UI to show selection
+                const customOption = document.getElementById('customCharacterOption');
+                if (customOption) {
+                    customOption.classList.add('selected');
+                    customOption.querySelector('.option-title').textContent = name;
+                    customOption.querySelector('.option-description').textContent = `Custom character: ${personality.substring(0, 100)}...`;
+                }
+
+                // Remove selection from other personality options
+                document.querySelectorAll('[data-personality="skeptical_councillor"], [data-personality="frustrated_resident"]').forEach(card => {
+                    card.classList.remove('selected');
+                });
+
+                // Update app state
+                appState.selectedPersonality = 'custom_character';
+                debugLog('App state updated', appState);
+
+                // Close modal
+                document.getElementById('customCharacterModal').style.display = 'none';
+
+                // Update start button
+                updateStartButton();
+
+                debugLog('Custom character created successfully', name);
+                showSuccessMessage('Custom character created! You can now start a practice session.');
+
+            } catch (error) {
+                debugLog('Error creating custom character', error);
+                showErrorMessage('Error creating custom character. Please try again.');
             }
-
-            // Store the custom character data
-            customCharacterData = {
-                name: name,
-                personality: personality,
-                motivations: motivations,
-                type: 'custom'
-            };
-
-            // Update the UI to show selection
-            const customOption = document.getElementById('customCharacterOption');
-            customOption.classList.add('selected');
-            customOption.querySelector('.option-title').textContent = name;
-            customOption.querySelector('.option-description').textContent = `Custom character: ${personality.substring(0, 100)}...`;
-
-            // Remove selection from other personality options
-            document.querySelectorAll('[data-personality="skeptical_councillor"], [data-personality="frustrated_resident"]').forEach(card => {
-                card.classList.remove('selected');
-            });
-
-            // Update app state
-            appState.selectedPersonality = 'custom_character';
-
-            // Close modal
-            document.getElementById('customCharacterModal').style.display = 'none';
-
-            // Update start button
-            updateStartButton();
-
-            console.log('✅ Custom character created:', name);
-            alert('Custom character created! You can now start a practice session.');
         }
 
         function clearCustomCharacterForm() {
@@ -1044,7 +1109,7 @@
 
         // CUSTOM SCENARIO FUNCTIONS
         function showCustomScenarioModal() {
-            console.log('🎯 Opening custom scenario modal');
+            debugLog('Opening custom scenario modal');
             const modal = document.getElementById('customScenarioModal');
             if (modal) {
                 modal.style.display = 'block';
@@ -1052,7 +1117,7 @@
         }
 
         function cancelCustomScenario() {
-            console.log('❌ Cancelling custom scenario');
+            debugLog('Cancelling custom scenario');
             const modal = document.getElementById('customScenarioModal');
             if (modal) {
                 modal.style.display = 'none';
@@ -1061,7 +1126,7 @@
         }
 
         function saveCustomScenario() {
-            console.log('🎯 saveCustomScenario function called!');
+            debugLog('saveCustomScenario function called');
 
             try {
                 const title = document.getElementById('customScenarioTitle').value.trim();
@@ -1070,15 +1135,15 @@
                 const challenges = document.getElementById('customScenarioChallenges').value.trim();
                 const type = document.getElementById('customScenarioType').value;
 
-                console.log('📝 Form values:', { title, context, objective, challenges, type });
+                debugLog('Form values collected', { title, context, objective, challenges, type });
 
                 if (!title || !context || !objective) {
-                    console.log('❌ Validation failed - missing required fields');
+                    debugLog('Validation failed - missing required fields');
                     alert('Please provide at least a title, context, and your objective.');
                     return;
                 }
 
-                console.log('✅ Validation passed, creating scenario data...');
+                debugLog('Validation passed, creating scenario data');
 
                 // Store the custom scenario data
                 customScenarioData = {
@@ -1090,48 +1155,48 @@
                     created: new Date().toISOString()
                 };
 
-                console.log('💾 Scenario data created:', customScenarioData);
+                debugLog('Scenario data created', customScenarioData);
 
                 // Update the UI to show selection
                 const customOption = document.getElementById('customScenarioOption');
-                console.log('🎯 Found custom option element:', customOption);
+                debugLog('Found custom option element', customOption);
 
                 if (customOption) {
                     customOption.classList.add('selected');
                     customOption.querySelector('.option-title').textContent = title;
                     customOption.querySelector('.option-description').textContent = `Custom scenario: ${context.substring(0, 100)}...`;
-                    console.log('✅ Updated custom option UI');
+                    debugLog('Updated custom option UI');
                 }
 
                 // Remove selection from other scenario options
                 document.querySelectorAll('[data-scenario="budget_cuts"], [data-scenario="angry_resident"]').forEach(card => {
                     card.classList.remove('selected');
                 });
-                console.log('✅ Removed other selections');
+                debugLog('Removed other selections');
 
                 // Update app state
                 appState.selectedScenario = 'custom_scenario';
-                console.log('✅ Updated app state');
+                debugLog('Updated app state', appState);
 
                 // Close modal
                 const modal = document.getElementById('customScenarioModal');
                 if (modal) {
                     modal.style.display = 'none';
-                    console.log('✅ Closed modal');
+                    debugLog('Closed modal');
                 } else {
-                    console.log('❌ Could not find modal to close');
+                    debugLog('Could not find modal to close');
                 }
 
                 // Update start button
                 updateStartButton();
-                console.log('✅ Updated start button');
+                debugLog('Updated start button');
 
-                console.log('🎉 Custom scenario created successfully:', title);
-                alert('Custom scenario created! You can now start a practice session.');
+                debugLog('Custom scenario created successfully', title);
+                showSuccessMessage('Custom scenario created! You can now start a practice session.');
 
             } catch (error) {
-                console.error('❌ Error in saveCustomScenario:', error);
-                alert('There was an error creating the scenario. Check the console for details.');
+                debugLog('Error in saveCustomScenario', error);
+                showErrorMessage('There was an error creating the scenario. Check the console for details.');
             }
         }
 
@@ -1145,7 +1210,7 @@
 
         // CORE SELECTION HANDLER (Role, Scenario, Personality)
         function handleSelection(event) {
-            console.log('🎯 Selection handler called');
+            debugLog('Selection handler called');
             const card = event.currentTarget;
             const parent = card.parentElement;
 
@@ -1158,13 +1223,13 @@
             // Update state based on data attributes
             if (card.dataset.role) {
                 appState.selectedRole = card.dataset.role;
-                console.log('👤 Selected role:', appState.selectedRole);
+                debugLog('Selected role', appState.selectedRole);
             } else if (card.dataset.scenario) {
                 appState.selectedScenario = card.dataset.scenario;
-                console.log('📋 Selected scenario:', appState.selectedScenario);
+                debugLog('Selected scenario', appState.selectedScenario);
             } else if (card.dataset.personality) {
                 appState.selectedPersonality = card.dataset.personality;
-                console.log('🎭 Selected personality:', appState.selectedPersonality);
+                debugLog('Selected personality', appState.selectedPersonality);
             }
 
             updateStartButton();
@@ -1172,6 +1237,7 @@
 
         // REQUEST DATA BUILDING
         function getRequestData() {
+            debugLog('Building request data');
             const baseData = {
                 user_name: `${appState.selectedRole}_user`,
                 personality_type: appState.selectedPersonality
@@ -1180,16 +1246,20 @@
             // Handle custom character
             if (appState.selectedPersonality === 'custom_character' && customCharacterData) {
                 baseData.custom_character = customCharacterData;
+                debugLog('Added custom character data');
             }
 
             // Handle custom scenario
             if (appState.selectedScenario === 'custom_scenario' && customScenarioData) {
                 baseData.custom_scenario = customScenarioData;
                 baseData.scenario = buildCustomScenarioDescription(customScenarioData);
+                debugLog('Added custom scenario data');
             } else {
                 baseData.scenario = getScenarioDescription(appState.selectedScenario);
+                debugLog('Added standard scenario');
             }
 
+            debugLog('Request data built', baseData);
             return baseData;
         }
 
@@ -1228,31 +1298,51 @@ MEETING TYPE: ${scenarioData.type}`;
                 startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
             }
 
-            console.log('🎛️ Start button updated - Ready:', isReady, 'Connected:', appState.isConnected);
+            debugLog('Start button updated', { ready: isReady, connected: appState.isConnected });
+        }
+
+        // MESSAGE FUNCTIONS
+        function showSuccessMessage(message) {
+            const successMsg = document.getElementById('successMessage');
+            if (successMsg) {
+                successMsg.textContent = message;
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 4000);
+            }
+        }
+
+        function showErrorMessage(message) {
+            const errorMsg = document.getElementById('errorMessage');
+            if (errorMsg) {
+                errorMsg.textContent = message;
+                errorMsg.style.display = 'block';
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 6000);
+            }
         }
 
         // API CONNECTION TESTING
         async function testAPIConnection() {
             try {
-                console.log('🔍 Testing API connection...');
+                debugLog('Testing API connection');
                 const response = await fetch(`${API_BASE_URL}/health`);
                 const data = await response.json();
 
                 if (response.ok) {
                     appState.isConnected = true;
-                    document.getElementById('successMessage').style.display = 'block';
-                    console.log('✅ API connection successful:', data);
-
-                    setTimeout(() => {
-                        document.getElementById('successMessage').style.display = 'none';
-                    }, 3000);
+                    showSuccessMessage('✅ Connected to conversation service successfully');
+                    debugLog('API connection successful', data);
                 } else {
                     throw new Error('API health check failed');
                 }
             } catch (error) {
-                console.error('❌ API Connection Error:', error);
+                debugLog('API Connection Error', error);
                 appState.isConnected = false;
                 showConnectionError();
+                showErrorMessage('⚠️ Cannot connect to conversation service. Please check your internet connection.');
             } finally {
                 updateStartButton();
             }
@@ -1268,24 +1358,24 @@ MEETING TYPE: ${scenarioData.type}`;
                 if (personalitiesResponse.ok && scenariosResponse.ok) {
                     const personalities = await personalitiesResponse.json();
                     const scenarios = await scenariosResponse.json();
-                    console.log('📋 Loaded options:', { personalities, scenarios });
+                    debugLog('Loaded options', { personalities, scenarios });
                 }
             } catch (error) {
-                console.warn('⚠️ Could not load dynamic options:', error);
+                debugLog('Could not load dynamic options', error);
             }
         }
 
         // CONVERSATION MANAGEMENT
         async function startConversation() {
             try {
-                console.log('🎯 Starting conversation with:', appState);
+                debugLog('Starting conversation with state', appState);
 
                 const startBtn = document.getElementById('startConversation');
                 startBtn.disabled = true;
                 startBtn.innerHTML = '<span>⏳</span><span>Starting Session...</span>';
 
                 const requestData = getRequestData();
-                console.log('📤 Sending start conversation request:', requestData);
+                debugLog('Sending start conversation request', requestData);
 
                 const response = await fetch(`${API_BASE_URL}/api/conversations/start`, {
                     method: 'POST',
@@ -1295,8 +1385,16 @@ MEETING TYPE: ${scenarioData.type}`;
                     body: JSON.stringify(requestData)
                 });
 
+                debugLog('Response status', response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    debugLog('Response error', errorText);
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+
                 const data = await response.json();
-                console.log('📥 Start conversation response:', data);
+                debugLog('Start conversation response', data);
 
                 if (data.success) {
                     appState.currentConversation = data;
@@ -1307,6 +1405,9 @@ MEETING TYPE: ${scenarioData.type}`;
                         sender_type: 'ai_personality'
                     }];
 
+                    debugLog('Conversation started successfully');
+
+                    // Show chat screen
                     document.getElementById('setupScreen').style.display = 'none';
                     document.getElementById('chatScreen').style.display = 'flex';
 
@@ -1319,12 +1420,14 @@ MEETING TYPE: ${scenarioData.type}`;
                     updateChatHeader();
                     addSystemMessage('Practice session started. Your conversation partner is ready.');
                     addAIMessage(data.opening_message);
+
+                    debugLog('Chat interface initialized');
                 } else {
                     throw new Error(data.error || 'Failed to start conversation');
                 }
             } catch (error) {
-                console.error('❌ Error starting conversation:', error);
-                alert('Unable to start conversation. Please check your connection and try again.');
+                debugLog('Error starting conversation', error);
+                showErrorMessage(`Unable to start conversation: ${error.message}`);
 
                 const startBtn = document.getElementById('startConversation');
                 startBtn.disabled = false;
@@ -1339,6 +1442,8 @@ MEETING TYPE: ${scenarioData.type}`;
             if (!message || !appState.currentConversation) return;
 
             try {
+                debugLog('Sending message', message);
+
                 addUserMessage(message);
                 input.value = '';
                 autoResizeTextarea();
@@ -1354,7 +1459,7 @@ MEETING TYPE: ${scenarioData.type}`;
                     conversation_history: appState.conversationHistory
                 };
 
-                console.log('📤 Sending message:', requestData);
+                debugLog('Sending message request', requestData);
 
                 const response = await fetch(`${API_BASE_URL}/api/conversations/message`, {
                     method: 'POST',
@@ -1365,7 +1470,7 @@ MEETING TYPE: ${scenarioData.type}`;
                 });
 
                 const data = await response.json();
-                console.log('📥 Message response:', data);
+                debugLog('Message response', data);
 
                 if (data.success) {
                     hideTyping();
@@ -1384,13 +1489,16 @@ MEETING TYPE: ${scenarioData.type}`;
                         timestamp: data.timestamp,
                         sender_type: 'ai_personality'
                     });
+
+                    debugLog('Message exchange completed');
                 } else {
                     throw new Error(data.error || 'Failed to get AI response');
                 }
             } catch (error) {
-                console.error('❌ Error sending message:', error);
+                debugLog('Error sending message', error);
                 hideTyping();
                 addSystemMessage('Sorry, there was an error processing your message. Please try again.');
+                showErrorMessage('Error sending message. Please try again.');
             } finally {
                 input.disabled = false;
                 document.getElementById('sendButton').disabled = false;
@@ -1400,6 +1508,8 @@ MEETING TYPE: ${scenarioData.type}`;
 
         function endConversation() {
             if (confirm('Are you sure you want to end this practice session?')) {
+                debugLog('Ending conversation');
+
                 document.getElementById('chatScreen').style.display = 'none';
                 document.getElementById('setupScreen').style.display = 'block';
 
@@ -1437,6 +1547,7 @@ MEETING TYPE: ${scenarioData.type}`;
                 document.getElementById('sendButton').disabled = true;
 
                 updateStartButton();
+                debugLog('Conversation ended and reset complete');
             }
         }
 
@@ -1550,7 +1661,7 @@ MEETING TYPE: ${scenarioData.type}`;
         // ============================================
 
         function setupEventListeners() {
-            console.log('📝 Setting up event listeners...');
+            debugLog('Setting up event listeners');
 
             // CORE SELECTION HANDLING (Role, Scenario, Personality)
             document.querySelectorAll('.option-card').forEach(card => {
@@ -1611,7 +1722,7 @@ MEETING TYPE: ${scenarioData.type}`;
                 messageInput.addEventListener('input', autoResizeTextarea);
             }
 
-            // MODAL OVERLAY HANDLERS (Functions now exist!)
+            // MODAL OVERLAY HANDLERS
             const customCharacterModal = document.getElementById('customCharacterModal');
             if (customCharacterModal) {
                 customCharacterModal.addEventListener('click', function(e) {
@@ -1630,7 +1741,7 @@ MEETING TYPE: ${scenarioData.type}`;
                 });
             }
 
-            console.log('✅ All event listeners set up');
+            debugLog('All event listeners set up');
         }
 
         // ============================================
@@ -1638,7 +1749,7 @@ MEETING TYPE: ${scenarioData.type}`;
         // ============================================
 
         function initializeApp() {
-            console.log('🚀 Initializing Professional Conversation Trainer...');
+            debugLog('Initializing Professional Conversation Trainer');
             setupEventListeners();
             testAPIConnection();
             loadAvailableOptions();
@@ -1649,7 +1760,7 @@ MEETING TYPE: ${scenarioData.type}`;
             initializeApp();
         });
 
-        console.log('🎨 Professional Conversation Trainer with Custom Characters & Scenarios Loaded');
+        debugLog('Professional Conversation Trainer with Custom Characters & Scenarios Loaded');
 </script>
 </body>
 </html>
