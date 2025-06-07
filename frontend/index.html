@@ -2193,13 +2193,13 @@ MEETING TYPE: ${scenarioData.type}`;
 
             const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-            messageDiv.innerHTML = `
-                <div class="message-avatar">${avatar}</div>
-                <div class="message-content">
-                    <div class="message-text">${content}</div>
-                    <div class="message-time">${timestamp}</div>
-                </div>
-            `;
+            messageDiv.innerHTML = [
+                '<div class="message-avatar">' + avatar + '</div>',
+                '<div class="message-content">',
+                    '<div class="message-text">' + content + '</div>',
+                    '<div class="message-time">' + timestamp + '</div>',
+                '</div>'
+            ].join('');
 
             messagesArea.appendChild(messageDiv);
             scrollToBottom();
@@ -2377,7 +2377,7 @@ MEETING TYPE: ${scenarioData.type}`;
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
         });
-#
+
         debugLog('🎨 Professional Conversation Trainer Loaded');
 </script>
 </body>
