@@ -954,8 +954,6 @@
     </div>
 
 <script>
-
-
         // Configuration
         const API_BASE_URL = 'https://conversation-trainer-production.up.railway.app';
 
@@ -973,130 +971,9 @@
         let customCharacterData = null;
         let customScenarioData = null;
 
-        // Initialize Application
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeApp();
-        });
-
-        function initializeApp() {
-            console.log('🚀 Initializing Professional Conversation Trainer...');
-            setupEventListeners();
-            testAPIConnection();
-            loadAvailableOptions();
-        }
-
-        function setupEventListeners() {
-            console.log('📝 Setting up event listeners...');
-
-            // CORE SELECTION HANDLING (Role, Scenario, Personality)
-            document.querySelectorAll('.option-card').forEach(card => {
-                // Skip custom options (they have their own handlers)
-                if (card.id === 'customCharacterOption' || card.id === 'customScenarioOption') {
-                    return;
-                }
-                card.addEventListener('click', handleSelection);
-            });
-
-            // BUTTON HANDLERS
-            document.getElementById('startConversation').addEventListener('click', startConversation);
-            document.getElementById('endConversation').addEventListener('click', endConversation);
-            document.getElementById('sendButton').addEventListener('click', sendMessage);
-
-            // CUSTOM CHARACTER HANDLERS - FIXED
-            const customCharacterOption = document.getElementById('customCharacterOption');
-            if (customCharacterOption) {
-                customCharacterOption.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    showCustomCharacterModal();
-                });
-            }
-
-            // FIXED: Use function names directly, not variable names
-            const cancelCharacterBtn = document.getElementById('cancelCustomCharacter');
-            if (cancelCharacterBtn) {
-                cancelCharacterBtn.addEventListener('click', cancelCustomCharacter);
-            }
-
-            const saveCharacterBtn = document.getElementById('saveCustomCharacter');
-            if (saveCharacterBtn) {
-                saveCharacterBtn.addEventListener('click', saveCustomCharacter);
-            }
-
-            // CUSTOM SCENARIO HANDLERS - FIXED
-            const customScenarioOption = document.getElementById('customScenarioOption');
-            if (customScenarioOption) {
-                customScenarioOption.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    showCustomScenarioModal();
-                });
-            }
-
-            // FIXED: Use function names directly, not variable names
-            const cancelScenarioBtn = document.getElementById('cancelCustomScenario');
-            if (cancelScenarioBtn) {
-                cancelScenarioBtn.addEventListener('click', cancelCustomScenario);
-            }
-
-            const saveScenarioBtn = document.getElementById('saveCustomScenario');
-            if (saveScenarioBtn) {
-                saveScenarioBtn.addEventListener('click', saveCustomScenario);
-            }
-
-            // INPUT HANDLERS
-            const messageInput = document.getElementById('messageInput');
-            if (messageInput) {
-                messageInput.addEventListener('keydown', handleInputKeydown);
-                messageInput.addEventListener('input', autoResizeTextarea);
-            }
-
-            // MODAL OVERLAY HANDLERS
-            const customCharacterModal = document.getElementById('customCharacterModal');
-            if (customCharacterModal) {
-                customCharacterModal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        cancelCustomCharacter();
-                    }
-                });
-            }
-
-            const customScenarioModal = document.getElementById('customScenarioModal');
-            if (customScenarioModal) {
-                customScenarioModal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        cancelCustomScenario();
-                    }
-                });
-            }
-
-            console.log('✅ All event listeners set up');
-        }
-
-        // CORE SELECTION HANDLER (Role, Scenario, Personality)
-        function handleSelection(event) {
-            console.log('🎯 Selection handler called');
-            const card = event.currentTarget;
-            const parent = card.parentElement;
-
-            // Remove selection from siblings
-            parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-
-            // Add selection to clicked card
-            card.classList.add('selected');
-
-            // Update state based on data attributes
-            if (card.dataset.role) {
-                appState.selectedRole = card.dataset.role;
-                console.log('👤 Selected role:', appState.selectedRole);
-            } else if (card.dataset.scenario) {
-                appState.selectedScenario = card.dataset.scenario;
-                console.log('📋 Selected scenario:', appState.selectedScenario);
-            } else if (card.dataset.personality) {
-                appState.selectedPersonality = card.dataset.personality;
-                console.log('🎭 Selected personality:', appState.selectedPersonality);
-            }
-
-            updateStartButton();
-        }
+        // ============================================
+        // FUNCTION DEFINITIONS (DEFINED FIRST!)
+        // ============================================
 
         // CUSTOM CHARACTER FUNCTIONS
         function showCustomCharacterModal() {
@@ -1117,6 +994,7 @@
         }
 
         function saveCustomCharacter() {
+            console.log('💾 Saving custom character');
             const name = document.getElementById('customName').value.trim();
             const personality = document.getElementById('customPersonality').value.trim();
             const motivations = document.getElementById('customMotivations').value.trim();
@@ -1183,49 +1061,78 @@
         }
 
         function saveCustomScenario() {
-            const title = document.getElementById('customScenarioTitle').value.trim();
-            const context = document.getElementById('customScenarioContext').value.trim();
-            const objective = document.getElementById('customScenarioObjective').value.trim();
-            const challenges = document.getElementById('customScenarioChallenges').value.trim();
-            const type = document.getElementById('customScenarioType').value;
+            console.log('🎯 saveCustomScenario function called!');
 
-            if (!title || !context || !objective) {
-                alert('Please provide at least a title, context, and your objective.');
-                return;
+            try {
+                const title = document.getElementById('customScenarioTitle').value.trim();
+                const context = document.getElementById('customScenarioContext').value.trim();
+                const objective = document.getElementById('customScenarioObjective').value.trim();
+                const challenges = document.getElementById('customScenarioChallenges').value.trim();
+                const type = document.getElementById('customScenarioType').value;
+
+                console.log('📝 Form values:', { title, context, objective, challenges, type });
+
+                if (!title || !context || !objective) {
+                    console.log('❌ Validation failed - missing required fields');
+                    alert('Please provide at least a title, context, and your objective.');
+                    return;
+                }
+
+                console.log('✅ Validation passed, creating scenario data...');
+
+                // Store the custom scenario data
+                customScenarioData = {
+                    title: title,
+                    context: context,
+                    objective: objective,
+                    challenges: challenges,
+                    type: type,
+                    created: new Date().toISOString()
+                };
+
+                console.log('💾 Scenario data created:', customScenarioData);
+
+                // Update the UI to show selection
+                const customOption = document.getElementById('customScenarioOption');
+                console.log('🎯 Found custom option element:', customOption);
+
+                if (customOption) {
+                    customOption.classList.add('selected');
+                    customOption.querySelector('.option-title').textContent = title;
+                    customOption.querySelector('.option-description').textContent = `Custom scenario: ${context.substring(0, 100)}...`;
+                    console.log('✅ Updated custom option UI');
+                }
+
+                // Remove selection from other scenario options
+                document.querySelectorAll('[data-scenario="budget_cuts"], [data-scenario="angry_resident"]').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                console.log('✅ Removed other selections');
+
+                // Update app state
+                appState.selectedScenario = 'custom_scenario';
+                console.log('✅ Updated app state');
+
+                // Close modal
+                const modal = document.getElementById('customScenarioModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                    console.log('✅ Closed modal');
+                } else {
+                    console.log('❌ Could not find modal to close');
+                }
+
+                // Update start button
+                updateStartButton();
+                console.log('✅ Updated start button');
+
+                console.log('🎉 Custom scenario created successfully:', title);
+                alert('Custom scenario created! You can now start a practice session.');
+
+            } catch (error) {
+                console.error('❌ Error in saveCustomScenario:', error);
+                alert('There was an error creating the scenario. Check the console for details.');
             }
-
-            // Store the custom scenario data
-            customScenarioData = {
-                title: title,
-                context: context,
-                objective: objective,
-                challenges: challenges,
-                type: type,
-                created: new Date().toISOString()
-            };
-
-            // Update the UI to show selection
-            const customOption = document.getElementById('customScenarioOption');
-            customOption.classList.add('selected');
-            customOption.querySelector('.option-title').textContent = title;
-            customOption.querySelector('.option-description').textContent = `Custom scenario: ${context.substring(0, 100)}...`;
-
-            // Remove selection from other scenario options
-            document.querySelectorAll('[data-scenario="budget_cuts"], [data-scenario="angry_resident"]').forEach(card => {
-                card.classList.remove('selected');
-            });
-
-            // Update app state
-            appState.selectedScenario = 'custom_scenario';
-
-            // Close modal
-            document.getElementById('customScenarioModal').style.display = 'none';
-
-            // Update start button
-            updateStartButton();
-
-            console.log('✅ Custom scenario created:', title);
-            alert('Custom scenario created! You can now start a practice session.');
         }
 
         function clearCustomScenarioForm() {
@@ -1234,6 +1141,33 @@
             document.getElementById('customScenarioObjective').value = '';
             document.getElementById('customScenarioChallenges').value = '';
             document.getElementById('customScenarioType').value = 'budget_review';
+        }
+
+        // CORE SELECTION HANDLER (Role, Scenario, Personality)
+        function handleSelection(event) {
+            console.log('🎯 Selection handler called');
+            const card = event.currentTarget;
+            const parent = card.parentElement;
+
+            // Remove selection from siblings
+            parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+
+            // Add selection to clicked card
+            card.classList.add('selected');
+
+            // Update state based on data attributes
+            if (card.dataset.role) {
+                appState.selectedRole = card.dataset.role;
+                console.log('👤 Selected role:', appState.selectedRole);
+            } else if (card.dataset.scenario) {
+                appState.selectedScenario = card.dataset.scenario;
+                console.log('📋 Selected scenario:', appState.selectedScenario);
+            } else if (card.dataset.personality) {
+                appState.selectedPersonality = card.dataset.personality;
+                console.log('🎭 Selected personality:', appState.selectedPersonality);
+            }
+
+            updateStartButton();
         }
 
         // REQUEST DATA BUILDING
@@ -1610,6 +1544,110 @@ MEETING TYPE: ${scenarioData.type}`;
             statusIndicator.style.borderColor = '#fecaca';
             statusIndicator.style.color = '#dc2626';
         }
+
+        // ============================================
+        // EVENT LISTENERS SETUP (FUNCTIONS DEFINED ABOVE!)
+        // ============================================
+
+        function setupEventListeners() {
+            console.log('📝 Setting up event listeners...');
+
+            // CORE SELECTION HANDLING (Role, Scenario, Personality)
+            document.querySelectorAll('.option-card').forEach(card => {
+                // Skip custom options (they have their own handlers)
+                if (card.id === 'customCharacterOption' || card.id === 'customScenarioOption') {
+                    return;
+                }
+                card.addEventListener('click', handleSelection);
+            });
+
+            // BUTTON HANDLERS
+            document.getElementById('startConversation').addEventListener('click', startConversation);
+            document.getElementById('endConversation').addEventListener('click', endConversation);
+            document.getElementById('sendButton').addEventListener('click', sendMessage);
+
+            // CUSTOM CHARACTER HANDLERS
+            const customCharacterOption = document.getElementById('customCharacterOption');
+            if (customCharacterOption) {
+                customCharacterOption.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    showCustomCharacterModal();
+                });
+            }
+
+            const cancelCharacterBtn = document.getElementById('cancelCustomCharacter');
+            if (cancelCharacterBtn) {
+                cancelCharacterBtn.addEventListener('click', cancelCustomCharacter);
+            }
+
+            const saveCharacterBtn = document.getElementById('saveCustomCharacter');
+            if (saveCharacterBtn) {
+                saveCharacterBtn.addEventListener('click', saveCustomCharacter);
+            }
+
+            // CUSTOM SCENARIO HANDLERS
+            const customScenarioOption = document.getElementById('customScenarioOption');
+            if (customScenarioOption) {
+                customScenarioOption.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    showCustomScenarioModal();
+                });
+            }
+
+            const cancelScenarioBtn = document.getElementById('cancelCustomScenario');
+            if (cancelScenarioBtn) {
+                cancelScenarioBtn.addEventListener('click', cancelCustomScenario);
+            }
+
+            const saveScenarioBtn = document.getElementById('saveCustomScenario');
+            if (saveScenarioBtn) {
+                saveScenarioBtn.addEventListener('click', saveCustomScenario);
+            }
+
+            // INPUT HANDLERS
+            const messageInput = document.getElementById('messageInput');
+            if (messageInput) {
+                messageInput.addEventListener('keydown', handleInputKeydown);
+                messageInput.addEventListener('input', autoResizeTextarea);
+            }
+
+            // MODAL OVERLAY HANDLERS (Functions now exist!)
+            const customCharacterModal = document.getElementById('customCharacterModal');
+            if (customCharacterModal) {
+                customCharacterModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        cancelCustomCharacter();
+                    }
+                });
+            }
+
+            const customScenarioModal = document.getElementById('customScenarioModal');
+            if (customScenarioModal) {
+                customScenarioModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        cancelCustomScenario();
+                    }
+                });
+            }
+
+            console.log('✅ All event listeners set up');
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        function initializeApp() {
+            console.log('🚀 Initializing Professional Conversation Trainer...');
+            setupEventListeners();
+            testAPIConnection();
+            loadAvailableOptions();
+        }
+
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
 
         console.log('🎨 Professional Conversation Trainer with Custom Characters & Scenarios Loaded');
 </script>
