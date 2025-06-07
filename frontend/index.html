@@ -6,7 +6,8 @@
     <title>Conversation Trainer - Professional Development Platform</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        /* CRITICAL LAYOUT FIXES - Add at the top of your CSS */
+
+        /* CRITICAL LAYOUT FIXES */
         .chat-container {
             display: flex !important;
             flex-direction: column !important;
@@ -30,6 +31,7 @@
             font-size: 1rem !important;
             line-height: 1.7 !important;
         }
+
         * {
             margin: 0;
             padding: 0;
@@ -164,9 +166,20 @@
             font-size: 1rem;
         }
 
-        .panel-icon.role { background: #eff6ff; color: #2563eb; }
-        .panel-icon.scenario { background: #f0fdf4; color: #16a34a; }
-        .panel-icon.personality { background: #fef3c7; color: #d97706; }
+        .panel-icon.role {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .panel-icon.scenario {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .panel-icon.personality {
+            background: #fef3c7;
+            color: #d97706;
+        }
 
         .panel-title {
             font-size: 1.125rem;
@@ -232,7 +245,7 @@
             line-height: 1.4;
         }
 
-        /* Chat Interface - IMPROVED SPACING */
+        /* Chat Interface */
         .chat-container {
             display: none;
             background: white;
@@ -247,6 +260,9 @@
             padding: 1.5rem 2rem;
             border-bottom: 1px solid #f1f5f9;
             background: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .chat-info {
@@ -287,12 +303,11 @@
             background: #fafbfc;
         }
 
-        /* IMPROVED MESSAGE SPACING */
         .message {
             display: flex;
-            margin-bottom: 1.75rem; /* Increased from 1rem */
+            margin-bottom: 1.75rem;
             align-items: flex-end;
-            gap: 1rem; /* Increased from 0.75rem */
+            gap: 1rem;
         }
 
         .message.user {
@@ -300,15 +315,15 @@
         }
 
         .message-avatar {
-            width: 36px; /* Slightly larger */
+            width: 36px;
             height: 36px;
-            border-radius: 10px; /* More rounded */
+            border-radius: 10px;
             background: #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem; /* Slightly larger */
-            font-weight: 600; /* Increased weight */
+            font-size: 0.9rem;
+            font-weight: 600;
             color: #64748b;
             flex-shrink: 0;
         }
@@ -323,14 +338,13 @@
             color: white;
         }
 
-        /* IMPROVED MESSAGE CONTENT */
         .message-content {
-            max-width: 75%; /* Increased from 70% */
+            max-width: 75%;
             background: white;
             border: 1px solid #e2e8f0;
-            border-radius: 16px; /* More rounded */
-            padding: 1.25rem 1.5rem; /* Increased padding significantly */
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08); /* Slightly stronger shadow */
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
             position: relative;
         }
 
@@ -340,29 +354,28 @@
             border-color: #3b82f6;
         }
 
-        /* IMPROVED MESSAGE TEXT */
         .message-text {
-            font-size: 1rem; /* Increased from 0.95rem */
-            line-height: 1.7; /* Increased from 1.5 for better readability */
-            word-spacing: 0.05em; /* Added word spacing */
-            letter-spacing: 0.01em; /* Added letter spacing */
+            font-size: 1rem;
+            line-height: 1.7;
+            word-spacing: 0.05em;
+            letter-spacing: 0.01em;
         }
 
         .message-time {
-            font-size: 0.8rem; /* Increased from 0.75rem */
+            font-size: 0.8rem;
             opacity: 0.7;
-            margin-top: 0.75rem; /* Increased from 0.5rem */
+            margin-top: 0.75rem;
         }
 
         .input-area {
-            padding: 2rem; /* Increased from 1.5rem */
+            padding: 2rem;
             border-top: 1px solid #f1f5f9;
             background: white;
         }
 
         .input-container {
             display: flex;
-            gap: 1rem; /* Increased from 0.75rem */
+            gap: 1rem;
             align-items: flex-end;
         }
 
@@ -370,11 +383,11 @@
             flex: 1;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
-            padding: 1rem 1.25rem; /* Increased padding */
-            font-size: 1rem; /* Increased from 0.95rem */
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
             line-height: 1.5;
             resize: none;
-            min-height: 48px; /* Increased from 44px */
+            min-height: 48px;
             max-height: 120px;
             outline: none;
             transition: border-color 0.2s ease;
@@ -391,15 +404,15 @@
             color: white;
             border: none;
             border-radius: 12px;
-            padding: 1rem 1.5rem; /* Increased padding */
-            font-size: 1rem; /* Increased from 0.95rem */
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            min-width: 90px; /* Increased from 80px */
+            min-width: 90px;
             justify-content: center;
         }
 
@@ -470,43 +483,51 @@
             border-color: #cbd5e1;
         }
 
-        /* IMPROVED TYPING INDICATOR */
+        /* Typing Indicator */
         .typing-indicator {
             display: none;
-            margin-bottom: 1.5rem; /* Increased spacing */
+            margin-bottom: 1.5rem;
         }
 
         .typing-message {
             display: flex;
             align-items: flex-end;
-            gap: 1rem; /* Increased from 0.75rem */
+            gap: 1rem;
         }
 
         .typing-content {
             background: white;
             border: 1px solid #e2e8f0;
-            border-radius: 16px; /* Match message styling */
-            padding: 1.25rem 1.5rem; /* Match message padding */
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
         }
 
         .typing-dots {
             display: flex;
-            gap: 6px; /* Increased from 4px */
+            gap: 6px;
             align-items: center;
         }
 
         .typing-dots span {
-            width: 10px; /* Increased from 8px */
+            width: 10px;
             height: 10px;
             border-radius: 50%;
             background: #cbd5e1;
             animation: typing 1.4s infinite ease-in-out;
         }
 
-        .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
-        .typing-dots span:nth-child(3) { animation-delay: 0; }
+        .typing-dots span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0;
+        }
 
         @keyframes typing {
             0%, 80%, 100% {
@@ -519,17 +540,143 @@
             }
         }
 
-        /* IMPROVED SYSTEM MESSAGES */
+        /* System Messages */
         .system-message {
             text-align: center;
-            padding: 1.5rem; /* Increased from 1rem */
+            padding: 1.5rem;
             color: #64748b;
-            font-size: 0.9rem; /* Increased from 0.875rem */
+            font-size: 0.9rem;
             font-style: italic;
-            margin: 1rem 0; /* Added margin */
+            margin: 1rem 0;
             background: #f8fafc;
             border-radius: 12px;
             border: 1px solid #e2e8f0;
+        }
+
+        /* Custom Character Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+            color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background: #f1f5f9;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        /* Success States */
+        .success-message {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            display: none;
         }
 
         /* Responsive Design */
@@ -554,37 +701,25 @@
             }
 
             .message-content {
-                max-width: 90%; /* Increased from 85% */
+                max-width: 90%;
             }
 
             .messages-area {
-                padding: 1.5rem; /* Slightly reduced on mobile */
+                padding: 1.5rem;
             }
 
             .input-area {
-                padding: 1.5rem; /* Slightly reduced on mobile */
+                padding: 1.5rem;
             }
-        }
 
-        /* Loading States */
-        .loading {
-            opacity: 0.6;
-            pointer-events: none;
-        }
-
-        /* Success States */
-        .success-message {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            color: #166534;
-            padding: 1rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            font-size: 0.95rem;
-            display: none;
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="app-container">
         <!-- Header -->
@@ -671,6 +806,10 @@
                             <div class="option-title">Robert Chen - Local Business Owner</div>
                             <div class="option-description">Long-term resident and business owner who feels underserved by council. Articulate but frustrated, expects value for rates and responsive service.</div>
                         </div>
+                        <div class="option-card" data-personality="custom_character" id="customCharacterOption">
+                            <div class="option-title">🛠️ Create Custom Colleague</div>
+                            <div class="option-description">Design a virtual version of someone from your workplace. Perfect for practicing specific challenging conversations.</div>
+                        </div>
                     </div>
                 </div>
 
@@ -696,40 +835,13 @@
                             <p id="scenarioDescription">Preparing conversation...</p>
                         </div>
                     </div>
-                    <div style="margin-left: auto;">
+                    <div>
                         <button class="secondary-button" id="endConversation">End Session</button>
                     </div>
                 </div>
 
                 <div class="messages-area" id="messagesArea">
-                    <!-- Example messages to show improved spacing -->
-                    <div class="system-message">
-                        Practice session started. Your conversation partner is ready.
-                    </div>
-
-                    <div class="message ai">
-                        <div class="message-avatar">RC</div>
-                        <div class="message-content">
-                            <div class="message-text">Hello, my name is Robert Chen. I'm a longtime resident and business owner here in the community. I've been paying rates to this council for over 15 years now, and I have to say I'm quite frustrated with the recent rate increases and the service levels we're receiving.</div>
-                            <div class="message-time">2:30 PM</div>
-                        </div>
-                    </div>
-
-                    <div class="message user">
-                        <div class="message-avatar">You</div>
-                        <div class="message-content">
-                            <div class="message-text">Good afternoon Mr Chen, thank you for coming in today. I understand your concerns about the rate increases, and I appreciate you taking the time to speak with us directly. Could you tell me more specifically about which service areas you feel aren't meeting your expectations?</div>
-                            <div class="message-time">2:32 PM</div>
-                        </div>
-                    </div>
-
-                    <div class="message ai">
-                        <div class="message-avatar">RC</div>
-                        <div class="message-content">
-                            <div class="message-text">Well, let me give you some concrete examples. The road maintenance in our area has been absolutely terrible - there are potholes that have been there for months. Our bins are often missed during collection, and when I call the council, I get transferred between departments with no real resolution. Yet you're asking us to pay more for these same poor services?</div>
-                            <div class="message-time">2:34 PM</div>
-                        </div>
-                    </div>
+                    <!-- Messages will be added here dynamically -->
                 </div>
 
                 <div class="typing-indicator" id="typingIndicator">
@@ -747,8 +859,8 @@
 
                 <div class="input-area">
                     <div class="input-container">
-                        <textarea class="message-input" id="messageInput" placeholder="Type your response..." rows="1"></textarea>
-                        <button class="send-button" id="sendButton">
+                        <textarea class="message-input" id="messageInput" placeholder="Type your response..." rows="1" disabled></textarea>
+                        <button class="send-button" id="sendButton" disabled>
                             <span>Send</span>
                         </button>
                     </div>
@@ -761,424 +873,524 @@
         </main>
     </div>
 
-    <script>
-// Configuration
-const API_BASE_URL = 'https://conversation-trainer-production.up.railway.app';
+    <!-- Custom Character Modal -->
+    <div class="modal-overlay" id="customCharacterModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Your Custom Colleague</h3>
+            </div>
 
-// Application State
-let appState = {
-    selectedRole: null,
-    selectedScenario: null,
-    selectedPersonality: null,
-    currentConversation: null,
-    conversationHistory: [],
-    isConnected: false
-};
+            <div class="form-group">
+                <label class="form-label">Name & Role</label>
+                <input type="text" class="form-input" id="customName" placeholder="e.g., David Morrison - Senior Engineer">
+            </div>
 
-// Initialize Application
-document.addEventListener('DOMContentLoaded', function() {
-    initializeApp();
-});
+            <div class="form-group">
+                <label class="form-label">How do they typically behave in meetings?</label>
+                <textarea class="form-input form-textarea" id="customPersonality" placeholder="e.g., Direct, impatient, interrupts others, focuses only on engineering concerns, dismissive of other departments..."></textarea>
+            </div>
 
-function initializeApp() {
-    console.log('🚀 Initializing Professional Conversation Trainer...');
-    setupEventListeners();
-    testAPIConnection();
-    loadAvailableOptions();
-}
+            <div class="form-group">
+                <label class="form-label">What do they care about most?</label>
+                <textarea class="form-input form-textarea" id="customMotivations" placeholder="e.g., Getting things done quickly, protecting his team's budget, being seen as competent..."></textarea>
+            </div>
 
-function setupEventListeners() {
-    // Selection handling
-    document.querySelectorAll('.option-card').forEach(card => {
-        card.addEventListener('click', handleSelection);
-    });
-
-    // Button handlers
-    document.getElementById('startConversation').addEventListener('click', startConversation);
-    document.getElementById('endConversation').addEventListener('click', endConversation);
-    document.getElementById('sendButton').addEventListener('click', sendMessage);
-
-    // Input handlers
-    const messageInput = document.getElementById('messageInput');
-    messageInput.addEventListener('keydown', handleInputKeydown);
-    messageInput.addEventListener('input', autoResizeTextarea);
-}
-
-function handleSelection(event) {
-    const card = event.currentTarget;
-    const parent = card.parentElement;
-
-    // Remove selection from siblings
-    parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-
-    // Add selection to clicked card
-    card.classList.add('selected');
-
-    // Update state
-    if (card.dataset.role) {
-        appState.selectedRole = card.dataset.role;
-    } else if (card.dataset.scenario) {
-        appState.selectedScenario = card.dataset.scenario;
-    } else if (card.dataset.personality) {
-        appState.selectedPersonality = card.dataset.personality;
-    }
-
-    updateStartButton();
-}
-
-function updateStartButton() {
-    const startBtn = document.getElementById('startConversation');
-    const isReady = appState.selectedRole && appState.selectedScenario && appState.selectedPersonality;
-
-    startBtn.disabled = !isReady || !appState.isConnected;
-
-    if (!appState.isConnected) {
-        startBtn.innerHTML = '<span>⚠️</span><span>Connecting to Service...</span>';
-    } else if (!isReady) {
-        startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
-    } else {
-        startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
-    }
-}
-
-async function testAPIConnection() {
-    try {
-        console.log('🔍 Testing API connection...');
-        const response = await fetch(`${API_BASE_URL}/health`);
-        const data = await response.json();
-
-        if (response.ok) {
-            appState.isConnected = true;
-            document.getElementById('successMessage').style.display = 'block';
-            console.log('✅ API connection successful:', data);
-
-            // Hide success message after 3 seconds
-            setTimeout(() => {
-                document.getElementById('successMessage').style.display = 'none';
-            }, 3000);
-        } else {
-            throw new Error('API health check failed');
-        }
-    } catch (error) {
-        console.error('❌ API Connection Error:', error);
-        appState.isConnected = false;
-        showConnectionError();
-    } finally {
-        updateStartButton();
-    }
-}
-
-async function loadAvailableOptions() {
-    try {
-        // Load personalities and scenarios from API
-        const [personalitiesResponse, scenariosResponse] = await Promise.all([
-            fetch(`${API_BASE_URL}/api/personalities`),
-            fetch(`${API_BASE_URL}/api/scenarios`)
-        ]);
-
-        if (personalitiesResponse.ok && scenariosResponse.ok) {
-            const personalities = await personalitiesResponse.json();
-            const scenarios = await scenariosResponse.json();
-
-            console.log('📋 Loaded options:', { personalities, scenarios });
-            // Options are already in HTML, but this confirms API works
-        }
-    } catch (error) {
-        console.warn('⚠️ Could not load dynamic options:', error);
-        // Use static options from HTML
-    }
-}
-
-async function startConversation() {
-    try {
-        console.log('🎯 Starting conversation with:', appState);
-
-        // Show loading state
-        const startBtn = document.getElementById('startConversation');
-        startBtn.disabled = true;
-        startBtn.innerHTML = '<span>⏳</span><span>Starting Session...</span>';
-
-        // Prepare API request
-        const requestData = {
-            user_name: `${appState.selectedRole}_user`,
-            personality_type: appState.selectedPersonality,
-            scenario: getScenarioDescription(appState.selectedScenario)
-        };
-
-        console.log('📤 Sending start conversation request:', requestData);
-
-        // Call API to start conversation
-        const response = await fetch(`${API_BASE_URL}/api/conversations/start`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestData)
-        });
-
-        const data = await response.json();
-        console.log('📥 Start conversation response:', data);
-
-        if (data.success) {
-            // Store conversation data
-            appState.currentConversation = data;
-            appState.conversationHistory = [{
-                sender: data.personality_name,
-                content: data.opening_message,
-                timestamp: data.timestamp || new Date().toISOString(),
-                sender_type: 'ai_personality'
-            }];
-
-            // Switch to chat screen
-            document.getElementById('setupScreen').style.display = 'none';
-            document.getElementById('chatScreen').style.display = 'flex';
-
-            // Clear example messages and add real ones
-            const messagesArea = document.getElementById('messagesArea');
-            messagesArea.innerHTML = '';
-
-            // Enable input
-            document.getElementById('messageInput').disabled = false;
-            document.getElementById('sendButton').disabled = false;
-
-            // Update chat header
-            updateChatHeader();
-
-            // Add welcome message and AI opening
-            addSystemMessage('Practice session started. Your conversation partner is ready.');
-            addAIMessage(data.opening_message);
-
-        } else {
-            throw new Error(data.error || 'Failed to start conversation');
-        }
-
-    } catch (error) {
-        console.error('❌ Error starting conversation:', error);
-        alert('Unable to start conversation. Please check your connection and try again.');
-
-        // Reset button
-        const startBtn = document.getElementById('startConversation');
-        startBtn.disabled = false;
-        startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
-    }
-}
-
-function getScenarioDescription(scenarioKey) {
-    const scenarios = {
-        'budget_cuts': 'You need to discuss budget reductions with your team while maintaining morale and finding creative solutions.',
-        'angry_resident': 'Handle a frustrated ratepayer who is upset about service levels and rate increases.'
-    };
-    return scenarios[scenarioKey] || 'Practice conversation scenario';
-}
-
-async function sendMessage() {
-    const input = document.getElementById('messageInput');
-    const message = input.value.trim();
-
-    if (!message || !appState.currentConversation) return;
-
-    try {
-        // Add user message to chat
-        addUserMessage(message);
-        input.value = '';
-        autoResizeTextarea();
-
-        // Disable input while processing
-        input.disabled = true;
-        document.getElementById('sendButton').disabled = true;
-
-        // Show typing indicator
-        showTyping();
-
-        // Prepare API request
-        const requestData = {
-            conversation_id: appState.currentConversation.conversation_id,
-            user_message: message,
-            personality_data: appState.currentConversation.conversation_data.personality,
-            conversation_history: appState.conversationHistory
-        };
-
-        console.log('📤 Sending message:', requestData);
-
-        // Call API for AI response
-        const response = await fetch(`${API_BASE_URL}/api/conversations/message`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestData)
-        });
-
-        const data = await response.json();
-        console.log('📥 Message response:', data);
-
-        if (data.success) {
-            // Add AI response to chat
-            hideTyping();
-            addAIMessage(data.ai_response);
-
-            // Update conversation history
-            appState.conversationHistory.push({
-                sender: 'user',
-                content: message,
-                timestamp: new Date().toISOString(),
-                sender_type: 'user'
-            });
-
-            appState.conversationHistory.push({
-                sender: appState.currentConversation.personality_name,
-                content: data.ai_response,
-                timestamp: data.timestamp,
-                sender_type: 'ai_personality'
-            });
-
-        } else {
-            throw new Error(data.error || 'Failed to get AI response');
-        }
-
-    } catch (error) {
-        console.error('❌ Error sending message:', error);
-        hideTyping();
-        addSystemMessage('Sorry, there was an error processing your message. Please try again.');
-    } finally {
-        // Re-enable input
-        input.disabled = false;
-        document.getElementById('sendButton').disabled = false;
-        input.focus();
-    }
-}
-
-function updateChatHeader() {
-    const personalities = {
-        'skeptical_councillor': {
-            name: 'Councillor Margaret Stevens',
-            avatar: 'MS',
-            description: 'Budget-focused councillor • Expects detailed justifications'
-        },
-        'frustrated_resident': {
-            name: 'Robert Chen',
-            avatar: 'RC',
-            description: 'Local business owner • Concerned about service value'
-        }
-    };
-
-    const personality = personalities[appState.selectedPersonality];
-    if (personality) {
-        document.getElementById('participantAvatar').textContent = personality.avatar;
-        document.getElementById('participantName').textContent = personality.name;
-        document.getElementById('scenarioDescription').textContent = personality.description;
-    }
-}
-
-function addSystemMessage(content) {
-    const messagesArea = document.getElementById('messagesArea');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'system-message';
-    messageDiv.textContent = content;
-    messagesArea.appendChild(messageDiv);
-    scrollToBottom();
-}
-
-function addUserMessage(content) {
-    addMessage('user', content, 'You');
-}
-
-function addAIMessage(content) {
-    const personalities = {
-        'skeptical_councillor': 'MS',
-        'frustrated_resident': 'RC'
-    };
-    const avatar = personalities[appState.selectedPersonality] || 'AI';
-    addMessage('ai', content, avatar);
-}
-
-function addMessage(type, content, avatar) {
-    const messagesArea = document.getElementById('messagesArea');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${type}`;
-
-    const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-    messageDiv.innerHTML = `
-        <div class="message-avatar">${avatar}</div>
-        <div class="message-content">
-            <div class="message-text">${content}</div>
-            <div class="message-time">${timestamp}</div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancelCustomCharacter">Cancel</button>
+                <button class="btn btn-primary" id="saveCustomCharacter">Create Character</button>
+            </div>
         </div>
-    `;
+    </div>
 
-    messagesArea.appendChild(messageDiv);
-    scrollToBottom();
-}
+    <script>
+        // Configuration
+        const API_BASE_URL = 'https://conversation-trainer-production.up.railway.app';
 
-function showTyping() {
-    document.getElementById('typingIndicator').style.display = 'block';
-    scrollToBottom();
-}
+        // Application State
+        let appState = {
+            selectedRole: null,
+            selectedScenario: null,
+            selectedPersonality: null,
+            currentConversation: null,
+            conversationHistory: [],
+            isConnected: false
+        };
 
-function hideTyping() {
-    document.getElementById('typingIndicator').style.display = 'none';
-}
+        // Custom character data
+        let customCharacterData = null;
 
-function scrollToBottom() {
-    const messagesArea = document.getElementById('messagesArea');
-    messagesArea.scrollTop = messagesArea.scrollHeight;
-}
-
-function handleInputKeydown(event) {
-    if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        sendMessage();
-    }
-}
-
-function autoResizeTextarea() {
-    const textarea = document.getElementById('messageInput');
-    textarea.style.height = 'auto';
-    textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
-}
-
-function endConversation() {
-    if (confirm('Are you sure you want to end this practice session?')) {
-        // Reset to setup screen
-        document.getElementById('chatScreen').style.display = 'none';
-        document.getElementById('setupScreen').style.display = 'block';
-
-        // Clear messages
-        document.getElementById('messagesArea').innerHTML = '';
-
-        // Reset selections
-        document.querySelectorAll('.option-card').forEach(card => {
-            card.classList.remove('selected');
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
         });
 
-        // Reset state
-        appState.selectedRole = null;
-        appState.selectedScenario = null;
-        appState.selectedPersonality = null;
-        appState.currentConversation = null;
-        appState.conversationHistory = [];
+        function initializeApp() {
+            console.log('🚀 Initializing Professional Conversation Trainer...');
+            setupEventListeners();
+            testAPIConnection();
+            loadAvailableOptions();
+        }
 
-        // Reset input
-        const messageInput = document.getElementById('messageInput');
-        messageInput.value = '';
-        messageInput.disabled = true;
-        document.getElementById('sendButton').disabled = true;
+        function setupEventListeners() {
+            // Selection handling
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.addEventListener('click', handleSelection);
+            });
 
-        updateStartButton();
-    }
-}
+            // Button handlers
+            document.getElementById('startConversation').addEventListener('click', startConversation);
+            document.getElementById('endConversation').addEventListener('click', endConversation);
+            document.getElementById('sendButton').addEventListener('click', sendMessage);
 
-function showConnectionError() {
-    const statusIndicator = document.querySelector('.status-indicator');
-    statusIndicator.innerHTML = '<div style="width: 8px; height: 8px; background: #dc2626; border-radius: 50%;"></div><span>Service Offline</span>';
-    statusIndicator.style.background = '#fef2f2';
-    statusIndicator.style.borderColor = '#fecaca';
-    statusIndicator.style.color = '#dc2626';
-}
+            // Custom character modal handlers
+            document.getElementById('customCharacterOption').addEventListener('click', function(e) {
+                e.stopPropagation();
+                showCustomCharacterModal();
+            });
+            document.getElementById('cancelCustomCharacter').addEventListener('click', cancelCustomCharacter);
+            document.getElementById('saveCustomCharacter').addEventListener('click', saveCustomCharacter);
 
-// Initialize on load
-console.log('🎨 Professional Conversation Trainer with Improved Spacing Loaded');
+            // Input handlers
+            const messageInput = document.getElementById('messageInput');
+            messageInput.addEventListener('keydown', handleInputKeydown);
+            messageInput.addEventListener('input', autoResizeTextarea);
+
+            // Modal overlay click to close
+            document.getElementById('customCharacterModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    cancelCustomCharacter();
+                }
+            });
+        }
+
+        function handleSelection(event) {
+            const card = event.currentTarget;
+
+            // Skip if this is the custom character option
+            if (card.id === 'customCharacterOption') {
+                return;
+            }
+
+            const parent = card.parentElement;
+
+            // Remove selection from siblings
+            parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+
+            // Add selection to clicked card
+            card.classList.add('selected');
+
+            // Update state
+            if (card.dataset.role) {
+                appState.selectedRole = card.dataset.role;
+            } else if (card.dataset.scenario) {
+                appState.selectedScenario = card.dataset.scenario;
+            } else if (card.dataset.personality) {
+                appState.selectedPersonality = card.dataset.personality;
+            }
+
+            updateStartButton();
+        }
+
+        function showCustomCharacterModal() {
+            document.getElementById('customCharacterModal').style.display = 'block';
+        }
+
+        function cancelCustomCharacter() {
+            document.getElementById('customCharacterModal').style.display = 'none';
+            clearCustomCharacterForm();
+        }
+
+        function saveCustomCharacter() {
+            const name = document.getElementById('customName').value.trim();
+            const personality = document.getElementById('customPersonality').value.trim();
+            const motivations = document.getElementById('customMotivations').value.trim();
+
+            if (!name || !personality) {
+                alert('Please provide at least a name and personality description.');
+                return;
+            }
+
+            // Store the custom character data
+            customCharacterData = {
+                name: name,
+                personality: personality,
+                motivations: motivations,
+                type: 'custom'
+            };
+
+            // Update the UI to show selection
+            const customOption = document.getElementById('customCharacterOption');
+            customOption.classList.add('selected');
+            customOption.querySelector('.option-title').textContent = name;
+            customOption.querySelector('.option-description').textContent = `Custom character: ${personality.substring(0, 100)}...`;
+
+            // Remove selection from other personality options
+            document.querySelectorAll('[data-personality="skeptical_councillor"], [data-personality="frustrated_resident"]').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Update app state
+            appState.selectedPersonality = 'custom_character';
+
+            // Close modal
+            document.getElementById('customCharacterModal').style.display = 'none';
+
+            // Update start button
+            updateStartButton();
+
+            alert('Custom character created! You can now start a practice session.');
+        }
+
+        function clearCustomCharacterForm() {
+            document.getElementById('customName').value = '';
+            document.getElementById('customPersonality').value = '';
+            document.getElementById('customMotivations').value = '';
+        }
+
+        function getRequestData() {
+            if (appState.selectedPersonality === 'custom_character' && customCharacterData) {
+                return {
+                    user_name: `${appState.selectedRole}_user`,
+                    personality_type: 'custom_character',
+                    custom_character: customCharacterData,
+                    scenario: getScenarioDescription(appState.selectedScenario)
+                };
+            } else {
+                return {
+                    user_name: `${appState.selectedRole}_user`,
+                    personality_type: appState.selectedPersonality,
+                    scenario: getScenarioDescription(appState.selectedScenario)
+                };
+            }
+        }
+
+        function updateStartButton() {
+            const startBtn = document.getElementById('startConversation');
+            const isReady = appState.selectedRole && appState.selectedScenario && appState.selectedPersonality;
+
+            startBtn.disabled = !isReady || !appState.isConnected;
+
+            if (!appState.isConnected) {
+                startBtn.innerHTML = '<span>⚠️</span><span>Connecting to Service...</span>';
+            } else if (!isReady) {
+                startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+            } else {
+                startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+            }
+        }
+
+        async function testAPIConnection() {
+            try {
+                console.log('🔍 Testing API connection...');
+                const response = await fetch(`${API_BASE_URL}/health`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    appState.isConnected = true;
+                    document.getElementById('successMessage').style.display = 'block';
+                    console.log('✅ API connection successful:', data);
+
+                    setTimeout(() => {
+                        document.getElementById('successMessage').style.display = 'none';
+                    }, 3000);
+                } else {
+                    throw new Error('API health check failed');
+                }
+            } catch (error) {
+                console.error('❌ API Connection Error:', error);
+                appState.isConnected = false;
+                showConnectionError();
+            } finally {
+                updateStartButton();
+            }
+        }
+
+        async function loadAvailableOptions() {
+            try {
+                const [personalitiesResponse, scenariosResponse] = await Promise.all([
+                    fetch(`${API_BASE_URL}/api/personalities`),
+                    fetch(`${API_BASE_URL}/api/scenarios`)
+                ]);
+
+                if (personalitiesResponse.ok && scenariosResponse.ok) {
+                    const personalities = await personalitiesResponse.json();
+                    const scenarios = await scenariosResponse.json();
+                    console.log('📋 Loaded options:', { personalities, scenarios });
+                }
+            } catch (error) {
+                console.warn('⚠️ Could not load dynamic options:', error);
+            }
+        }
+
+        async function startConversation() {
+            try {
+                console.log('🎯 Starting conversation with:', appState);
+
+                const startBtn = document.getElementById('startConversation');
+                startBtn.disabled = true;
+                startBtn.innerHTML = '<span>⏳</span><span>Starting Session...</span>';
+
+                const requestData = getRequestData();
+                console.log('📤 Sending start conversation request:', requestData);
+
+                const response = await fetch(`${API_BASE_URL}/api/conversations/start`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                const data = await response.json();
+                console.log('📥 Start conversation response:', data);
+
+                if (data.success) {
+                    appState.currentConversation = data;
+                    appState.conversationHistory = [{
+                        sender: data.personality_name,
+                        content: data.opening_message,
+                        timestamp: data.timestamp || new Date().toISOString(),
+                        sender_type: 'ai_personality'
+                    }];
+
+                    document.getElementById('setupScreen').style.display = 'none';
+                    document.getElementById('chatScreen').style.display = 'flex';
+
+                    const messagesArea = document.getElementById('messagesArea');
+                    messagesArea.innerHTML = '';
+
+                    document.getElementById('messageInput').disabled = false;
+                    document.getElementById('sendButton').disabled = false;
+
+                    updateChatHeader();
+                    addSystemMessage('Practice session started. Your conversation partner is ready.');
+                    addAIMessage(data.opening_message);
+                } else {
+                    throw new Error(data.error || 'Failed to start conversation');
+                }
+            } catch (error) {
+                console.error('❌ Error starting conversation:', error);
+                alert('Unable to start conversation. Please check your connection and try again.');
+
+                const startBtn = document.getElementById('startConversation');
+                startBtn.disabled = false;
+                startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+            }
+        }
+
+        function getScenarioDescription(scenarioKey) {
+            const scenarios = {
+                'budget_cuts': 'You need to discuss budget reductions with your team while maintaining morale and finding creative solutions.',
+                'angry_resident': 'Handle a frustrated ratepayer who is upset about service levels and rate increases.'
+            };
+            return scenarios[scenarioKey] || 'Practice conversation scenario';
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+
+            if (!message || !appState.currentConversation) return;
+
+            try {
+                addUserMessage(message);
+                input.value = '';
+                autoResizeTextarea();
+
+                input.disabled = true;
+                document.getElementById('sendButton').disabled = true;
+                showTyping();
+
+                const requestData = {
+                    conversation_id: appState.currentConversation.conversation_id,
+                    user_message: message,
+                    personality_data: appState.currentConversation.conversation_data.personality,
+                    conversation_history: appState.conversationHistory
+                };
+
+                console.log('📤 Sending message:', requestData);
+
+                const response = await fetch(`${API_BASE_URL}/api/conversations/message`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                const data = await response.json();
+                console.log('📥 Message response:', data);
+
+                if (data.success) {
+                    hideTyping();
+                    addAIMessage(data.ai_response);
+
+                    appState.conversationHistory.push({
+                        sender: 'user',
+                        content: message,
+                        timestamp: new Date().toISOString(),
+                        sender_type: 'user'
+                    });
+
+                    appState.conversationHistory.push({
+                        sender: appState.currentConversation.personality_name,
+                        content: data.ai_response,
+                        timestamp: data.timestamp,
+                        sender_type: 'ai_personality'
+                    });
+                } else {
+                    throw new Error(data.error || 'Failed to get AI response');
+                }
+            } catch (error) {
+                console.error('❌ Error sending message:', error);
+                hideTyping();
+                addSystemMessage('Sorry, there was an error processing your message. Please try again.');
+            } finally {
+                input.disabled = false;
+                document.getElementById('sendButton').disabled = false;
+                input.focus();
+            }
+        }
+
+        function updateChatHeader() {
+            const personalities = {
+                'skeptical_councillor': {
+                    name: 'Councillor Margaret Stevens',
+                    avatar: 'MS',
+                    description: 'Budget-focused councillor • Expects detailed justifications'
+                },
+                'frustrated_resident': {
+                    name: 'Robert Chen',
+                    avatar: 'RC',
+                    description: 'Local business owner • Concerned about service value'
+                },
+                'custom_character': {
+                    name: customCharacterData ? customCharacterData.name : 'Custom Character',
+                    avatar: customCharacterData ? customCharacterData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'CC',
+                    description: customCharacterData ? `Custom colleague • ${customCharacterData.personality.substring(0, 50)}...` : 'Custom character'
+                }
+            };
+
+            const personality = personalities[appState.selectedPersonality];
+            if (personality) {
+                document.getElementById('participantAvatar').textContent = personality.avatar;
+                document.getElementById('participantName').textContent = personality.name;
+                document.getElementById('scenarioDescription').textContent = personality.description;
+            }
+        }
+
+        function addSystemMessage(content) {
+            const messagesArea = document.getElementById('messagesArea');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'system-message';
+            messageDiv.textContent = content;
+            messagesArea.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function addUserMessage(content) {
+            addMessage('user', content, 'You');
+        }
+
+        function addAIMessage(content) {
+            const personalities = {
+                'skeptical_councillor': 'MS',
+                'frustrated_resident': 'RC',
+                'custom_character': customCharacterData ? customCharacterData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'CC'
+            };
+            const avatar = personalities[appState.selectedPersonality] || 'AI';
+            addMessage('ai', content, avatar);
+        }
+
+        function addMessage(type, content, avatar) {
+            const messagesArea = document.getElementById('messagesArea');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${avatar}</div>
+                <div class="message-content">
+                    <div class="message-text">${content}</div>
+                    <div class="message-time">${timestamp}</div>
+                </div>
+            `;
+
+            messagesArea.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function showTyping() {
+            document.getElementById('typingIndicator').style.display = 'block';
+            scrollToBottom();
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        function scrollToBottom() {
+            const messagesArea = document.getElementById('messagesArea');
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }
+
+        function handleInputKeydown(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function autoResizeTextarea() {
+            const textarea = document.getElementById('messageInput');
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+
+        function endConversation() {
+            if (confirm('Are you sure you want to end this practice session?')) {
+                document.getElementById('chatScreen').style.display = 'none';
+                document.getElementById('setupScreen').style.display = 'block';
+
+                document.getElementById('messagesArea').innerHTML = '';
+
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+
+                // Reset custom character if it was selected
+                if (appState.selectedPersonality === 'custom_character') {
+                    const customOption = document.getElementById('customCharacterOption');
+                    customOption.querySelector('.option-title').textContent = '🛠️ Create Custom Colleague';
+                    customOption.querySelector('.option-description').textContent = 'Design a virtual version of someone from your workplace. Perfect for practicing specific challenging conversations.';
+                }
+
+                appState.selectedRole = null;
+                appState.selectedScenario = null;
+                appState.selectedPersonality = null;
+                appState.currentConversation = null;
+                appState.conversationHistory = [];
+                customCharacterData = null;
+
+                const messageInput = document.getElementById('messageInput');
+                messageInput.value = '';
+                messageInput.disabled = true;
+                document.getElementById('sendButton').disabled = true;
+
+                updateStartButton();
+            }
+        }
+
+        function showConnectionError() {
+            const statusIndicator = document.querySelector('.status-indicator');
+            statusIndicator.innerHTML = '<div style="width: 8px; height: 8px; background: #dc2626; border-radius: 50%;"></div><span>Service Offline</span>';
+            statusIndicator.style.background = '#fef2f2';
+            statusIndicator.style.borderColor = '#fecaca';
+            statusIndicator.style.color = '#dc2626';
+        }
+
+        console.log('🎨 Professional Conversation Trainer with Custom Characters Loaded');
     </script>
 </body>
 </html>
