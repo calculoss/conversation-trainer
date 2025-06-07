@@ -685,120 +685,174 @@
     </div>
 
     <script>
-        // Configuration
-        const API_BASE_URL = 'https://conversation-trainer-production.up.railway.app';
+// Configuration
+const API_BASE_URL = 'https://conversation-trainer-production.up.railway.app';
 
-        // Application State
-        let appState = {
-            selectedRole: null,
-            selectedScenario: null,
-            selectedPersonality: null,
-            currentConversation: null,
-            isConnected: false
+// Application State
+let appState = {
+    selectedRole: null,
+    selectedScenario: null,
+    selectedPersonality: null,
+    currentConversation: null,
+    conversationHistory: [],
+    isConnected: false
+};
+
+// Initialize Application
+document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
+});
+
+function initializeApp() {
+    console.log('🚀 Initializing Professional Conversation Trainer...');
+    setupEventListeners();
+    testAPIConnection();
+    loadAvailableOptions();
+}
+
+function setupEventListeners() {
+    // Selection handling
+    document.querySelectorAll('.option-card').forEach(card => {
+        card.addEventListener('click', handleSelection);
+    });
+
+    // Button handlers
+    document.getElementById('startConversation').addEventListener('click', startConversation);
+    document.getElementById('endConversation').addEventListener('click', endConversation);
+    document.getElementById('sendButton').addEventListener('click', sendMessage);
+
+    // Input handlers
+    const messageInput = document.getElementById('messageInput');
+    messageInput.addEventListener('keydown', handleInputKeydown);
+    messageInput.addEventListener('input', autoResizeTextarea);
+}
+
+function handleSelection(event) {
+    const card = event.currentTarget;
+    const parent = card.parentElement;
+
+    // Remove selection from siblings
+    parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+
+    // Add selection to clicked card
+    card.classList.add('selected');
+
+    // Update state
+    if (card.dataset.role) {
+        appState.selectedRole = card.dataset.role;
+    } else if (card.dataset.scenario) {
+        appState.selectedScenario = card.dataset.scenario;
+    } else if (card.dataset.personality) {
+        appState.selectedPersonality = card.dataset.personality;
+    }
+
+    updateStartButton();
+}
+
+function updateStartButton() {
+    const startBtn = document.getElementById('startConversation');
+    const isReady = appState.selectedRole && appState.selectedScenario && appState.selectedPersonality;
+
+    startBtn.disabled = !isReady || !appState.isConnected;
+
+    if (!appState.isConnected) {
+        startBtn.innerHTML = '<span>⚠️</span><span>Connecting to Service...</span>';
+    } else if (!isReady) {
+        startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+    } else {
+        startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+    }
+}
+
+async function testAPIConnection() {
+    try {
+        console.log('🔍 Testing API connection...');
+        const response = await fetch(`${API_BASE_URL}/health`);
+        const data = await response.json();
+
+        if (response.ok) {
+            appState.isConnected = true;
+            document.getElementById('successMessage').style.display = 'block';
+            console.log('✅ API connection successful:', data);
+
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 3000);
+        } else {
+            throw new Error('API health check failed');
+        }
+    } catch (error) {
+        console.error('❌ API Connection Error:', error);
+        appState.isConnected = false;
+        showConnectionError();
+    } finally {
+        updateStartButton();
+    }
+}
+
+async function loadAvailableOptions() {
+    try {
+        // Load personalities and scenarios from API
+        const [personalitiesResponse, scenariosResponse] = await Promise.all([
+            fetch(`${API_BASE_URL}/api/personalities`),
+            fetch(`${API_BASE_URL}/api/scenarios`)
+        ]);
+
+        if (personalitiesResponse.ok && scenariosResponse.ok) {
+            const personalities = await personalitiesResponse.json();
+            const scenarios = await scenariosResponse.json();
+
+            console.log('📋 Loaded options:', { personalities, scenarios });
+            // Options are already in HTML, but this confirms API works
+        }
+    } catch (error) {
+        console.warn('⚠️ Could not load dynamic options:', error);
+        // Use static options from HTML
+    }
+}
+
+async function startConversation() {
+    try {
+        console.log('🎯 Starting conversation with:', appState);
+
+        // Show loading state
+        const startBtn = document.getElementById('startConversation');
+        startBtn.disabled = true;
+        startBtn.innerHTML = '<span>⏳</span><span>Starting Session...</span>';
+
+        // Prepare API request
+        const requestData = {
+            user_name: `${appState.selectedRole}_user`,
+            personality_type: appState.selectedPersonality,
+            scenario: getScenarioDescription(appState.selectedScenario)
         };
 
-        // Initialize Application
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeApp();
+        console.log('📤 Sending start conversation request:', requestData);
+
+        // Call API to start conversation
+        const response = await fetch(`${API_BASE_URL}/api/conversations/start`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData)
         });
 
-        function initializeApp() {
-            console.log('🚀 Initializing Professional Conversation Trainer...');
-            setupEventListeners();
-            testAPIConnection();
-        }
+        const data = await response.json();
+        console.log('📥 Start conversation response:', data);
 
-        function setupEventListeners() {
-            // Selection handling
-            document.querySelectorAll('.option-card').forEach(card => {
-                card.addEventListener('click', handleSelection);
-            });
+        if (data.success) {
+            // Store conversation data
+            appState.currentConversation = data;
+            appState.conversationHistory = [{
+                sender: data.personality_name,
+                content: data.opening_message,
+                timestamp: data.timestamp || new Date().toISOString(),
+                sender_type: 'ai_personality'
+            }];
 
-            // Button handlers
-            document.getElementById('startConversation').addEventListener('click', startConversation);
-            document.getElementById('endConversation').addEventListener('click', endConversation);
-            document.getElementById('sendButton').addEventListener('click', sendMessage);
-
-            // Input handlers
-            const messageInput = document.getElementById('messageInput');
-            messageInput.addEventListener('keydown', handleInputKeydown);
-            messageInput.addEventListener('input', autoResizeTextarea);
-        }
-
-        function handleSelection(event) {
-            const card = event.currentTarget;
-            const parent = card.parentElement;
-
-            // Remove selection from siblings
-            parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-
-            // Add selection to clicked card
-            card.classList.add('selected');
-
-            // Update state
-            if (card.dataset.role) {
-                appState.selectedRole = card.dataset.role;
-            } else if (card.dataset.scenario) {
-                appState.selectedScenario = card.dataset.scenario;
-            } else if (card.dataset.personality) {
-                appState.selectedPersonality = card.dataset.personality;
-            }
-
-            updateStartButton();
-        }
-
-        function updateStartButton() {
-            const startBtn = document.getElementById('startConversation');
-            const isReady = appState.selectedRole && appState.selectedScenario && appState.selectedPersonality;
-
-            startBtn.disabled = !isReady || !appState.isConnected;
-
-            if (!appState.isConnected) {
-                startBtn.innerHTML = '<span>⚠️</span><span>Connecting to Service...</span>';
-            } else if (!isReady) {
-                startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
-            } else {
-                startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
-            }
-        }
-
-        async function testAPIConnection() {
-            try {
-                console.log('🔍 Testing API connection...');
-                const response = await fetch(`${API_BASE_URL}/health`);
-                const data = await response.json();
-
-                if (response.ok) {
-                    appState.isConnected = true;
-                    document.getElementById('successMessage').style.display = 'block';
-                    console.log('✅ API connection successful:', data);
-
-                    // Hide success message after 3 seconds
-                    setTimeout(() => {
-                        document.getElementById('successMessage').style.display = 'none';
-                    }, 3000);
-                } else {
-                    throw new Error('API health check failed');
-                }
-            } catch (error) {
-                console.error('❌ API Connection Error:', error);
-                appState.isConnected = false;
-
-                // Show error state
-                const statusIndicator = document.querySelector('.status-indicator');
-                statusIndicator.innerHTML = '<div style="width: 8px; height: 8px; background: #dc2626; border-radius: 50%;"></div><span>Service Offline</span>';
-                statusIndicator.style.background = '#fef2f2';
-                statusIndicator.style.borderColor = '#fecaca';
-                statusIndicator.style.color = '#dc2626';
-            } finally {
-                updateStartButton();
-            }
-        }
-
-        function startConversation() {
-            console.log('🎯 Starting conversation with:', appState);
-
-            // Hide setup screen, show chat
+            // Switch to chat screen
             document.getElementById('setupScreen').style.display = 'none';
             document.getElementById('chatScreen').style.display = 'flex';
 
@@ -809,157 +863,241 @@
             // Update chat header
             updateChatHeader();
 
-            // Add welcome message
-            addSystemMessage('Welcome to your practice session. The AI conversation partner will introduce themselves momentarily...');
+            // Add welcome message and AI opening
+            addSystemMessage('Practice session started. Your conversation partner is ready.');
+            addAIMessage(data.opening_message);
 
-            // TODO: Start actual API conversation
-            setTimeout(() => {
-                addAIMessage("Hello! I'm ready to begin our practice conversation. How can I help you today?");
-            }, 1500);
+        } else {
+            throw new Error(data.error || 'Failed to start conversation');
         }
 
-        function updateChatHeader() {
-            const personalities = {
-                'skeptical_councillor': {
-                    name: 'Councillor Margaret Stevens',
-                    avatar: 'MS',
-                    description: 'Budget-focused councillor • Expects detailed justifications'
-                },
-                'frustrated_resident': {
-                    name: 'Robert Chen',
-                    avatar: 'RC',
-                    description: 'Local business owner • Concerned about service value'
-                }
-            };
+    } catch (error) {
+        console.error('❌ Error starting conversation:', error);
+        alert('Unable to start conversation. Please check your connection and try again.');
 
-            const personality = personalities[appState.selectedPersonality];
-            if (personality) {
-                document.getElementById('participantAvatar').textContent = personality.avatar;
-                document.getElementById('participantName').textContent = personality.name;
-                document.getElementById('scenarioDescription').textContent = personality.description;
-            }
+        // Reset button
+        const startBtn = document.getElementById('startConversation');
+        startBtn.disabled = false;
+        startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+    }
+}
+
+function getScenarioDescription(scenarioKey) {
+    const scenarios = {
+        'budget_cuts': 'You need to discuss budget reductions with your team while maintaining morale and finding creative solutions.',
+        'angry_resident': 'Handle a frustrated ratepayer who is upset about service levels and rate increases.'
+    };
+    return scenarios[scenarioKey] || 'Practice conversation scenario';
+}
+
+async function sendMessage() {
+    const input = document.getElementById('messageInput');
+    const message = input.value.trim();
+
+    if (!message || !appState.currentConversation) return;
+
+    try {
+        // Add user message to chat
+        addUserMessage(message);
+        input.value = '';
+        autoResizeTextarea();
+
+        // Disable input while processing
+        input.disabled = true;
+        document.getElementById('sendButton').disabled = true;
+
+        // Show typing indicator
+        showTyping();
+
+        // Prepare API request
+        const requestData = {
+            conversation_id: appState.currentConversation.conversation_id,
+            user_message: message,
+            personality_data: appState.currentConversation.conversation_data.personality,
+            conversation_history: appState.conversationHistory
+        };
+
+        console.log('📤 Sending message:', requestData);
+
+        // Call API for AI response
+        const response = await fetch(`${API_BASE_URL}/api/conversations/message`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData)
+        });
+
+        const data = await response.json();
+        console.log('📥 Message response:', data);
+
+        if (data.success) {
+            // Add AI response to chat
+            hideTyping();
+            addAIMessage(data.ai_response);
+
+            // Update conversation history
+            appState.conversationHistory.push({
+                sender: 'user',
+                content: message,
+                timestamp: new Date().toISOString(),
+                sender_type: 'user'
+            });
+
+            appState.conversationHistory.push({
+                sender: appState.currentConversation.personality_name,
+                content: data.ai_response,
+                timestamp: data.timestamp,
+                sender_type: 'ai_personality'
+            });
+
+        } else {
+            throw new Error(data.error || 'Failed to get AI response');
         }
 
-        function addSystemMessage(content) {
-            const messagesArea = document.getElementById('messagesArea');
-            const messageDiv = document.createElement('div');
-            messageDiv.style.cssText = 'text-align: center; padding: 1rem; color: #64748b; font-size: 0.875rem; font-style: italic;';
-            messageDiv.textContent = content;
-            messagesArea.appendChild(messageDiv);
-            scrollToBottom();
+    } catch (error) {
+        console.error('❌ Error sending message:', error);
+        hideTyping();
+        addSystemMessage('Sorry, there was an error processing your message. Please try again.');
+    } finally {
+        // Re-enable input
+        input.disabled = false;
+        document.getElementById('sendButton').disabled = false;
+        input.focus();
+    }
+}
+
+function updateChatHeader() {
+    const personalities = {
+        'skeptical_councillor': {
+            name: 'Councillor Margaret Stevens',
+            avatar: 'MS',
+            description: 'Budget-focused councillor • Expects detailed justifications'
+        },
+        'frustrated_resident': {
+            name: 'Robert Chen',
+            avatar: 'RC',
+            description: 'Local business owner • Concerned about service value'
         }
+    };
 
-        function addUserMessage(content) {
-            addMessage('user', content, 'You');
-        }
+    const personality = personalities[appState.selectedPersonality];
+    if (personality) {
+        document.getElementById('participantAvatar').textContent = personality.avatar;
+        document.getElementById('participantName').textContent = personality.name;
+        document.getElementById('scenarioDescription').textContent = personality.description;
+    }
+}
 
-        function addAIMessage(content) {
-            const personalities = {
-                'skeptical_councillor': 'MS',
-                'frustrated_resident': 'RC'
-            };
-            const avatar = personalities[appState.selectedPersonality] || 'AI';
-            addMessage('ai', content, avatar);
-        }
+function addSystemMessage(content) {
+    const messagesArea = document.getElementById('messagesArea');
+    const messageDiv = document.createElement('div');
+    messageDiv.style.cssText = 'text-align: center; padding: 1rem; color: #64748b; font-size: 0.875rem; font-style: italic;';
+    messageDiv.textContent = content;
+    messagesArea.appendChild(messageDiv);
+    scrollToBottom();
+}
 
-        function addMessage(type, content, avatar) {
-            const messagesArea = document.getElementById('messagesArea');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${type}`;
+function addUserMessage(content) {
+    addMessage('user', content, 'You');
+}
 
-            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+function addAIMessage(content) {
+    const personalities = {
+        'skeptical_councillor': 'MS',
+        'frustrated_resident': 'RC'
+    };
+    const avatar = personalities[appState.selectedPersonality] || 'AI';
+    addMessage('ai', content, avatar);
+}
 
-            messageDiv.innerHTML = `
-                <div class="message-avatar">${avatar}</div>
-                <div class="message-content">
-                    <div class="message-text">${content}</div>
-                    <div class="message-time">${timestamp}</div>
-                </div>
-            `;
+function addMessage(type, content, avatar) {
+    const messagesArea = document.getElementById('messagesArea');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${type}`;
 
-            messagesArea.appendChild(messageDiv);
-            scrollToBottom();
-        }
+    const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
+    messageDiv.innerHTML = `
+        <div class="message-avatar">${avatar}</div>
+        <div class="message-content">
+            <div class="message-text">${content}</div>
+            <div class="message-time">${timestamp}</div>
+        </div>
+    `;
 
-            if (message) {
-                addUserMessage(message);
-                input.value = '';
-                autoResizeTextarea(); // Reset height
+    messagesArea.appendChild(messageDiv);
+    scrollToBottom();
+}
 
-                // Show typing indicator
-                showTyping();
+function showTyping() {
+    document.getElementById('typingIndicator').style.display = 'block';
+    scrollToBottom();
+}
 
-                // TODO: Send to API and get AI response
-                setTimeout(() => {
-                    hideTyping();
-                    addAIMessage("Thank you for your message. I appreciate you taking the time to discuss this with me. How would you like to proceed?");
-                }, 2000);
-            }
-        }
+function hideTyping() {
+    document.getElementById('typingIndicator').style.display = 'none';
+}
 
-        function showTyping() {
-            document.getElementById('typingIndicator').style.display = 'block';
-            scrollToBottom();
-        }
+function scrollToBottom() {
+    const messagesArea = document.getElementById('messagesArea');
+    messagesArea.scrollTop = messagesArea.scrollHeight;
+}
 
-        function hideTyping() {
-            document.getElementById('typingIndicator').style.display = 'none';
-        }
+function handleInputKeydown(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+}
 
-        function scrollToBottom() {
-            const messagesArea = document.getElementById('messagesArea');
-            messagesArea.scrollTop = messagesArea.scrollHeight;
-        }
+function autoResizeTextarea() {
+    const textarea = document.getElementById('messageInput');
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+}
 
-        function handleInputKeydown(event) {
-            if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                sendMessage();
-            }
-        }
+function endConversation() {
+    if (confirm('Are you sure you want to end this practice session?')) {
+        // Reset to setup screen
+        document.getElementById('chatScreen').style.display = 'none';
+        document.getElementById('setupScreen').style.display = 'block';
 
-        function autoResizeTextarea() {
-            const textarea = document.getElementById('messageInput');
-            textarea.style.height = 'auto';
-            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
-        }
+        // Clear messages
+        document.getElementById('messagesArea').innerHTML = '';
 
-        function endConversation() {
-            if (confirm('Are you sure you want to end this practice session?')) {
-                // Reset to setup screen
-                document.getElementById('chatScreen').style.display = 'none';
-                document.getElementById('setupScreen').style.display = 'block';
+        // Reset selections
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.classList.remove('selected');
+        });
 
-                // Clear messages
-                document.getElementById('messagesArea').innerHTML = '';
+        // Reset state
+        appState.selectedRole = null;
+        appState.selectedScenario = null;
+        appState.selectedPersonality = null;
+        appState.currentConversation = null;
+        appState.conversationHistory = [];
 
-                // Reset selections
-                document.querySelectorAll('.option-card').forEach(card => {
-                    card.classList.remove('selected');
-                });
+        // Reset input
+        const messageInput = document.getElementById('messageInput');
+        messageInput.value = '';
+        messageInput.disabled = true;
+        document.getElementById('sendButton').disabled = true;
 
-                // Reset state
-                appState.selectedRole = null;
-                appState.selectedScenario = null;
-                appState.selectedPersonality = null;
-                appState.currentConversation = null;
+        updateStartButton();
+    }
+}
 
-                // Reset input
-                const messageInput = document.getElementById('messageInput');
-                messageInput.value = '';
-                messageInput.disabled = true;
-                document.getElementById('sendButton').disabled = true;
+function showConnectionError() {
+    const statusIndicator = document.querySelector('.status-indicator');
+    statusIndicator.innerHTML = '<div style="width: 8px; height: 8px; background: #dc2626; border-radius: 50%;"></div><span>Service Offline</span>';
+    statusIndicator.style.background = '#fef2f2';
+    statusIndicator.style.borderColor = '#fecaca';
+    statusIndicator.style.color = '#dc2626';
+}
 
-                updateStartButton();
-            }
-        }
-
-        // Initialize on load
-        console.log('🎨 Professional Conversation Trainer Interface Loaded');
+// Initialize on load
+console.log('🎨 Professional Conversation Trainer with Live AI Integration Loaded');
     </script>
 </body>
 </html>
