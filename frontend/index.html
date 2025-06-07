@@ -6,7 +6,30 @@
     <title>Conversation Trainer - Professional Development Platform</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        /* CRITICAL LAYOUT FIXES - Add at the top of your CSS */
+        .chat-container {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 100% !important;
+            max-width: none !important;
+        }
 
+        .messages-area {
+            flex: 1 !important;
+            width: 100% !important;
+            padding: 2rem !important;
+        }
+
+        .message-content {
+            max-width: 75% !important;
+            min-width: 200px !important;
+            padding: 1.25rem 1.5rem !important;
+        }
+
+        .message-text {
+            font-size: 1rem !important;
+            line-height: 1.7 !important;
+        }
         * {
             margin: 0;
             padding: 0;
