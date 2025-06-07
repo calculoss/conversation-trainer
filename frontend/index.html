@@ -1685,6 +1685,77 @@
             document.getElementById('customScenarioType').value = 'budget_review';
         }
 
+        // Enhanced request data building to include all new character data
+        function buildCharacterPersonalityPrompt(characterData) {
+            let prompt = `You are ${characterData.name}`;
+
+            if (characterData.role) {
+                prompt += `, ${characterData.role}`;
+            }
+
+            if (characterData.age) {
+                prompt += ` in your ${characterData.age}`;
+            }
+
+            if (characterData.gender && characterData.gender !== 'prefer-not-to-say') {
+                prompt += ` (${characterData.gender} pronouns)`;
+            }
+
+            prompt += '.\n\n';
+
+            // Add DISC personality information
+            if (characterData.discScores) {
+                const primaryDisc = Object.entries(characterData.discScores)
+                    .filter(([key, value]) => value > 0)
+                    .sort(([,a], [,b]) => b - a)[0];
+
+                if (primaryDisc) {
+                    const discType = discProfiles[primaryDisc[0]];
+                    prompt += `PERSONALITY PROFILE: You have a ${discType.name} (${primaryDisc[0]}) personality style. This means you tend to be ${discType.traits.join(', ')}.\n\n`;
+                }
+            }
+
+            // Add communication style
+            if (characterData.commPace) {
+                const paceDescriptions = {
+                    'very-fast': 'You speak very quickly and expect rapid responses. You get impatient with slow conversations.',
+                    'fast': 'You prefer efficient, quick exchanges and direct answers.',
+                    'moderate': 'You take a measured, thoughtful approach to conversations.',
+                    'slow': 'You speak deliberately and thoroughly, considering each response carefully.',
+                    'very-slow': 'You are extremely cautious in your responses and take time to think things through.'
+                };
+                prompt += `COMMUNICATION PACE: ${paceDescriptions[characterData.commPace] || characterData.commPace}\n\n`;
+            }
+
+            if (characterData.directness) {
+                const directnessDescriptions = {
+                    'very-direct': 'You are blunt and direct, with no sugar-coating. You say exactly what you think.',
+                    'direct': 'You communicate clearly and straightforwardly without beating around the bush.',
+                    'diplomatic': 'You use a tactful approach and consider others\' feelings when speaking.',
+                    'indirect': 'You prefer to hint at things rather than state them directly.',
+                    'very-indirect': 'You avoid direct confrontation and communicate very carefully.'
+                };
+                prompt += `COMMUNICATION STYLE: ${directnessDescriptions[characterData.directness] || characterData.directness}\n\n`;
+            }
+
+            // Add workplace behavior
+            if (characterData.personality) {
+                prompt += `MEETING BEHAVIOR: ${characterData.personality}\n\n`;
+            }
+
+            if (characterData.motivations) {
+                prompt += `MOTIVATIONS: ${characterData.motivations}\n\n`;
+            }
+
+            if (characterData.stressors) {
+                prompt += `STRESS TRIGGERS: ${characterData.stressors}\n\n`;
+            }
+
+            prompt += 'Respond as this person would in a workplace conversation. Stay completely in character, using their communication style, pace, and personality traits. Be realistic and authentic to how this person would actually behave.';
+
+            return prompt;
+        }
+
         // ============================================
         // CORE SELECTION HANDLER
         // ============================================
