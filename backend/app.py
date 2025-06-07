@@ -390,15 +390,27 @@ def get_scenarios():
     print("🧪 DEBUG: About to check if __name__ == '__main__'")
     print(f"🧪 DEBUG: __name__ is: {__name__}")
 
-if __name__ == '__main__':
-    print("🧪 DEBUG: Inside main block!")
-    print("🚀 Starting Conversation Trainer Backend v2.0...")
-    # ... rest of the startup messages ...
 
-    print("🧪 DEBUG: About to call app.run()")
+if __name__ == '__main__':
+    print("🚀 Starting Conversation Trainer Backend v2.0...")
+    print("📍 Local development server")
+    print("🧠 AI personality conversations enabled")
+    print("🏛️ NSW Local Government scenarios loaded")
+    print("🔗 Frontend can connect to this API")
+    print()
+    print("Test endpoints:")
+    print("  GET  / - API information")
+    print("  GET  /health - Health check")
+    print("  GET  /test-claude - Test Claude connection")
+    print("  GET  /api/personalities - Available personalities")
+    print("  POST /api/conversations/start - Start conversation")
+    print()
+
+    # Run the Flask development server
+    port = int(os.environ.get('PORT', 5000))  # Railway provides PORT variable
     app.run(
         host='0.0.0.0',
-        port=5000,
-        debug=True
+        port=port,
+        debug=False  # Disable debug in production
     )
     print("🧪 DEBUG: app.run() finished (this shouldn't print)")
