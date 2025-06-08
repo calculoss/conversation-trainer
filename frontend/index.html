@@ -900,6 +900,30 @@
                 gap: 0.75rem;
             }
         }
+        /* Saved Scenario Cards */
+        .option-card.saved-scenario {
+            border: 2px solid #10b981;
+            background: linear-gradient(135deg, #d1fae5, #6ee7b7);
+            position: relative;
+        }
+
+        .option-card.saved-scenario:hover {
+            border-color: #059669;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px -1px rgba(16, 185, 129, 0.25);
+        }
+
+        .option-card.saved-scenario.selected {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #d1fae5, #6ee7b7);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+
+        .saved-badge-small {
+            display: inline-block;
+            font-size: 0.8rem;
+            margin-right: 0.3rem;
+        }
     </style>
 </head>
 
@@ -2729,6 +2753,81 @@ function createSavedColleagueCard(colleague) {
 
     return cardDiv;
 }
+function loadSavedScenarios() {
+    debugLog('📋 Loading saved scenarios into scenario grid');
+
+    try {
+        const savedScenarios = getStoredScenarios();
+        const scenarioCount = Object.keys(savedScenarios).length;
+
+        console.log(`Phase 1: Found ${scenarioCount} saved scenarios in storage`);
+
+        if (scenarioCount === 0) {
+            console.log('No saved scenarios found - create some to test!');
+            return;
+        }
+
+        const scenarioGrid = document.querySelector('[data-scenario="budget_cuts"]').parentElement;
+        if (!scenarioGrid) {
+            console.error('❌ Scenario grid not found');
+            return;
+        }
+
+        // Add saved scenarios to the grid
+        Object.values(savedScenarios).forEach(scenario => {
+            console.log('Creating card for scenario:', scenario.title);
+            const scenarioCard = createSavedScenarioCard(scenario);
+            scenarioGrid.insertBefore(scenarioCard, scenarioGrid.lastElementChild);
+        });
+
+        console.log(`✅ Added ${scenarioCount} saved scenario cards to scenario grid`);
+
+    } catch (error) {
+        console.error('❌ Error loading saved scenarios:', error);
+    }
+}
+
+function createSavedScenarioCard(scenario) {
+    debugLog('🎨 Creating card for saved scenario:', scenario.title);
+
+    const cardDiv = document.createElement('div');
+    cardDiv.className = 'option-card saved-scenario';
+    cardDiv.dataset.scenario = `saved_scenario_${scenario.id}`;
+
+    cardDiv.innerHTML = `
+        <div class="option-title">
+            <span class="saved-badge-small">💾</span> ${scenario.title}
+        </div>
+        <div class="option-description">
+            <strong>Type:</strong> ${scenario.type.replace('_', ' ')} • ${scenario.context.length > 80 ? scenario.context.substring(0, 80) + '...' : scenario.context}
+        </div>
+    `;
+
+    // Add click handler for saved scenario
+    cardDiv.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Clear other selections
+        document.querySelectorAll('[data-scenario]').forEach(card => {
+            card.classList.remove('selected');
+        });
+
+        // Select this card
+        cardDiv.classList.add('selected');
+
+        // Set app state
+        appState.selectedScenario = `saved_scenario_${scenario.id}`;
+
+        // Store the scenario data for use in conversation
+        customScenarioData = scenario;
+
+        debugLog('✅ Selected saved scenario:', scenario.title);
+        updateStartButton();
+    });
+
+    return cardDiv;
+}
 // ============================================
 // INITIALIZATION
 // ============================================
@@ -2738,8 +2837,9 @@ function initializeApp() {
     testAPIConnection();
     updateStorageCounts();
 
-    // NEW: Test loading saved colleagues
+    // NEW: Load saved content
     loadSavedColleagues();
+    loadSavedScenarios();
 }
 
 // Initialize Application
@@ -2942,7 +3042,30 @@ function importScenarios() {
     fileInput.click();
     document.body.removeChild(fileInput);
 }
+function refreshSavedContent() {
+    debugLog('🔄 Refreshing saved content in UI');
 
+    try {
+        // Remove existing saved colleague cards
+        document.querySelectorAll('.personality-card.saved-colleague').forEach(card => {
+            card.remove();
+        });
+
+        // Remove existing saved scenario cards
+        document.querySelectorAll('.option-card.saved-scenario').forEach(card => {
+            card.remove();
+        });
+
+        // Reload saved content
+        loadSavedColleagues();
+        loadSavedScenarios();
+
+        console.log('✅ Saved content refreshed successfully');
+
+    } catch (error) {
+        console.error('❌ Error refreshing saved content:', error);
+    }
+}
 // ============================================
 // BULK IMPORT FUNCTION (Import Both Types)
 // ============================================
