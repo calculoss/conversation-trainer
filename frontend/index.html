@@ -1607,12 +1607,22 @@ MEETING TYPE: ${scenarioData.type}`;
             return scenarios[scenarioKey] || 'Practice conversation scenario';
         }
 
+        // Enhanced request data function with debugging
         function getRequestData() {
             debugLog('Building request data');
             const baseData = {
                 user_name: `${appState.selectedRole}_user`,
                 personality_type: appState.selectedPersonality
             };
+
+            // Debug logging to see what's being sent
+            debugLog('🔍 REQUEST DATA DEBUG:', {
+                selectedRole: appState.selectedRole,
+                selectedScenario: appState.selectedScenario,
+                selectedPersonality: appState.selectedPersonality,
+                hasCustomCharacter: !!customCharacterData,
+                hasCustomScenario: !!customScenarioData
+            });
 
             if (appState.selectedPersonality === 'custom_character' && customCharacterData) {
                 baseData.custom_character = customCharacterData;
@@ -1628,7 +1638,7 @@ MEETING TYPE: ${scenarioData.type}`;
                 debugLog('Added standard scenario');
             }
 
-            debugLog('Request data built', baseData);
+            debugLog('🚀 FINAL REQUEST DATA:', baseData);
             return baseData;
         }
 
@@ -1682,19 +1692,18 @@ MEETING TYPE: ${scenarioData.type}`;
             statusIndicator.style.color = '#dc2626';
         }
 
-        // Conversation management
+        // Enhanced start conversation with better error handling
         async function startConversation() {
             debugLog('🚀 START CONVERSATION CALLED');
+            debugLog('🎯 Current app state:', appState);
 
             try {
-                debugLog('Starting conversation with state', appState);
-
                 const startBtn = document.getElementById('startConversation');
                 startBtn.disabled = true;
                 startBtn.innerHTML = '<span>⏳</span><span>Starting Session...</span>';
 
                 const requestData = getRequestData();
-                debugLog('Sending start conversation request', requestData);
+                debugLog('📤 Sending request to backend:', requestData);
 
                 const response = await fetch(`${API_BASE_URL}/api/conversations/start`, {
                     method: 'POST',
@@ -1704,20 +1713,18 @@ MEETING TYPE: ${scenarioData.type}`;
                     body: JSON.stringify(requestData)
                 });
 
-                debugLog('Response received', { status: response.status, ok: response.ok });
+                debugLog('📥 Backend response status:', response.status);
 
                 if (!response.ok) {
                     const errorText = await response.text();
-                    debugLog('Response error', errorText);
-                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                    debugLog('❌ Backend error response:', errorText);
+                    throw new Error(`Backend error (${response.status}): ${errorText}`);
                 }
 
                 const data = await response.json();
-                debugLog('Start conversation response', data);
+                debugLog('✅ Backend success response:', data);
 
                 if (data.success) {
-                    debugLog('✅ API responded successfully, setting up conversation');
-
                     appState.currentConversation = data;
                     appState.conversationHistory = [{
                         sender: data.personality_name,
@@ -1726,15 +1733,10 @@ MEETING TYPE: ${scenarioData.type}`;
                         sender_type: 'ai_personality'
                     }];
 
-                    debugLog('🎬 About to switch to chat screen');
-
                     const switchSuccess = switchToChat();
-
                     if (!switchSuccess) {
                         throw new Error('Failed to switch to chat screen');
                     }
-
-                    debugLog('🎨 Initializing chat interface');
 
                     const messagesArea = document.getElementById('messagesArea');
                     if (messagesArea) {
@@ -1751,14 +1753,14 @@ MEETING TYPE: ${scenarioData.type}`;
                     addSystemMessage('Practice session started. Your conversation partner is ready.');
                     addAIMessage(data.opening_message);
 
-                    debugLog('🎉 Conversation started successfully - chat should be visible');
+                    debugLog('🎉 Conversation started successfully');
 
                 } else {
-                    throw new Error(data.error || 'Failed to start conversation');
+                    throw new Error(data.error || 'Backend reported failure');
                 }
             } catch (error) {
-                debugLog('❌ Error starting conversation', error);
-                showErrorMessage(`Unable to start conversation: ${error.message}`);
+                debugLog('💥 CONVERSATION START ERROR:', error);
+                showErrorMessage(`Failed to start conversation: ${error.message}`);
 
                 const startBtn = document.getElementById('startConversation');
                 startBtn.disabled = false;
@@ -1878,7 +1880,40 @@ MEETING TYPE: ${scenarioData.type}`;
 
         // Chat UI functions
         function updateChatHeader() {
+            // Complete mapping for all DISC-based personalities
             const personalities = {
+                // New DISC-based personalities
+                'infrastructure_engineer': {
+                    name: 'Terry Mitchell',
+                    avatar: 'TM',
+                    description: 'Senior Infrastructure Engineer • Technical expert, detail-oriented'
+                },
+                'community_engagement': {
+                    name: 'Sarah Chen',
+                    avatar: 'SC',
+                    description: 'Community Engagement Officer • People-focused, diplomatic'
+                },
+                'budget_director': {
+                    name: 'David Walsh',
+                    avatar: 'DW',
+                    description: 'Budget & Finance Director • Numbers-driven, direct about constraints'
+                },
+                'union_rep': {
+                    name: 'Maria Santos',
+                    avatar: 'MS',
+                    description: 'Union Representative • Assertive advocate for workers\' rights'
+                },
+                'councillor_thompson': {
+                    name: 'Robert Thompson',
+                    avatar: 'RT',
+                    description: 'Long-term Councillor • Steady, consensus-building approach'
+                },
+                'strategic_planner': {
+                    name: 'Emily Kim',
+                    avatar: 'EK',
+                    description: 'Strategic Planner • Analytical yet enthusiastic about new ideas'
+                },
+                // Legacy personalities (if still needed)
                 'skeptical_councillor': {
                     name: 'Councillor Margaret Stevens',
                     avatar: 'MS',
@@ -1889,6 +1924,7 @@ MEETING TYPE: ${scenarioData.type}`;
                     avatar: 'RC',
                     description: 'Local business owner • Concerned about service value'
                 },
+                // Custom character
                 'custom_character': {
                     name: customCharacterData ? customCharacterData.name : 'Custom Character',
                     avatar: customCharacterData ? customCharacterData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'CC',
@@ -1901,6 +1937,13 @@ MEETING TYPE: ${scenarioData.type}`;
                 document.getElementById('participantAvatar').textContent = personality.avatar;
                 document.getElementById('participantName').textContent = personality.name;
                 document.getElementById('scenarioDescription').textContent = personality.description;
+                debugLog('Chat header updated', { selectedPersonality: appState.selectedPersonality, personality });
+            } else {
+                debugLog('⚠️ Unknown personality type', appState.selectedPersonality);
+                // Fallback
+                document.getElementById('participantAvatar').textContent = 'AI';
+                document.getElementById('participantName').textContent = 'Practice Partner';
+                document.getElementById('scenarioDescription').textContent = 'Conversation practice session';
             }
         }
 
@@ -1918,12 +1961,21 @@ MEETING TYPE: ${scenarioData.type}`;
         }
 
         function addAIMessage(content) {
+            // Updated avatar mapping for all personalities
             const personalities = {
+                'infrastructure_engineer': 'TM',
+                'community_engagement': 'SC',
+                'budget_director': 'DW',
+                'union_rep': 'MS',
+                'councillor_thompson': 'RT',
+                'strategic_planner': 'EK',
                 'skeptical_councillor': 'MS',
                 'frustrated_resident': 'RC',
                 'custom_character': customCharacterData ? customCharacterData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'CC'
             };
+
             const avatar = personalities[appState.selectedPersonality] || 'AI';
+            debugLog('Adding AI message', { personality: appState.selectedPersonality, avatar, content: content.substring(0, 50) + '...' });
             addMessage('ai', content, avatar);
         }
 
