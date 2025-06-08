@@ -2334,30 +2334,32 @@ function testStorage() {
 // SCREEN SWITCHING
 // ============================================
 function switchToChat() {
-    debugLog('🎬 SWITCHING TO CHAT SCREEN');
+    debugLog('🎬 SWITCHING TO CHAT SCREEN FROM TABS');
 
     try {
-        const setupScreen = document.getElementById('setupScreen');
-        const chatScreen = document.getElementById('chatScreen');
+        // Hide all tab content
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.style.display = 'none';
+        });
 
-        if (!setupScreen || !chatScreen) {
-            throw new Error('Missing required screen elements');
+        // Hide tab navigation
+        const tabNavigation = document.querySelector('.tab-navigation');
+        if (tabNavigation) {
+            tabNavigation.style.display = 'none';
         }
 
-        setupScreen.style.display = 'none';
-        setupScreen.classList.add('hidden');
+        // Show chat screen
+        const chatScreen = document.getElementById('chatScreen');
+        if (chatScreen) {
+            chatScreen.style.display = 'flex';
+            chatScreen.classList.add('active');
+        }
 
-        chatScreen.style.display = 'flex';
-        chatScreen.classList.add('active');
-
-        chatScreen.offsetHeight; // Force layout recalculation
-
-        debugLog('🎯 Screen switch completed successfully');
+        debugLog('🎯 Chat screen activated, tabs hidden');
         return true;
 
     } catch (error) {
-        debugLog('❌ Error switching screens', error);
-        showErrorMessage(`Screen switching error: ${error.message}`);
+        debugLog('❌ Error switching to chat screen:', error);
         return false;
     }
 }
@@ -3049,23 +3051,36 @@ async function sendMessage() {
 
 function endConversation() {
     if (confirm('Are you sure you want to end this practice session?')) {
-        debugLog('Ending conversation');
+        debugLog('🏁 Ending conversation and returning to tabs');
 
-        switchToSetup();
+        // Hide chat screen
+        const chatScreen = document.getElementById('chatScreen');
+        if (chatScreen) {
+            chatScreen.style.display = 'none';
+            chatScreen.classList.remove('active');
+        }
 
-        document.getElementById('messagesArea').innerHTML = '';
-        document.querySelectorAll('.option-card, .personality-card').forEach(card => {
-            card.classList.remove('selected');
+        // Show tab navigation
+        const tabNavigation = document.querySelector('.tab-navigation');
+        if (tabNavigation) {
+            tabNavigation.style.display = 'block';
+        }
+
+        // Show tab content
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.style.display = 'block';
         });
 
-        // Reset custom options
-        if (appState.selectedPersonality === 'custom_character') {
-            resetCustomCharacterCard();
-        }
+        // Return to Quick Start tab
+        switchToTab('quick-start');
 
-        if (appState.selectedScenario === 'custom_scenario') {
-            resetCustomScenarioCard();
-        }
+        // Clear messages and reset state
+        document.getElementById('messagesArea').innerHTML = '';
+
+        // Clear Quick Start selections
+        document.querySelectorAll('#quick-start-tab .option-card, #quick-start-tab .personality-card').forEach(card => {
+            card.classList.remove('selected');
+        });
 
         // Reset state
         appState.selectedRole = null;
@@ -3073,16 +3088,14 @@ function endConversation() {
         appState.selectedPersonality = null;
         appState.currentConversation = null;
         appState.conversationHistory = [];
-        customCharacterData = null;
-        customScenarioData = null;
 
         const messageInput = document.getElementById('messageInput');
         messageInput.value = '';
         messageInput.disabled = true;
         document.getElementById('sendButton').disabled = true;
 
-        updateStartButton();
-        debugLog('Conversation ended and reset complete');
+        updateQuickStartButton();
+        debugLog('✅ Returned to Quick Start tab');
     }
 }
 
@@ -3231,46 +3244,54 @@ function handleInputKeydown(event) {
 function setupEventListeners() {
     debugLog('🔧 Setting up all event listeners including tab system');
 
-    // Quick Start role and scenario selection (existing logic adapted for tab)
+    // Quick Start role and scenario selection
     document.querySelectorAll('#quick-start-tab .option-card').forEach(card => {
-        if (card.id === 'customCharacterOption' || card.id === 'customScenarioOption') {
-            return; // Skip custom options in Quick Start
-        }
         card.addEventListener('click', handleQuickStartSelection);
     });
 
-    // Main action buttons
-    document.getElementById('quickStartButton').addEventListener('click', startConversation);
+    // UPDATED: Connect both start buttons
+    const quickStartBtn = document.getElementById('quickStartButton');
+    const originalStartBtn = document.getElementById('startConversation');
+
+    if (quickStartBtn) {
+        quickStartBtn.addEventListener('click', startConversation);
+    }
+    if (originalStartBtn) {
+        originalStartBtn.addEventListener('click', startConversation);
+    }
+
+    // Rest of existing event listeners...
     document.getElementById('endConversation').addEventListener('click', endConversation);
     document.getElementById('sendButton').addEventListener('click', sendMessage);
 
-    // Message input
     const messageInput = document.getElementById('messageInput');
     if (messageInput) {
         messageInput.addEventListener('keydown', handleInputKeydown);
     }
 
-    // Setup custom character and scenario systems (existing)
     setupCustomCharacterListeners();
     setupCustomScenarioListeners();
 
-    debugLog('✅ All event listeners set up including tab functionality');
+    debugLog('✅ All event listeners set up including Quick Start integration');
 }
 function handleQuickStartSelection(event) {
-    debugLog('Quick Start selection handler called');
+    debugLog('🚀 Quick Start selection handler called');
     const card = event.currentTarget;
     const parent = card.parentElement;
 
     // Clear selections within this panel only
-    parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    parent.querySelectorAll('.option-card, .personality-card').forEach(c => c.classList.remove('selected'));
     card.classList.add('selected');
 
     if (card.dataset.role) {
         appState.selectedRole = card.dataset.role;
-        debugLog('Selected role in Quick Start', appState.selectedRole);
+        debugLog('✅ Selected role in Quick Start:', appState.selectedRole);
     } else if (card.dataset.scenario) {
         appState.selectedScenario = card.dataset.scenario;
-        debugLog('Selected scenario in Quick Start', appState.selectedScenario);
+        debugLog('✅ Selected scenario in Quick Start:', appState.selectedScenario);
+    } else if (card.dataset.personality) {
+        appState.selectedPersonality = card.dataset.personality;
+        debugLog('✅ Selected personality in Quick Start:', appState.selectedPersonality);
     }
 
     updateQuickStartButton();
