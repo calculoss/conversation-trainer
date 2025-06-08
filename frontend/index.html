@@ -660,7 +660,60 @@
             z-index: 1000;
             backdrop-filter: blur(4px);
         }
+        /* ============================================
+   SAVED CONTENT STYLING (PHASE 1)
+   ============================================ */
 
+        /* Saved Colleague Cards */
+        .personality-card.saved-colleague {
+            border: 2px solid #f59e0b;
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            position: relative;
+        }
+
+        .personality-card.saved-colleague:hover {
+            border-color: #d97706;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px -2px rgba(245, 158, 11, 0.25);
+        }
+
+        .personality-card.saved-colleague.selected {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+        }
+
+        .saved-avatar {
+            background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+            color: white !important;
+        }
+
+        .saved-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #065f46;
+            color: #d1fae5;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .saved-personality-preview {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .saved-description {
+            font-size: 0.85rem;
+            color: #374151;
+            line-height: 1.4;
+            margin: 0;
+            font-style: italic;
+        }
         .modal-content {
             position: absolute;
             top: 50%;
@@ -2594,17 +2647,87 @@ function setupCustomScenarioListeners() {
 function loadSavedColleagues() {
     debugLog('📚 Loading saved colleagues into personality grid');
 
-    const savedColleagues = getStoredColleagues();
-    const colleagueCount = Object.keys(savedColleagues).length;
+    try {
+        const savedColleagues = getStoredColleagues();
+        const colleagueCount = Object.keys(savedColleagues).length;
 
-    console.log(`Phase 1 Test: Found ${colleagueCount} saved colleagues in storage`);
+        console.log(`Phase 1: Found ${colleagueCount} saved colleagues in storage`);
 
-    if (colleagueCount > 0) {
-        console.log('Saved colleagues found:', Object.keys(savedColleagues));
-        console.log('First colleague:', Object.values(savedColleagues)[0]);
-    } else {
-        console.log('No saved colleagues found - import some to test!');
+        if (colleagueCount === 0) {
+            console.log('No saved colleagues found - create some to test!');
+            return;
+        }
+
+        const personalityGrid = document.querySelector('.personality-grid');
+        if (!personalityGrid) {
+            console.error('❌ Personality grid not found');
+            return;
+        }
+
+        // Add saved colleagues to the grid
+        Object.values(savedColleagues).forEach(colleague => {
+            console.log('Creating card for:', colleague.name);
+            const colleagueCard = createSavedColleagueCard(colleague);
+            personalityGrid.insertBefore(colleagueCard, personalityGrid.lastElementChild);
+        });
+
+        console.log(`✅ Added ${colleagueCount} saved colleague cards to personality grid`);
+
+    } catch (error) {
+        console.error('❌ Error loading saved colleagues:', error);
     }
+}
+function createSavedColleagueCard(colleague) {
+    debugLog('🎨 Creating card for saved colleague:', colleague.name);
+
+    const cardDiv = document.createElement('div');
+    cardDiv.className = 'personality-card saved-colleague';
+    cardDiv.dataset.personality = `saved_colleague_${colleague.id}`;
+
+    // Create avatar initials
+    const initials = colleague.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+
+    cardDiv.innerHTML = `
+        <div class="personality-header">
+            <div class="personality-avatar saved-avatar">${initials}</div>
+            <div class="personality-info">
+                <div class="personality-name">${colleague.name}</div>
+                <div class="personality-role">${colleague.role}</div>
+            </div>
+            <div class="saved-badge">💾 Saved</div>
+        </div>
+        <div class="saved-personality-preview">
+            <p class="saved-description">${colleague.personality.length > 80 ? colleague.personality.substring(0, 80) + '...' : colleague.personality}</p>
+        </div>
+        <div class="personality-description">
+            <strong>Custom colleague:</strong> ${colleague.motivations || 'Professional development focused'}
+        </div>
+    `;
+
+    // Add click handler for saved colleague
+    cardDiv.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Clear other selections
+        document.querySelectorAll('.personality-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+
+        // Select this card
+        cardDiv.classList.add('selected');
+
+        // Set app state
+        appState.selectedPersonality = `saved_colleague_${colleague.id}`;
+
+        // Store the colleague data for use in conversation
+        customCharacterData = colleague;
+
+        debugLog('✅ Selected saved colleague:', colleague.name);
+        updateStartButton();
+    });
+
+    return cardDiv;
 }
 // ============================================
 // INITIALIZATION
