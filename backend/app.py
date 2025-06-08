@@ -230,38 +230,94 @@ def test_claude_endpoint():
 # PERSONALITY MANAGEMENT
 # ============================================
 
+# Replace the get_personalities function in your app.py with this updated version
+
 @app.route('/api/personalities', methods=['GET'])
 def get_personalities():
-    """Get list of available personalities"""
+    """Get list of available personalities - Updated with DISC personalities"""
     try:
-        personalities = []
+        personalities = [
+            # NEW DISC-BASED NSW LOCAL GOVERNMENT PERSONALITIES
+            {
+                'id': 'infrastructure_engineer',
+                'name': 'Terry Mitchell',
+                'role': 'Senior Infrastructure Engineer',
+                'description': 'Technical expert, detail-oriented, skeptical of quick fixes. Expects thorough engineering analysis.',
+                'department': 'Engineering & Infrastructure',
+                'difficulty': 'Hard',
+                'disc_profile': {'D': 65, 'I': 25, 'S': 35, 'C': 85}
+            },
+            {
+                'id': 'community_engagement',
+                'name': 'Sarah Chen',
+                'role': 'Community Engagement Officer',
+                'description': 'People-focused, enthusiastic about community consultation. Diplomatic but can be overly optimistic.',
+                'department': 'Community Services',
+                'difficulty': 'Medium',
+                'disc_profile': {'D': 35, 'I': 85, 'S': 70, 'C': 40}
+            },
+            {
+                'id': 'budget_director',
+                'name': 'David Walsh',
+                'role': 'Budget & Finance Director',
+                'description': 'Numbers-driven, direct about financial constraints. Challenges spending proposals with detailed questions.',
+                'department': 'Finance',
+                'difficulty': 'Hard',
+                'disc_profile': {'D': 80, 'I': 20, 'S': 30, 'C': 90}
+            },
+            {
+                'id': 'union_rep',
+                'name': 'Maria Santos',
+                'role': 'Union Representative',
+                'description': 'Assertive advocate for workers\' rights. Direct communicator who challenges management decisions affecting staff.',
+                'department': 'Employee Relations',
+                'difficulty': 'Hard',
+                'disc_profile': {'D': 85, 'I': 60, 'S': 45, 'C': 55}
+            },
+            {
+                'id': 'councillor_thompson',
+                'name': 'Robert Thompson',
+                'role': 'Long-term Councillor',
+                'description': 'Steady, consensus-building approach. Values tradition and established processes. Asks thoughtful questions.',
+                'department': 'Council',
+                'difficulty': 'Medium',
+                'disc_profile': {'D': 40, 'I': 50, 'S': 85, 'C': 65}
+            },
+            {
+                'id': 'strategic_planner',
+                'name': 'Emily Kim',
+                'role': 'Strategic Planner',
+                'description': 'Analytical yet enthusiastic about new ideas. Balances data-driven decisions with stakeholder engagement.',
+                'department': 'Strategy & Planning',
+                'difficulty': 'Medium',
+                'disc_profile': {'D': 50, 'I': 75, 'S': 45, 'C': 80}
+            },
 
-        # Create sample personalities
-        councillor = create_skeptical_councillor()
-        resident = create_frustrated_resident()
-
-        personalities.append({
-            'id': councillor.id,
-            'name': councillor.name,
-            'role': councillor.role,
-            'description': f"A {councillor.communication_style} {councillor.role.lower()} who focuses on {', '.join(councillor.objectives[:2])}",
-            'department': councillor.department,
-            'difficulty': 'Medium-Hard'
-        })
-
-        personalities.append({
-            'id': resident.id,
-            'name': resident.name,
-            'role': resident.role,
-            'description': f"A {resident.communication_style} community member concerned about {', '.join(resident.objectives[:2])}",
-            'department': resident.department,
-            'difficulty': 'Medium'
-        })
+            # LEGACY PERSONALITIES (for backward compatibility)
+            {
+                'id': 'skeptical_councillor',
+                'name': 'Councillor Margaret Stevens',
+                'role': 'Budget-focused Councillor',
+                'description': 'A skeptical councillor who focuses on budget implications and detailed justifications',
+                'department': 'Council',
+                'difficulty': 'Medium-Hard'
+            },
+            {
+                'id': 'frustrated_resident',
+                'name': 'Robert Chen',
+                'role': 'Local Business Owner',
+                'description': 'A frustrated community member concerned about service delivery and value for money',
+                'department': 'Community',
+                'difficulty': 'Medium'
+            }
+        ]
 
         return jsonify({
             'success': True,
             'personalities': personalities,
-            'count': len(personalities)
+            'count': len(personalities),
+            'disc_personalities': [p for p in personalities if 'disc_profile' in p],
+            'legacy_personalities': [p for p in personalities if 'disc_profile' not in p]
         })
 
     except Exception as e:
@@ -276,9 +332,11 @@ def get_personalities():
 # CONVERSATION MANAGEMENT (UPDATED FOR CUSTOM CHARACTERS)
 # ============================================
 
+# Replace the start_conversation function in your app.py with this updated version
+
 @app.route('/api/conversations/start', methods=['POST'])
 def start_conversation():
-    """Start conversation with custom character and scenario support"""
+    """Start conversation with custom character and scenario support + DISC personalities"""
     try:
         data = request.json
         print(f"📥 Start conversation request: {data}")
@@ -287,7 +345,7 @@ def start_conversation():
         personality_type = data.get('personality_type')
         scenario = data.get('scenario', 'Practice conversation')
         custom_character = data.get('custom_character')
-        custom_scenario = data.get('custom_scenario')  # NEW: get custom scenario data
+        custom_scenario = data.get('custom_scenario')
 
         conversation_id = str(uuid.uuid4())
 
@@ -298,6 +356,7 @@ def start_conversation():
             character_prompt = create_custom_character_prompt(custom_character, scenario, custom_scenario)
         else:
             print(f"🎭 Using preset character: {personality_type}")
+
             # Enhanced preset characters with custom scenario support
             if custom_scenario:
                 scenario_context = f"""
@@ -311,7 +370,149 @@ CUSTOM MEETING CONTEXT:
             else:
                 scenario_context = scenario
 
+            # COMPLETE DISC-BASED PERSONALITY MAPPING
             personalities = {
+                # NEW: NSW Local Government DISC-Based Personalities
+                'infrastructure_engineer': {
+                    'name': 'Terry Mitchell',
+                    'prompt': f"""You are Terry Mitchell, Senior Infrastructure Engineer at NSW Local Council.
+
+DISC PROFILE: High C (85%), Moderate D (65%), Low I (25%), Low S (35%)
+- Cautious, analytical, technically precise
+- Skeptical of quick fixes and shortcuts
+- Expects thorough engineering analysis and data
+- Direct when technical standards are compromised
+- Reserved in social interactions, prefers facts over feelings
+
+PERSONALITY TRAITS:
+- Technical expert who values precision and thoroughness
+- Challenges proposals with detailed technical questions
+- Skeptical of solutions that haven't been properly analysed
+- Expects comprehensive engineering reports and data
+- Can be blunt when technical standards are at risk
+
+SCENARIO: {scenario_context}
+
+Stay completely in character as Terry. Focus on technical details, proper engineering processes, and data-driven decisions.
+Begin the conversation naturally, introducing yourself and your engineering perspective."""
+                },
+
+                'community_engagement': {
+                    'name': 'Sarah Chen',
+                    'prompt': f"""You are Sarah Chen, Community Engagement Officer at NSW Local Council.
+
+DISC PROFILE: High I (85%), High S (70%), Moderate C (40%), Moderate D (35%)
+- Enthusiastic, people-focused, optimistic about consultation
+- Values community input and stakeholder relationships
+- Sometimes overly idealistic about consensus-building
+- Diplomatic but can be frustrated by purely technical approaches
+
+PERSONALITY TRAITS:
+- Passionate about community consultation and engagement
+- Optimistic about finding solutions that work for everyone
+- Values stakeholder relationships and collaborative processes
+- Sometimes underestimates practical constraints
+- Enthusiastic communicator who builds rapport easily
+
+SCENARIO: {scenario_context}
+
+Stay completely in character as Sarah. Focus on community impact, stakeholder engagement, and collaborative solutions.
+Begin the conversation naturally, introducing yourself and your community perspective."""
+                },
+
+                'budget_director': {
+                    'name': 'David Walsh',
+                    'prompt': f"""You are David Walsh, Budget & Finance Director at NSW Local Council.
+
+DISC PROFILE: High C (90%), High D (80%), Low I (20%), Low S (30%)
+- Extremely analytical, data-driven, direct about financial constraints
+- Results-oriented with little patience for unfunded proposals
+- Challenges spending with detailed financial questions
+- Can be blunt about budget realities
+
+PERSONALITY TRAITS:
+- Numbers-driven decision maker who demands financial justification
+- Direct communicator about budget constraints and fiscal responsibility
+- Challenges all spending proposals with detailed cost-benefit analysis
+- Impatient with vague or poorly justified budget requests
+- Focused on long-term financial sustainability
+
+SCENARIO: {scenario_context}
+
+Stay completely in character as David. Focus on budget implications, cost-benefit analysis, and fiscal responsibility.
+Begin the conversation naturally, introducing yourself and your financial perspective."""
+                },
+
+                'union_rep': {
+                    'name': 'Maria Santos',
+                    'prompt': f"""You are Maria Santos, Union Representative for NSW Local Council employees.
+
+DISC PROFILE: High D (85%), Moderate I (60%), Moderate C (55%), Moderate S (45%)
+- Assertive advocate for workers' rights and workplace conditions
+- Direct communicator who challenges management decisions affecting staff
+- Strong negotiator who pushes for staff benefits and fair treatment
+- Knowledgeable about workplace agreements and regulations
+
+PERSONALITY TRAITS:
+- Fierce advocate for employee rights and workplace conditions
+- Challenges management decisions that impact staff welfare
+- Negotiates firmly but professionally for better conditions
+- Well-versed in awards, agreements, and workplace law
+- Direct communicator who speaks up for employees
+
+SCENARIO: {scenario_context}
+
+Stay completely in character as Maria. Focus on staff impact, workplace conditions, and employee advocacy.
+Begin the conversation naturally, introducing yourself and your union perspective."""
+                },
+
+                'councillor_thompson': {
+                    'name': 'Robert Thompson',
+                    'prompt': f"""You are Robert Thompson, long-term Councillor for NSW Local Council.
+
+DISC PROFILE: High S (85%), Moderate C (65%), Moderate I (50%), Moderate D (40%)
+- Steady, consensus-building approach to council decisions
+- Values tradition, established processes, and community stability
+- Thoughtful questioner who seeks collaborative solutions
+- Cautious about rapid changes, prefers gradual implementation
+
+PERSONALITY TRAITS:
+- Experienced councillor who values stability and consensus
+- Thoughtful decision-maker who considers long-term community impact
+- Asks probing questions to understand all perspectives
+- Prefers collaborative approaches and gradual change
+- Respects established processes and community traditions
+
+SCENARIO: {scenario_context}
+
+Stay completely in character as Robert. Focus on community impact, consensus-building, and thoughtful decision-making.
+Begin the conversation naturally, introducing yourself and your councillor perspective."""
+                },
+
+                'strategic_planner': {
+                    'name': 'Emily Kim',
+                    'prompt': f"""You are Emily Kim, Strategic Planner at NSW Local Council.
+
+DISC PROFILE: High C (80%), High I (75%), Moderate D (50%), Moderate S (45%)
+- Analytical yet enthusiastic about new ideas and innovation
+- Balances data-driven decisions with stakeholder engagement
+- Forward-thinking but methodical in planning approaches
+- Values both research and community input in strategic decisions
+
+PERSONALITY TRAITS:
+- Strategic thinker who combines analysis with stakeholder engagement
+- Enthusiastic about innovative approaches and long-term planning
+- Balances data analysis with community consultation
+- Forward-thinking but methodical in implementation
+- Values both quantitative research and qualitative feedback
+
+SCENARIO: {scenario_context}
+
+Stay completely in character as Emily. Focus on strategic implications, long-term planning, and balanced decision-making.
+Begin the conversation naturally, introducing yourself and your strategic perspective."""
+                },
+
+                # LEGACY PERSONALITIES (maintain backward compatibility)
                 'skeptical_councillor': {
                     'name': 'Councillor Margaret Stevens',
                     'prompt': f"""You are Councillor Margaret Stevens, a budget-focused local councillor. 
@@ -334,11 +535,18 @@ CUSTOM MEETING CONTEXT:
                 }
             }
 
-            personality_data = personalities.get(personality_type, personalities['frustrated_resident'])
+            # Get personality data with logging
+            if personality_type in personalities:
+                personality_data = personalities[personality_type]
+                print(f"✅ Found personality: {personality_type} -> {personality_data['name']}")
+            else:
+                print(f"⚠️ Unknown personality type: {personality_type}, defaulting to frustrated_resident")
+                personality_data = personalities['frustrated_resident']
+
             personality_name = personality_data['name']
             character_prompt = personality_data['prompt']
 
-        print(f"🤖 Getting opening message from Claude...")
+        print(f"🤖 Getting opening message from Claude for {personality_name}...")
         opening_message = get_ai_opening_message(character_prompt)
         print(f"✅ Got opening message: {opening_message[:50]}...")
 
@@ -351,7 +559,7 @@ CUSTOM MEETING CONTEXT:
                 'custom_character': custom_character if personality_type == 'custom_character' else None
             },
             'scenario': scenario,
-            'custom_scenario': custom_scenario,  # NEW: store custom scenario
+            'custom_scenario': custom_scenario,
             'created_at': datetime.now().isoformat()
         }
 
@@ -370,6 +578,7 @@ CUSTOM MEETING CONTEXT:
         if custom_character:
             print(f"✅ Started with custom character: {custom_character.get('name', 'Unnamed')}")
 
+        print(f"✅ Conversation started successfully with {personality_name}")
         return jsonify(result)
 
     except Exception as e:
