@@ -924,6 +924,720 @@
             font-size: 0.8rem;
             margin-right: 0.3rem;
         }
+        /* ============================================
+           TAB INTERFACE STYLING (PHASE 2)
+           ============================================ */
+
+        /* Tab Navigation */
+        .tab-navigation {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            padding: 0 2rem;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            color: #64748b;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            color: #3b82f6;
+            background: #f8fafc;
+        }
+
+        .tab-button.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .tab-icon {
+            font-size: 1.1rem;
+        }
+
+        .tab-label {
+            white-space: nowrap;
+        }
+
+        .tab-count {
+            background: #3b82f6;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            min-width: 1.5rem;
+            text-align: center;
+            line-height: 1;
+        }
+
+        /* Tab Content */
+        .tab-content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .tab-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .tab-header p {
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        /* Enhanced Colleague Management */
+        .colleague-management,
+        .scenario-management {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+        }
+
+        .colleagues-toolbar,
+        .scenarios-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .search-filter-section {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .filter-select {
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background: white;
+            cursor: pointer;
+            min-width: 150px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+            color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        /* Grids */
+        .colleagues-grid,
+        .scenarios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #64748b;
+            border: 2px dashed #e2e8f0;
+            border-radius: 12px;
+            background: #f8fafc;
+        }
+
+        .empty-state h3 {
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-state.hidden {
+            display: none;
+        }
+
+        /* DISC Explorer */
+        .disc-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+        }
+
+        .disc-overview {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .disc-overview h3 {
+            color: #1e293b;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .disc-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .disc-type-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .disc-type-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .disc-type-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .disc-type-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .disc-type-icon.dominant {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+        }
+
+        .disc-type-icon.influence {
+            background: linear-gradient(135deg, #d97706, #92400e);
+        }
+
+        .disc-type-icon.steadiness {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+        }
+
+        .disc-type-icon.conscientiousness {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        }
+
+        .disc-type-header h4 {
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .disc-percentage {
+            background: #e2e8f0;
+            color: #64748b;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .disc-type-content p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        .disc-type-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .disc-workplace-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .disc-workplace-section h3 {
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .workplace-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .workplace-example {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .workplace-example h4 {
+            color: #1e293b;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .workplace-example p {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin: 0;
+        }
+
+        .coming-soon-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-radius: 12px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .coming-soon-section h3 {
+            color: #1e40af;
+            margin-bottom: 1rem;
+        }
+
+        .feature-preview {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .feature-preview h4 {
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-preview p {
+            color: #64748b;
+            margin: 0;
+        }
+
+        /* Panel width adjustment for Quick Start */
+        .setup-panel.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tab-nav-container {
+                padding: 0 1rem;
+                overflow-x: auto;
+            }
+
+            .tab-button {
+                padding: 0.75rem 1rem;
+                flex-shrink: 0;
+            }
+
+            .tab-label {
+                display: none;
+            }
+
+            .colleagues-toolbar,
+            .scenarios-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+
+            .search-filter-section {
+                max-width: none;
+            }
+
+            .action-buttons {
+                justify-content: stretch;
+            }
+
+            .btn {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .disc-types-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .workplace-examples {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* ============================================
+           ENHANCED CARDS STYLING (PHASE 2)
+           ============================================ */
+
+        /* Enhanced Colleague Cards */
+        .enhanced-colleague-card,
+        .enhanced-scenario-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            position: relative;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .enhanced-colleague-card:hover,
+        .enhanced-scenario-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-color: #cbd5e1;
+        }
+
+        .enhanced-colleague-card {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .enhanced-scenario-card {
+            border-left: 4px solid #10b981;
+        }
+
+        .enhanced-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .enhanced-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .enhanced-info {
+            flex: 1;
+        }
+
+        .enhanced-info h4 {
+            color: #1e293b;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 0.25rem 0;
+            line-height: 1.2;
+        }
+
+        .enhanced-info p {
+            color: #64748b;
+            font-size: 0.85rem;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .enhanced-badge {
+            background: #065f46;
+            color: #d1fae5;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .scenario-type-badge {
+            background: #1e40af;
+            color: #dbeafe;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .enhanced-title {
+            margin-bottom: 1rem;
+        }
+
+        .enhanced-title h4 {
+            color: #1e293b;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .enhanced-description {
+            color: #4b5563;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .enhanced-metadata {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .metadata-item {
+            font-size: 0.8rem;
+            color: #64748b;
+            background: #f8fafc;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .enhanced-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .action-btn.primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .action-btn.secondary {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+            color: #64748b;
+        }
+
+        .action-btn.secondary:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #475569;
+        }
+
+        /* Search and Filter Styling */
+        .search-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .filter-select {
+            color: #374151;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Loading States */
+        .loading-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .loading-card {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        /* Responsive Enhanced Cards */
+        @media (max-width: 768px) {
+            .enhanced-colleague-card,
+            .enhanced-scenario-card {
+                padding: 1rem;
+            }
+
+            .enhanced-card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .enhanced-info {
+                width: 100%;
+            }
+
+            .enhanced-actions {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                padding: 0.75rem;
+            }
+
+            .metadata-item {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Quick Start Enhancements */
+        #quickStartPersonalities .personality-card {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #quickStartPersonalities .personality-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        #quickStartPersonalities .personality-card.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        #quickStartPersonalities .personality-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 20px;
+            height: 20px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Tab Count Badges */
+        .tab-count {
+            transition: all 0.2s ease;
+        }
+
+        .tab-button.active .tab-count {
+            background: #1d4ed8;
+        }
     </style>
 </head>
 
@@ -951,326 +1665,289 @@
         <!-- Main Content -->
         <main class="main-content">
             <!-- Setup Screen -->
-            <div id="setupScreen" class="setup-screen">
-                <div class="setup-container">
-                    <!-- Role Selection -->
-                    <div class="setup-panel">
-                        <div class="panel-header">
-                            <div class="panel-icon role">👤</div>
-                            <h2 class="panel-title">Your Role</h2>
-                        </div>
-                        <div class="selection-grid">
-                            <div class="option-card" data-role="director">
-                                <div class="option-title">Director</div>
-                                <div class="option-description">Practice strategic leadership, mentoring conversations, and budget discussions with senior stakeholders.</div>
-                            </div>
-                            <div class="option-card" data-role="manager">
-                                <div class="option-title">Manager</div>
-                                <div class="option-description">Handle performance reviews, team conflicts, and operational discussions with staff and colleagues.</div>
-                            </div>
-                            <div class="option-card" data-role="customer-service">
-                                <div class="option-title">Customer Service Officer</div>
-                                <div class="option-description">Manage resident complaints, billing disputes, and challenging service-related conversations.</div>
-                            </div>
-                            <div class="option-card" data-role="project-manager">
-                                <div class="option-title">Project Manager</div>
-                                <div class="option-description">Navigate stakeholder negotiations, contractor management, and cross-departmental coordination.</div>
-                            </div>
-                        </div>
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <div class="tab-nav-container">
+                    <button class="tab-button active" data-tab="quick-start">
+                        <span class="tab-icon">🚀</span>
+                        <span class="tab-label">Quick Start</span>
+                    </button>
+                    <button class="tab-button" data-tab="my-colleagues">
+                        <span class="tab-icon">👥</span>
+                        <span class="tab-label">My Colleagues</span>
+                        <span class="tab-count" id="colleaguesTabCount">0</span>
+                    </button>
+                    <button class="tab-button" data-tab="my-scenarios">
+                        <span class="tab-icon">📋</span>
+                        <span class="tab-label">My Scenarios</span>
+                        <span class="tab-count" id="scenariosTabCount">0</span>
+                    </button>
+                    <button class="tab-button" data-tab="disc-explorer">
+                        <span class="tab-icon">🧠</span>
+                        <span class="tab-label">DISC Explorer</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Content Areas -->
+            <div class="tab-content-container">
+
+                <!-- Quick Start Tab -->
+                <div class="tab-content active" id="quick-start-tab">
+                    <div class="tab-header">
+                        <h2>Quick Start Practice Session</h2>
+                        <p>Get started quickly with built-in personalities and scenarios</p>
                     </div>
 
-                    <!-- Scenario Selection -->
-                    <div class="setup-panel">
-                        <div class="panel-header">
-                            <div class="panel-icon scenario">📋</div>
-                            <h2 class="panel-title">Practice Scenario</h2>
+                    <!-- Move existing setup-container content here -->
+                    <div class="setup-container">
+                        <!-- Role Selection -->
+                        <div class="setup-panel">
+                            <div class="panel-header">
+                                <div class="panel-icon role">👤</div>
+                                <h2 class="panel-title">Your Role</h2>
+                            </div>
+                            <div class="selection-grid">
+                                <div class="option-card" data-role="director">
+                                    <div class="option-title">Director</div>
+                                    <div class="option-description">Practice strategic leadership, mentoring conversations, and budget discussions with senior stakeholders.</div>
+                                </div>
+                                <div class="option-card" data-role="manager">
+                                    <div class="option-title">Manager</div>
+                                    <div class="option-description">Handle performance reviews, team conflicts, and operational discussions with staff and colleagues.</div>
+                                </div>
+                                <div class="option-card" data-role="customer-service">
+                                    <div class="option-title">Customer Service Officer</div>
+                                    <div class="option-description">Manage resident complaints, billing disputes, and challenging service-related conversations.</div>
+                                </div>
+                                <div class="option-card" data-role="project-manager">
+                                    <div class="option-title">Project Manager</div>
+                                    <div class="option-description">Navigate stakeholder negotiations, contractor management, and cross-departmental coordination.</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="selection-grid">
-                            <div class="option-card" data-scenario="budget_cuts">
-                                <div class="option-title">Budget Reduction Discussion</div>
-                                <div class="option-description">Practice explaining budget cuts while maintaining team morale and finding creative solutions to resource constraints.</div>
+
+                        <!-- Scenario Selection -->
+                        <div class="setup-panel">
+                            <div class="panel-header">
+                                <div class="panel-icon scenario">📋</div>
+                                <h2 class="panel-title">Practice Scenario</h2>
                             </div>
-                            <div class="option-card" data-scenario="angry_resident">
-                                <div class="option-title">Challenging Resident Interaction</div>
-                                <div class="option-description">Handle frustrated ratepayer complaints about service levels, rate increases, and council decisions.</div>
-                            </div>
-                            <div class="option-card" data-scenario="custom_scenario" id="customScenarioOption">
-                                <div class="option-title">🎯 Create Custom Scenario</div>
-                                <div class="option-description">Design your specific meeting situation. Perfect for practicing upcoming real conversations.</div>
+                            <div class="selection-grid">
+                                <div class="option-card" data-scenario="budget_cuts">
+                                    <div class="option-title">Budget Reduction Discussion</div>
+                                    <div class="option-description">Practice explaining budget cuts while maintaining team morale and finding creative solutions to resource constraints.</div>
+                                </div>
+                                <div class="option-card" data-scenario="angry_resident">
+                                    <div class="option-title">Challenging Resident Interaction</div>
+                                    <div class="option-description">Handle frustrated ratepayer complaints about service levels, rate increases, and council decisions.</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- AI Personality Selection -->
-                    <div class="setup-panel">
-                        <div class="panel-header">
-                            <div class="panel-icon personality">🎭</div>
-                            <h2 class="panel-title">AI Conversation Partner</h2>
+                        <!-- Built-in Personalities Only (for quick start) -->
+                        <div class="setup-panel full-width">
+                            <div class="panel-header">
+                                <div class="panel-icon personality">🎭</div>
+                                <h2 class="panel-title">Built-in Personalities</h2>
+                            </div>
+                            <div class="personality-grid" id="quickStartPersonalities">
+                                <!-- Built-in personalities will be loaded here -->
+                            </div>
                         </div>
-                        <div class="personality-grid">
-                            <!-- NSW Local Government Personalities -->
-                            <div class="personality-card" data-personality="infrastructure_engineer">
-                                <div class="personality-header">
-                                    <div class="personality-avatar">TM</div>
-                                    <div class="personality-info">
-                                        <div class="personality-name">Terry Mitchell</div>
-                                        <div class="personality-role">Senior Infrastructure Engineer</div>
-                                    </div>
-                                </div>
-                                <div class="disc-preview">
-                                    <div class="disc-bar">
-                                        <span class="disc-label">D</span>
-                                        <div class="disc-fill" style="width: 65%; background: #dc2626;"></div>
-                                        <span class="disc-score">65%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">I</span>
-                                        <div class="disc-fill" style="width: 25%; background: #d97706;"></div>
-                                        <span class="disc-score">25%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">S</span>
-                                        <div class="disc-fill" style="width: 35%; background: #16a34a;"></div>
-                                        <span class="disc-score">35%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">C</span>
-                                        <div class="disc-fill" style="width: 85%; background: #2563eb;"></div>
-                                        <span class="disc-score">85%</span>
-                                    </div>
-                                </div>
-                                <div class="personality-description">Technical expert, detail-oriented, skeptical of quick fixes. Expects thorough engineering analysis.</div>
-                            </div>
 
-                            <div class="personality-card" data-personality="community_engagement">
-                                <div class="personality-header">
-                                    <div class="personality-avatar">SC</div>
-                                    <div class="personality-info">
-                                        <div class="personality-name">Sarah Chen</div>
-                                        <div class="personality-role">Community Engagement Officer</div>
-                                    </div>
-                                </div>
-                                <div class="disc-preview">
-                                    <div class="disc-bar">
-                                        <span class="disc-label">D</span>
-                                        <div class="disc-fill" style="width: 35%; background: #dc2626;"></div>
-                                        <span class="disc-score">35%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">I</span>
-                                        <div class="disc-fill" style="width: 85%; background: #d97706;"></div>
-                                        <span class="disc-score">85%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">S</span>
-                                        <div class="disc-fill" style="width: 70%; background: #16a34a;"></div>
-                                        <span class="disc-score">70%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">C</span>
-                                        <div class="disc-fill" style="width: 40%; background: #2563eb;"></div>
-                                        <span class="disc-score">40%</span>
-                                    </div>
-                                </div>
-                                <div class="personality-description">People-focused, enthusiastic about community consultation. Diplomatic but can be overly optimistic.</div>
-                            </div>
-
-                            <div class="personality-card" data-personality="budget_director">
-                                <div class="personality-header">
-                                    <div class="personality-avatar">DW</div>
-                                    <div class="personality-info">
-                                        <div class="personality-name">David Walsh</div>
-                                        <div class="personality-role">Budget & Finance Director</div>
-                                    </div>
-                                </div>
-                                <div class="disc-preview">
-                                    <div class="disc-bar">
-                                        <span class="disc-label">D</span>
-                                        <div class="disc-fill" style="width: 80%; background: #dc2626;"></div>
-                                        <span class="disc-score">80%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">I</span>
-                                        <div class="disc-fill" style="width: 20%; background: #d97706;"></div>
-                                        <span class="disc-score">20%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">S</span>
-                                        <div class="disc-fill" style="width: 30%; background: #16a34a;"></div>
-                                        <span class="disc-score">30%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">C</span>
-                                        <div class="disc-fill" style="width: 90%; background: #2563eb;"></div>
-                                        <span class="disc-score">90%</span>
-                                    </div>
-                                </div>
-                                <div class="personality-description">Numbers-driven, direct about financial constraints. Challenges spending proposals with detailed questions.</div>
-                            </div>
-
-                            <div class="personality-card" data-personality="union_rep">
-                                <div class="personality-header">
-                                    <div class="personality-avatar">MS</div>
-                                    <div class="personality-info">
-                                        <div class="personality-name">Maria Santos</div>
-                                        <div class="personality-role">Union Representative</div>
-                                    </div>
-                                </div>
-                                <div class="disc-preview">
-                                    <div class="disc-bar">
-                                        <span class="disc-label">D</span>
-                                        <div class="disc-fill" style="width: 85%; background: #dc2626;"></div>
-                                        <span class="disc-score">85%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">I</span>
-                                        <div class="disc-fill" style="width: 60%; background: #d97706;"></div>
-                                        <span class="disc-score">60%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">S</span>
-                                        <div class="disc-fill" style="width: 45%; background: #16a34a;"></div>
-                                        <span class="disc-score">45%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">C</span>
-                                        <div class="disc-fill" style="width: 55%; background: #2563eb;"></div>
-                                        <span class="disc-score">55%</span>
-                                    </div>
-                                </div>
-                                <div class="personality-description">Assertive advocate for workers' rights. Direct communicator who challenges management decisions affecting staff.</div>
-                            </div>
-
-                            <div class="personality-card" data-personality="councillor_thompson">
-                                <div class="personality-header">
-                                    <div class="personality-avatar">RT</div>
-                                    <div class="personality-info">
-                                        <div class="personality-name">Robert Thompson</div>
-                                        <div class="personality-role">Long-term Councillor</div>
-                                    </div>
-                                </div>
-                                <div class="disc-preview">
-                                    <div class="disc-bar">
-                                        <span class="disc-label">D</span>
-                                        <div class="disc-fill" style="width: 40%; background: #dc2626;"></div>
-                                        <span class="disc-score">40%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">I</span>
-                                        <div class="disc-fill" style="width: 50%; background: #d97706;"></div>
-                                        <span class="disc-score">50%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">S</span>
-                                        <div class="disc-fill" style="width: 85%; background: #16a34a;"></div>
-                                        <span class="disc-score">85%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">C</span>
-                                        <div class="disc-fill" style="width: 65%; background: #2563eb;"></div>
-                                        <span class="disc-score">65%</span>
-                                    </div>
-                                </div>
-                                <div class="personality-description">Steady, consensus-building approach. Values tradition and established processes. Asks thoughtful questions.</div>
-                            </div>
-
-                            <div class="personality-card" data-personality="strategic_planner">
-                                <div class="personality-header">
-                                    <div class="personality-avatar">EK</div>
-                                    <div class="personality-info">
-                                        <div class="personality-name">Emily Kim</div>
-                                        <div class="personality-role">Strategic Planner</div>
-                                    </div>
-                                </div>
-                                <div class="disc-preview">
-                                    <div class="disc-bar">
-                                        <span class="disc-label">D</span>
-                                        <div class="disc-fill" style="width: 50%; background: #dc2626;"></div>
-                                        <span class="disc-score">50%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">I</span>
-                                        <div class="disc-fill" style="width: 75%; background: #d97706;"></div>
-                                        <span class="disc-score">75%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">S</span>
-                                        <div class="disc-fill" style="width: 45%; background: #16a34a;"></div>
-                                        <span class="disc-score">45%</span>
-                                    </div>
-                                    <div class="disc-bar">
-                                        <span class="disc-label">C</span>
-                                        <div class="disc-fill" style="width: 80%; background: #2563eb;"></div>
-                                        <span class="disc-score">80%</span>
-                                    </div>
-                                </div>
-                                <div class="personality-description">Analytical yet enthusiastic about new ideas. Balances data-driven decisions with stakeholder engagement.</div>
-                            </div>
-
-                            <div class="personality-card" data-personality="custom_character" id="customCharacterOption">
-                                <div class="personality-header">
-                                    <div class="personality-avatar">🛠️</div>
-                                    <div class="personality-info">
-                                        <div class="personality-name">Create Custom</div>
-                                        <div class="personality-role">Build Your Own</div>
-                                    </div>
-                                </div>
-                                <div class="custom-personality-preview">
-                                    <p>Design a virtual version of someone from your workplace with custom DISC profile and behaviors.</p>
-                                </div>
-                            </div>
+                        <!-- Quick Start Action Panel -->
+                        <div class="action-panel">
+                            <button class="start-button" id="quickStartButton" disabled>
+                                <span>🚀</span>
+                                <span>Begin Practice Session</span>
+                            </button>
+                            <p style="margin-top: 1rem; color: #64748b; font-size: 0.875rem;">
+                                Quick practice with built-in personalities and scenarios
+                            </p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Action Panel -->
-                    <div class="action-panel">
-                        <button class="start-button" id="startConversation" disabled>
-                            <span>🚀</span>
-                            <span>Begin Practice Session</span>
-                        </button>
-                        <p style="margin-top: 1rem; color: #64748b; font-size: 0.875rem;">
-                            Select your role, scenario, and AI partner to start practicing
-                        </p>
+                <!-- My Colleagues Tab -->
+                <div class="tab-content" id="my-colleagues-tab">
+                    <div class="tab-header">
+                        <h2>My Colleague Library</h2>
+                        <p>Manage your saved colleagues and create new ones</p>
+                    </div>
 
-                        <!-- UPDATED STORAGE MANAGEMENT SECTION -->
-                        <!-- Replace the existing storage management section in your action panel -->
-
-                        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
-                            <h4 style="font-size: 0.9rem; font-weight: 600; color: #64748b; margin-bottom: 1rem;">Storage Management</h4>
-
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
-                                <!-- View & Export -->
-                                <button class="secondary-button" onclick="showStoredColleagues()" style="font-size: 0.85rem;">
-                                    📚 View Colleagues (<span id="colleagueCount">0</span>)
+                    <div class="colleague-management">
+                        <div class="colleagues-toolbar">
+                            <div class="search-filter-section">
+                                <input type="text" class="search-input" placeholder="Search colleagues..." id="colleagueSearch">
+                                <select class="filter-select" id="colleagueFilter">
+                                    <option value="">All Colleagues</option>
+                                    <option value="recent">Recently Used</option>
+                                    <option value="unused">Never Used</option>
+                                </select>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" onclick="showCustomCharacterModal()">
+                                    ➕ Create New Colleague
                                 </button>
-                                <button class="secondary-button" onclick="showStoredScenarios()" style="font-size: 0.85rem;">
-                                    📋 View Scenarios (<span id="scenarioCount">0</span>)
-                                </button>
-
-                                <!-- Export -->
-                                <button class="secondary-button" onclick="exportColleagues()" style="font-size: 0.85rem;">
-                                    💾 Export Colleagues
-                                </button>
-                                <button class="secondary-button" onclick="exportScenarios()" style="font-size: 0.85rem;">
-                                    💾 Export Scenarios
-                                </button>
-
-                                <!-- Import -->
-                                <button class="secondary-button" onclick="importColleagues()" style="font-size: 0.85rem;">
-                                    📂 Import Colleagues
-                                </button>
-                                <button class="secondary-button" onclick="importScenarios()" style="font-size: 0.85rem;">
-                                    📂 Import Scenarios
+                                <button class="btn btn-secondary" onclick="importColleagues()">
+                                    📂 Import
                                 </button>
                             </div>
+                        </div>
 
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                                <button class="secondary-button" onclick="testStorage()" style="font-size: 0.85rem;">
-                                    🔍 Debug Storage (Console)
+                        <div class="colleagues-grid" id="colleaguesGrid">
+                            <!-- Enhanced colleague cards will be loaded here -->
+                        </div>
+
+                        <div class="empty-state colleagues-empty" id="colleaguesEmpty">
+                            <h3>No colleagues yet</h3>
+                            <p>Create your first colleague to start building your practice library</p>
+                            <button class="btn btn-primary" onclick="showCustomCharacterModal()">
+                                Create First Colleague
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Scenarios Tab -->
+                <div class="tab-content" id="my-scenarios-tab">
+                    <div class="tab-header">
+                        <h2>My Scenario Library</h2>
+                        <p>Manage your saved scenarios and create new ones</p>
+                    </div>
+
+                    <div class="scenario-management">
+                        <div class="scenarios-toolbar">
+                            <div class="search-filter-section">
+                                <input type="text" class="search-input" placeholder="Search scenarios..." id="scenarioSearch">
+                                <select class="filter-select" id="scenarioFilter">
+                                    <option value="">All Scenarios</option>
+                                    <option value="budget_review">Budget Review</option>
+                                    <option value="project_planning">Project Planning</option>
+                                    <option value="performance_discussion">Performance Discussion</option>
+                                </select>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" onclick="showCustomScenarioModal()">
+                                    ➕ Create New Scenario
                                 </button>
-                                <button class="secondary-button" onclick="clearAllStorage()" style="font-size: 0.85rem; color: #dc2626;">
-                                    🗑️ Clear All Data
+                                <button class="btn btn-secondary" onclick="importScenarios()">
+                                    📂 Import
                                 </button>
+                            </div>
+                        </div>
+
+                        <div class="scenarios-grid" id="scenariosGrid">
+                            <!-- Enhanced scenario cards will be loaded here -->
+                        </div>
+
+                        <div class="empty-state scenarios-empty" id="scenariosEmpty">
+                            <h3>No scenarios yet</h3>
+                            <p>Create your first scenario to start building your practice library</p>
+                            <button class="btn btn-primary" onclick="showCustomScenarioModal()">
+                                Create First Scenario
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DISC Explorer Tab -->
+                <div class="tab-content" id="disc-explorer-tab">
+                    <div class="tab-header">
+                        <h2>DISC Explorer</h2>
+                        <p>Learn about DISC personality types and their workplace behaviors</p>
+                    </div>
+
+                    <div class="disc-content">
+                        <div class="disc-overview">
+                            <h3>Understanding DISC Personalities</h3>
+                            <p>DISC is a behavioral assessment tool that helps understand how people prefer to communicate and work. The four types represent different behavioral styles:</p>
+                        </div>
+
+                        <div class="disc-types-grid">
+                            <div class="disc-type-card" data-type="D">
+                                <div class="disc-type-header">
+                                    <div class="disc-type-icon dominant">D</div>
+                                    <h4>Dominance</h4>
+                                    <span class="disc-percentage">3-11% of population</span>
+                                </div>
+                                <div class="disc-type-content">
+                                    <p><strong>Key Traits:</strong> Results-focused, direct, decisive, competitive</p>
+                                    <p><strong>In Meetings:</strong> Takes charge, challenges ideas, pushes for quick decisions</p>
+                                    <p><strong>Communication:</strong> Prefers brief, bottom-line focused discussions</p>
+                                </div>
+                            </div>
+
+                            <div class="disc-type-card" data-type="I">
+                                <div class="disc-type-header">
+                                    <div class="disc-type-icon influence">I</div>
+                                    <h4>Influence</h4>
+                                    <span class="disc-percentage">11-40% of population</span>
+                                </div>
+                                <div class="disc-type-content">
+                                    <p><strong>Key Traits:</strong> Enthusiastic, optimistic, social, persuasive</p>
+                                    <p><strong>In Meetings:</strong> Builds consensus, shares ideas openly, motivates others</p>
+                                    <p><strong>Communication:</strong> Enjoys interaction, storytelling, relationship-building</p>
+                                </div>
+                            </div>
+
+                            <div class="disc-type-card" data-type="S">
+                                <div class="disc-type-header">
+                                    <div class="disc-type-icon steadiness">S</div>
+                                    <h4>Steadiness</h4>
+                                    <span class="disc-percentage">69% of population</span>
+                                </div>
+                                <div class="disc-type-content">
+                                    <p><strong>Key Traits:</strong> Patient, reliable, supportive, good listener</p>
+                                    <p><strong>In Meetings:</strong> Asks clarifying questions, seeks consensus, supports team</p>
+                                    <p><strong>Communication:</strong> Prefers one-on-one, thoughtful discussion, avoids conflict</p>
+                                </div>
+                            </div>
+
+                            <div class="disc-type-card" data-type="C">
+                                <div class="disc-type-header">
+                                    <div class="disc-type-icon conscientiousness">C</div>
+                                    <h4>Conscientiousness</h4>
+                                    <span class="disc-percentage">17% of population</span>
+                                </div>
+                                <div class="disc-type-content">
+                                    <p><strong>Key Traits:</strong> Analytical, precise, systematic, quality-focused</p>
+                                    <p><strong>In Meetings:</strong> Asks detailed questions, wants data, ensures accuracy</p>
+                                    <p><strong>Communication:</strong> Prefers facts, data, written follow-up, thorough analysis</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="disc-workplace-section">
+                            <h3>DISC in NSW Local Government</h3>
+                            <p>Different roles tend to attract different DISC types. Understanding these patterns helps you practice more realistic conversations:</p>
+
+                            <div class="workplace-examples">
+                                <div class="workplace-example">
+                                    <h4>🏗️ Engineering & Infrastructure</h4>
+                                    <p>Typically High C personalities who value technical accuracy and detailed analysis</p>
+                                </div>
+                                <div class="workplace-example">
+                                    <h4>👥 Community Services</h4>
+                                    <p>Often High I and S personalities focused on relationships and service delivery</p>
+                                </div>
+                                <div class="workplace-example">
+                                    <h4>💰 Finance & Administration</h4>
+                                    <p>Usually High C personalities with attention to detail and process accuracy</p>
+                                </div>
+                                <div class="workplace-example">
+                                    <h4>📋 Customer Service</h4>
+                                    <p>Commonly High S personalities with patience and people-helping focus</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="coming-soon-section">
+                            <h3>🚀 Coming Soon</h3>
+                            <div class="feature-preview">
+                                <h4>Interactive DISC Quadrant</h4>
+                                <p>Visualize population distribution, explore your colleague library placement, and discover DISC patterns in your practice sessions.</p>
                             </div>
                         </div>
                     </div>
@@ -2550,27 +3227,20 @@ function handleInputKeydown(event) {
 // ============================================
 // EVENT LISTENERS SETUP
 // ============================================
+// Update setupEventListeners to include Quick Start handlers
 function setupEventListeners() {
-    debugLog('🔧 Setting up all event listeners');
+    debugLog('🔧 Setting up all event listeners including tab system');
 
-    // Core selection handling for roles and scenarios
-    document.querySelectorAll('.option-card').forEach(card => {
+    // Quick Start role and scenario selection (existing logic adapted for tab)
+    document.querySelectorAll('#quick-start-tab .option-card').forEach(card => {
         if (card.id === 'customCharacterOption' || card.id === 'customScenarioOption') {
-            return; // Skip - these have special handlers
+            return; // Skip custom options in Quick Start
         }
-        card.addEventListener('click', handleSelection);
-    });
-
-    // Personality card handling (excluding custom)
-    document.querySelectorAll('.personality-card').forEach(card => {
-        if (card.id === 'customCharacterOption') {
-            return; // Skip - has special handler
-        }
-        card.addEventListener('click', handleSelection);
+        card.addEventListener('click', handleQuickStartSelection);
     });
 
     // Main action buttons
-    document.getElementById('startConversation').addEventListener('click', startConversation);
+    document.getElementById('quickStartButton').addEventListener('click', startConversation);
     document.getElementById('endConversation').addEventListener('click', endConversation);
     document.getElementById('sendButton').addEventListener('click', sendMessage);
 
@@ -2580,15 +3250,31 @@ function setupEventListeners() {
         messageInput.addEventListener('keydown', handleInputKeydown);
     }
 
-    // Setup custom character system
+    // Setup custom character and scenario systems (existing)
     setupCustomCharacterListeners();
-
-    // Setup custom scenario system
     setupCustomScenarioListeners();
 
-    debugLog('✅ All event listeners set up successfully');
+    debugLog('✅ All event listeners set up including tab functionality');
 }
+function handleQuickStartSelection(event) {
+    debugLog('Quick Start selection handler called');
+    const card = event.currentTarget;
+    const parent = card.parentElement;
 
+    // Clear selections within this panel only
+    parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+
+    if (card.dataset.role) {
+        appState.selectedRole = card.dataset.role;
+        debugLog('Selected role in Quick Start', appState.selectedRole);
+    } else if (card.dataset.scenario) {
+        appState.selectedScenario = card.dataset.scenario;
+        debugLog('Selected scenario in Quick Start', appState.selectedScenario);
+    }
+
+    updateQuickStartButton();
+}
 function setupCustomCharacterListeners() {
     debugLog('🔧 Setting up custom character event listeners');
 
@@ -2860,17 +3546,390 @@ function createSavedScenarioCard(scenario) {
     return cardDiv;
 }
 // ============================================
+        // TAB SYSTEM FUNCTIONALITY (PHASE 2)
+        // ============================================
+
+        function initializeTabs() {
+            debugLog('🗂️ Initializing tab system');
+
+            // Add click handlers to tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetTab = this.dataset.tab;
+                    switchToTab(targetTab);
+                });
+            });
+
+            // Load built-in personalities into Quick Start
+            loadQuickStartPersonalities();
+
+            // Update tab counts
+            updateTabCounts();
+
+            debugLog('✅ Tab system initialized');
+        }
+
+        function switchToTab(tabId) {
+            debugLog(`🗂️ Switching to tab: ${tabId}`);
+
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+
+            // Load tab-specific content
+            switch(tabId) {
+                case 'my-colleagues':
+                    loadColleaguesTab();
+                    break;
+                case 'my-scenarios':
+                    loadScenariosTab();
+                    break;
+                case 'disc-explorer':
+                    loadDiscExplorerTab();
+                    break;
+            }
+        }
+
+        function loadQuickStartPersonalities() {
+            debugLog('🚀 Loading built-in personalities for Quick Start');
+
+            const quickStartGrid = document.getElementById('quickStartPersonalities');
+            if (!quickStartGrid) {
+                debugLog('❌ Quick start personalities grid not found');
+                return;
+            }
+
+            // Clear existing content
+            quickStartGrid.innerHTML = '';
+
+            // Built-in personalities (excluding custom option)
+            const builtInPersonalities = [
+                {
+                    id: 'infrastructure_engineer',
+                    name: 'Terry Mitchell',
+                    avatar: 'TM',
+                    role: 'Senior Infrastructure Engineer',
+                    description: 'Technical expert, detail-oriented'
+                },
+                {
+                    id: 'community_engagement',
+                    name: 'Sarah Chen',
+                    avatar: 'SC',
+                    role: 'Community Engagement Officer',
+                    description: 'People-focused, diplomatic'
+                },
+                {
+                    id: 'budget_director',
+                    name: 'David Walsh',
+                    avatar: 'DW',
+                    role: 'Budget & Finance Director',
+                    description: 'Numbers-driven, direct about constraints'
+                },
+                {
+                    id: 'union_rep',
+                    name: 'Maria Santos',
+                    avatar: 'MS',
+                    role: 'Union Representative',
+                    description: 'Assertive advocate for workers\' rights'
+                },
+                {
+                    id: 'councillor_thompson',
+                    name: 'Robert Thompson',
+                    avatar: 'RT',
+                    role: 'Long-term Councillor',
+                    description: 'Steady, consensus-building approach'
+                },
+                {
+                    id: 'strategic_planner',
+                    name: 'Emily Kim',
+                    avatar: 'EK',
+                    role: 'Strategic Planner',
+                    description: 'Analytical yet enthusiastic about new ideas'
+                }
+            ];
+
+            // Create cards for built-in personalities
+            builtInPersonalities.forEach(personality => {
+                const card = createBuiltInPersonalityCard(personality);
+                quickStartGrid.appendChild(card);
+            });
+        }
+
+        function createBuiltInPersonalityCard(personality) {
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'personality-card';
+            cardDiv.dataset.personality = personality.id;
+
+            cardDiv.innerHTML = `
+                <div class="personality-header">
+                    <div class="personality-avatar">${personality.avatar}</div>
+                    <div class="personality-info">
+                        <div class="personality-name">${personality.name}</div>
+                        <div class="personality-role">${personality.role}</div>
+                    </div>
+                </div>
+                <div class="personality-description">
+                    ${personality.description}
+                </div>
+            `;
+
+            // Add click handler
+            cardDiv.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Clear other selections in Quick Start
+                document.querySelectorAll('#quickStartPersonalities .personality-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+
+                // Select this card
+                cardDiv.classList.add('selected');
+
+                // Set app state
+                appState.selectedPersonality = personality.id;
+
+                debugLog('✅ Selected built-in personality for Quick Start:', personality.name);
+                updateQuickStartButton();
+            });
+
+            return cardDiv;
+        }
+
+        function updateQuickStartButton() {
+            const quickStartBtn = document.getElementById('quickStartButton');
+            const isReady = appState.selectedRole && appState.selectedScenario && appState.selectedPersonality;
+
+            quickStartBtn.disabled = !isReady || !appState.isConnected;
+
+            if (!appState.isConnected) {
+                quickStartBtn.innerHTML = '<span>⚠️</span><span>Connecting to Service...</span>';
+            } else if (!isReady) {
+                quickStartBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+            } else {
+                quickStartBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+            }
+        }
+
+        function loadColleaguesTab() {
+            debugLog('👥 Loading My Colleagues tab');
+
+            const colleaguesGrid = document.getElementById('colleaguesGrid');
+            const colleaguesEmpty = document.getElementById('colleaguesEmpty');
+
+            if (!colleaguesGrid || !colleaguesEmpty) {
+                debugLog('❌ Colleagues tab elements not found');
+                return;
+            }
+
+            const savedColleagues = getStoredColleagues();
+            const colleagueCount = Object.keys(savedColleagues).length;
+
+            if (colleagueCount === 0) {
+                colleaguesGrid.style.display = 'none';
+                colleaguesEmpty.classList.remove('hidden');
+            } else {
+                colleaguesEmpty.classList.add('hidden');
+                colleaguesGrid.style.display = 'grid';
+
+                // Clear existing content
+                colleaguesGrid.innerHTML = '';
+
+                // Load enhanced colleague cards
+                Object.values(savedColleagues).forEach(colleague => {
+                    const card = createEnhancedColleagueCard(colleague);
+                    colleaguesGrid.appendChild(card);
+                });
+            }
+        }
+
+        function createEnhancedColleagueCard(colleague) {
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'enhanced-colleague-card';
+
+            const initials = colleague.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+            const createdDate = new Date(colleague.created || colleague.saved_at || Date.now()).toLocaleDateString();
+
+            cardDiv.innerHTML = `
+                <div class="enhanced-card-header">
+                    <div class="enhanced-avatar">${initials}</div>
+                    <div class="enhanced-info">
+                        <h4>${colleague.name}</h4>
+                        <p>${colleague.role}</p>
+                    </div>
+                    <div class="enhanced-badge">💾</div>
+                </div>
+                <div class="enhanced-description">
+                    ${colleague.personality.length > 100 ? colleague.personality.substring(0, 100) + '...' : colleague.personality}
+                </div>
+                <div class="enhanced-metadata">
+                    <span class="metadata-item">Created: ${createdDate}</span>
+                    <span class="metadata-item">Type: Custom</span>
+                </div>
+                <div class="enhanced-actions">
+                    <button class="action-btn primary" onclick="useColleagueForPractice('${colleague.id}')">
+                        🚀 Use in Practice
+                    </button>
+                    <button class="action-btn secondary" onclick="editColleague('${colleague.id}')">
+                        ✏️ Edit
+                    </button>
+                </div>
+            `;
+
+            return cardDiv;
+        }
+
+        function loadScenariosTab() {
+            debugLog('📋 Loading My Scenarios tab');
+
+            const scenariosGrid = document.getElementById('scenariosGrid');
+            const scenariosEmpty = document.getElementById('scenariosEmpty');
+
+            if (!scenariosGrid || !scenariosEmpty) {
+                debugLog('❌ Scenarios tab elements not found');
+                return;
+            }
+
+            const savedScenarios = getStoredScenarios();
+            const scenarioCount = Object.keys(savedScenarios).length;
+
+            if (scenarioCount === 0) {
+                scenariosGrid.style.display = 'none';
+                scenariosEmpty.classList.remove('hidden');
+            } else {
+                scenariosEmpty.classList.add('hidden');
+                scenariosGrid.style.display = 'grid';
+
+                // Clear existing content
+                scenariosGrid.innerHTML = '';
+
+                // Load enhanced scenario cards
+                Object.values(savedScenarios).forEach(scenario => {
+                    const card = createEnhancedScenarioCard(scenario);
+                    scenariosGrid.appendChild(card);
+                });
+            }
+        }
+
+        function createEnhancedScenarioCard(scenario) {
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'enhanced-scenario-card';
+
+            const createdDate = new Date(scenario.created || scenario.saved_at || Date.now()).toLocaleDateString();
+            const scenarioType = scenario.type ? scenario.type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'General';
+
+            cardDiv.innerHTML = `
+                <div class="enhanced-card-header">
+                    <div class="scenario-type-badge">${scenarioType}</div>
+                    <div class="enhanced-badge">💾</div>
+                </div>
+                <div class="enhanced-title">
+                    <h4>${scenario.title}</h4>
+                </div>
+                <div class="enhanced-description">
+                    ${scenario.context.length > 120 ? scenario.context.substring(0, 120) + '...' : scenario.context}
+                </div>
+                <div class="enhanced-metadata">
+                    <span class="metadata-item">Created: ${createdDate}</span>
+                    <span class="metadata-item">Type: ${scenarioType}</span>
+                </div>
+                <div class="enhanced-actions">
+                    <button class="action-btn primary" onclick="useScenarioForPractice('${scenario.id}')">
+                        🚀 Use in Practice
+                    </button>
+                    <button class="action-btn secondary" onclick="editScenario('${scenario.id}')">
+                        ✏️ Edit
+                    </button>
+                </div>
+            `;
+
+            return cardDiv;
+        }
+
+        function loadDiscExplorerTab() {
+            debugLog('🧠 Loading DISC Explorer tab');
+            // DISC Explorer content is static for now
+            // Future: Add interactive elements, quizzes, etc.
+        }
+
+        function updateTabCounts() {
+            try {
+                const colleagues = getStoredColleagues();
+                const scenarios = getStoredScenarios();
+
+                const colleagueCount = Object.keys(colleagues).length;
+                const scenarioCount = Object.keys(scenarios).length;
+
+                const colleaguesTabCount = document.getElementById('colleaguesTabCount');
+                const scenariosTabCount = document.getElementById('scenariosTabCount');
+
+                if (colleaguesTabCount) colleaguesTabCount.textContent = colleagueCount;
+                if (scenariosTabCount) scenariosTabCount.textContent = scenarioCount;
+
+            } catch (error) {
+                debugLog('Error updating tab counts', error);
+            }
+        }
+
+        // Quick action functions
+        function useColleagueForPractice(colleagueId) {
+            debugLog('🚀 Using colleague for practice:', colleagueId);
+            // Switch to Quick Start tab and select this colleague
+            // Future implementation
+            alert('Feature coming soon: Quick practice with selected colleague');
+        }
+
+        function editColleague(colleagueId) {
+            debugLog('✏️ Editing colleague:', colleagueId);
+            // Future implementation
+            alert('Feature coming soon: Edit colleague in-place');
+        }
+
+        function useScenarioForPractice(scenarioId) {
+            debugLog('🚀 Using scenario for practice:', scenarioId);
+            // Switch to Quick Start tab and select this scenario
+            // Future implementation
+            alert('Feature coming soon: Quick practice with selected scenario');
+        }
+
+        function editScenario(scenarioId) {
+            debugLog('✏️ Editing scenario:', scenarioId);
+            // Future implementation
+            alert('Feature coming soon: Edit scenario in-place');
+        }
+// ============================================
 // INITIALIZATION
 // ============================================
+// Update the existing initializeApp function
 function initializeApp() {
-    debugLog('🚀 Initializing Professional Conversation Trainer');
-    setupEventListeners();
-    testAPIConnection();
-    updateStorageCounts();
+    debugLog('🚀 Initializing Professional Conversation Trainer with Tabs');
 
-    // NEW: Load saved content
+    // Initialize tab system FIRST
+    initializeTabs();
+
+    // Set up existing event listeners
+    setupEventListeners();
+
+    // Test API connection
+    testAPIConnection();
+
+    // Update storage counts (both old and new systems)
+    updateStorageCounts();
+    updateTabCounts();
+
+    // Load saved content (Phase 1 functionality)
     loadSavedColleagues();
     loadSavedScenarios();
+
+    debugLog('✅ Full application initialized with tab system');
 }
 
 // Initialize Application
@@ -3073,28 +4132,43 @@ function importScenarios() {
     fileInput.click();
     document.body.removeChild(fileInput);
 }
+// Update the refreshSavedContent function to also refresh tab counts
 function refreshSavedContent() {
-    debugLog('🔄 Refreshing saved content in UI');
+    debugLog('🔄 Refreshing saved content in UI and tabs');
 
     try {
-        // Remove existing saved colleague cards
+        // Remove existing saved colleague cards (from Phase 1 grid)
         document.querySelectorAll('.personality-card.saved-colleague').forEach(card => {
             card.remove();
         });
 
-        // Remove existing saved scenario cards
+        // Remove existing saved scenario cards (from Phase 1 grid)
         document.querySelectorAll('.option-card.saved-scenario').forEach(card => {
             card.remove();
         });
 
-        // Reload saved content
+        // Reload saved content into Phase 1 grids
         loadSavedColleagues();
         loadSavedScenarios();
 
-        console.log('✅ Saved content refreshed successfully');
+        // Update tab counts and content
+        updateTabCounts();
+
+        // Refresh tab content if currently viewing those tabs
+        const activeTab = document.querySelector('.tab-content.active');
+        if (activeTab) {
+            const tabId = activeTab.id.replace('-tab', '');
+            if (tabId === 'my-colleagues') {
+                loadColleaguesTab();
+            } else if (tabId === 'my-scenarios') {
+                loadScenariosTab();
+            }
+        }
+
+        debugLog('✅ Saved content and tabs refreshed successfully');
 
     } catch (error) {
-        console.error('❌ Error refreshing saved content:', error);
+        debugLog('❌ Error refreshing saved content:', error);
     }
 }
 // ============================================
