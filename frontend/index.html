@@ -3128,7 +3128,17 @@ function updateQuadrantView(view) {
         `;
     }
 }
-
+// Force initialize DISC quadrant after page load
+window.addEventListener('load', function() {
+    setTimeout(() => {
+        if (typeof initializeDISCQuadrant === 'function') {
+            initializeDISCQuadrant();
+            console.log('✅ DISC Quadrant manually initialized');
+        } else {
+            console.log('❌ initializeDISCQuadrant function not found');
+        }
+    }, 1000);
+});
 debugLog('🎨 Professional Conversation Trainer Loaded');
 </script>
 </body>
