@@ -13,9 +13,6 @@
             box-sizing: border-box;
         }
 
-        // Make deleteColleague available globally for onclick handlers
-        window.deleteColleague = deleteColleague;
-
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #f8fafc;
@@ -479,63 +476,6 @@
             border-color: #cbd5e1;
         }
 
-        /* Typing Indicator */
-        .typing-indicator {
-            display: none;
-            margin-bottom: 1.5rem;
-        }
-
-        .typing-message {
-            display: flex;
-            align-items: flex-end;
-            gap: 1rem;
-        }
-
-        .typing-content {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 1.25rem 1.5rem;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
-        }
-
-        .typing-dots {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .typing-dots span {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #cbd5e1;
-            animation: typing 1.4s infinite ease-in-out;
-        }
-
-        .typing-dots span:nth-child(1) {
-            animation-delay: -0.32s;
-        }
-
-        .typing-dots span:nth-child(2) {
-            animation-delay: -0.16s;
-        }
-
-        .typing-dots span:nth-child(3) {
-            animation-delay: 0;
-        }
-
-        @keyframes typing {
-            0%, 80%, 100% {
-                transform: scale(0.8);
-                opacity: 0.5;
-            }
-            40% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
         /* System Messages */
         .system-message {
             text-align: center;
@@ -549,7 +489,28 @@
             border: 1px solid #e2e8f0;
         }
 
-        /* Modals */
+        /* Messages */
+        .success-message, .error-message {
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .success-message {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+        }
+
+        /* Enhanced Custom Character Modal Styles */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -571,8 +532,8 @@
             padding: 2rem;
             border-radius: 16px;
             width: 90%;
-            max-width: 500px;
-            max-height: 80vh;
+            max-width: 700px;
+            max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
@@ -588,6 +549,33 @@
             font-weight: 600;
             color: #1e293b;
             margin: 0;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-description {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 1rem;
         }
 
         .form-group {
@@ -621,6 +609,12 @@
         .form-textarea {
             resize: vertical;
             min-height: 100px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .modal-actions {
@@ -663,317 +657,7 @@
             background: #2563eb;
         }
 
-        /* Messages */
-        .success-message, .error-message {
-            padding: 1rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            font-size: 0.95rem;
-            display: none;
-        }
-
-        .success-message {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            color: #166534;
-        }
-
-        .error-message {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #dc2626;
-        }
-
-        /* Debug Panel */
-        .debug-panel {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #1e293b;
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            max-width: 300px;
-            display: none;
-            z-index: 1000;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .debug-panel.show {
-            display: block;
-        }
-
-        /* Enhanced Custom Character Modal Styles */
-        .form-section {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .form-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .section-description {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-bottom: 1rem;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        /* DISC Personality Grid */
-        .disc-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .disc-card {
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 1rem;
-            background: #fafbfc;
-            transition: all 0.2s ease;
-        }
-
-        .disc-card[data-disc="D"] {
-            border-color: #dc2626;
-            background: linear-gradient(135deg, #fef2f2, #fafbfc);
-        }
-
-        .disc-card[data-disc="I"] {
-            border-color: #d97706;
-            background: linear-gradient(135deg, #fffbeb, #fafbfc);
-        }
-
-        .disc-card[data-disc="S"] {
-            border-color: #16a34a;
-            background: linear-gradient(135deg, #f0fdf4, #fafbfc);
-        }
-
-        .disc-card[data-disc="C"] {
-            border-color: #2563eb;
-            background: linear-gradient(135deg, #eff6ff, #fafbfc);
-        }
-
-        .disc-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .disc-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: white;
-        }
-
-        .disc-card[data-disc="D"] .disc-icon {
-            background: #dc2626;
-        }
-
-        .disc-card[data-disc="I"] .disc-icon {
-            background: #d97706;
-        }
-
-        .disc-card[data-disc="S"] .disc-icon {
-            background: #16a34a;
-        }
-
-        .disc-card[data-disc="C"] .disc-icon {
-            background: #2563eb;
-        }
-
-        .disc-title {
-            font-weight: 600;
-            font-size: 1rem;
-            color: #1e293b;
-        }
-
-        .disc-description {
-            font-size: 0.85rem;
-            color: #64748b;
-            line-height: 1.4;
-            margin-bottom: 1rem;
-        }
-
-        .disc-intensity {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .disc-intensity label {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #374151;
-            min-width: 60px;
-        }
-
-        .disc-slider {
-            flex: 1;
-            height: 6px;
-            border-radius: 3px;
-            background: #e2e8f0;
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        .disc-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #3b82f6;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .disc-slider::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #3b82f6;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .disc-value {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #1e293b;
-            min-width: 35px;
-            text-align: right;
-        }
-
-        .personality-summary {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-        }
-
-        .personality-summary strong {
-            color: #1e40af;
-        }
-
-        #personalityText {
-            color: #1e40af;
-            font-weight: 500;
-        }
-
-        /* Saved Colleagues */
-        .saved-colleagues-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .saved-colleague-card {
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 0.75rem;
-            background: white;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .saved-colleague-card:hover {
-            border-color: #3b82f6;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .saved-colleague-card.selected {
-            border-color: #3b82f6;
-            background: #eff6ff;
-        }
-
-        .saved-colleague-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #1e293b;
-            margin-bottom: 0.25rem;
-        }
-
-        .saved-colleague-role {
-            font-size: 0.8rem;
-            color: #64748b;
-            margin-bottom: 0.5rem;
-        }
-
-        .saved-colleague-disc {
-            font-size: 0.75rem;
-            color: #3b82f6;
-            font-weight: 500;
-        }
-
-        .delete-colleague {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #dc2626;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 0.7rem;
-            display: none;
-        }
-
-        .saved-colleague-card:hover .delete-colleague {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .disc-grid {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-            }
-
-            .form-row {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-
-            .saved-colleagues-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        /* Responsive */
         @media (max-width: 768px) {
             .setup-container {
                 grid-template-columns: 1fr;
@@ -1009,6 +693,11 @@
             .modal-content {
                 width: 95%;
                 padding: 1.5rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0.75rem;
             }
         }
     </style>
@@ -1142,19 +831,6 @@
                     <!-- Messages will be added here dynamically -->
                 </div>
 
-                <div class="typing-indicator" id="typingIndicator">
-                    <div class="typing-message">
-                        <div class="message-avatar">AI</div>
-                        <div class="typing-content">
-                            <div class="typing-dots">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="input-area">
                     <div class="input-container">
                         <textarea class="message-input" id="messageInput" placeholder="Type your response..." rows="1" disabled></textarea>
@@ -1172,37 +848,15 @@
             <div class="error-message" id="errorMessage">
                 ❌ Error starting conversation
             </div>
-
-            <!-- localStorage Success Notice -->
-            <div class="success-message" style="background: #f0fdf4; border-color: #16a34a; color: #166534; display: block;" id="storageNotice">
-                💾 <strong>Colleague Storage Active:</strong> Your custom colleagues will be saved automatically and persist across browser sessions.
-            </div>
         </main>
-    </div>
-
-    <!-- Debug Panel -->
-    <div class="debug-panel" id="debugPanel">
-        <div><strong>Debug Info:</strong></div>
-        <div id="debugContent">Loading...</div>
     </div>
 
     <!-- Enhanced Custom Character Modal -->
     <div class="modal-overlay" id="customCharacterModal">
-        <div class="modal-content" style="max-width: 700px; max-height: 90vh;">
+        <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Create Your Custom Colleague</h3>
                 <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.5rem;">Build a realistic virtual version of someone from your workplace</p>
-            </div>
-
-            <!-- Saved Colleagues Section -->
-            <div class="form-section" id="savedColleaguesSection" style="display: none;">
-                <h4 class="section-title">📁 Saved Colleagues</h4>
-                <div class="saved-colleagues-grid" id="savedColleaguesGrid">
-                    <!-- Saved colleagues will be populated here -->
-                </div>
-                <button type="button" class="btn btn-secondary" id="createNewColleague" style="width: 100%; margin-top: 1rem;">
-                    ➕ Create New Colleague
-                </button>
             </div>
 
             <!-- Character Creation Form -->
@@ -1217,97 +871,9 @@
                             <input type="text" class="form-input" id="customName" placeholder="e.g., David Morrison">
                         </div>
                         <div class="form-group" style="flex: 1;">
-                            <label class="form-label">Age Range</label>
-                            <select class="form-input" id="customAge">
-                                <option value="">Select age</option>
-                                <option value="20s">20s</option>
-                                <option value="30s">30s</option>
-                                <option value="40s">40s</option>
-                                <option value="50s">50s</option>
-                                <option value="60+">60+</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group" style="flex: 1;">
                             <label class="form-label">Job Title/Role</label>
-                            <input type="text" class="form-input" id="customRole" placeholder="e.g., Senior Engineer, Team Leader">
+                            <input type="text" class="form-input" id="customRole" placeholder="e.g., Senior Engineer">
                         </div>
-                        <div class="form-group" style="flex: 1;">
-                            <label class="form-label">Gender Pronouns</label>
-                            <select class="form-input" id="customGender">
-                                <option value="">Select pronouns</option>
-                                <option value="he/him">He/Him</option>
-                                <option value="she/her">She/Her</option>
-                                <option value="they/them">They/Them</option>
-                                <option value="prefer-not-to-say">Prefer not to say</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DISC Personality Profile -->
-                <div class="form-section">
-                    <h4 class="section-title">🧠 DISC Personality Profile</h4>
-                    <p class="section-description">Select their primary and secondary personality traits</p>
-
-                    <div class="disc-grid">
-                        <div class="disc-card" data-disc="D">
-                            <div class="disc-header">
-                                <div class="disc-icon">D</div>
-                                <div class="disc-title">Dominance</div>
-                            </div>
-                            <div class="disc-description">Direct, results-oriented, decisive, competitive, strong-willed</div>
-                            <div class="disc-intensity">
-                                <label>Intensity:</label>
-                                <input type="range" min="0" max="100" value="0" class="disc-slider" id="discD">
-                                <span class="disc-value">0%</span>
-                            </div>
-                        </div>
-
-                        <div class="disc-card" data-disc="I">
-                            <div class="disc-header">
-                                <div class="disc-icon">I</div>
-                                <div class="disc-title">Influence</div>
-                            </div>
-                            <div class="disc-description">Outgoing, enthusiastic, optimistic, people-focused, persuasive</div>
-                            <div class="disc-intensity">
-                                <label>Intensity:</label>
-                                <input type="range" min="0" max="100" value="0" class="disc-slider" id="discI">
-                                <span class="disc-value">0%</span>
-                            </div>
-                        </div>
-
-                        <div class="disc-card" data-disc="S">
-                            <div class="disc-header">
-                                <div class="disc-icon">S</div>
-                                <div class="disc-title">Steadiness</div>
-                            </div>
-                            <div class="disc-description">Patient, reliable, supportive, team-oriented, consistent</div>
-                            <div class="disc-intensity">
-                                <label>Intensity:</label>
-                                <input type="range" min="0" max="100" value="0" class="disc-slider" id="discS">
-                                <span class="disc-value">0%</span>
-                            </div>
-                        </div>
-
-                        <div class="disc-card" data-disc="C">
-                            <div class="disc-header">
-                                <div class="disc-icon">C</div>
-                                <div class="disc-title">Conscientiousness</div>
-                            </div>
-                            <div class="disc-description">Analytical, detail-oriented, systematic, quality-focused, cautious</div>
-                            <div class="disc-intensity">
-                                <label>Intensity:</label>
-                                <input type="range" min="0" max="100" value="0" class="disc-slider" id="discC">
-                                <span class="disc-value">0%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="personality-summary" id="personalitySummary">
-                        <strong>Personality Summary:</strong> <span id="personalityText">Adjust the sliders above to see their personality profile</span>
                     </div>
                 </div>
 
@@ -1317,58 +883,21 @@
 
                     <div class="form-group">
                         <label class="form-label">How do they typically behave in meetings?</label>
-                        <textarea class="form-input form-textarea" id="customPersonality" placeholder="e.g., Speaks first, asks lots of questions, prefers data over opinions, interrupts when excited..."></textarea>
+                        <textarea class="form-input form-textarea" id="customPersonality" placeholder="e.g., Speaks first, asks lots of questions, interrupts when excited, focuses on technical details..."></textarea>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">What motivates them most?</label>
-                        <textarea class="form-input form-textarea" id="customMotivations" placeholder="e.g., Recognition for achievements, job security, team harmony, solving complex problems..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">What stresses them or makes them difficult?</label>
-                        <textarea class="form-input form-textarea" id="customStressors" placeholder="e.g., Tight deadlines, unclear instructions, being micromanaged, public criticism..."></textarea>
-                    </div>
-                </div>
-
-                <!-- Communication Style -->
-                <div class="form-section">
-                    <h4 class="section-title">💬 Communication Style</h4>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Communication Pace</label>
-                            <select class="form-input" id="commPace">
-                                <option value="">Select pace</option>
-                                <option value="very-fast">Very Fast - Rapid-fire, impatient</option>
-                                <option value="fast">Fast - Quick responses, efficient</option>
-                                <option value="moderate">Moderate - Thoughtful, measured</option>
-                                <option value="slow">Slow - Deliberate, thorough</option>
-                                <option value="very-slow">Very Slow - Extremely cautious</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Directness Level</label>
-                            <select class="form-input" id="directness">
-                                <option value="">Select style</option>
-                                <option value="very-direct">Very Direct - Blunt, no sugar-coating</option>
-                                <option value="direct">Direct - Clear and straightforward</option>
-                                <option value="diplomatic">Diplomatic - Tactful approach</option>
-                                <option value="indirect">Indirect - Hints and implications</option>
-                                <option value="very-indirect">Very Indirect - Avoids confrontation</option>
-                            </select>
-                        </div>
+                        <textarea class="form-input form-textarea" id="customMotivations" placeholder="e.g., Recognition for achievements, job security, solving complex problems..."></textarea>
                     </div>
                 </div>
             </div>
 
             <div class="modal-actions">
                 <button class="btn btn-secondary" id="cancelCustomCharacter">Cancel</button>
-                <div style="display: flex; gap: 0.5rem;">
-                    <button class="btn btn-primary" id="saveCustomCharacter">
-                        💾 Save & Use Character
-                    </button>
-                </div>
+                <button class="btn btn-primary" id="saveCustomCharacter">
+                    💾 Create Character
+                </button>
             </div>
         </div>
     </div>
@@ -1425,7 +954,7 @@
         // Configuration
         const API_BASE_URL = 'https://conversation-trainer-production.up.railway.app';
 
-        // Application State
+        // Application State - defined first
         let appState = {
             selectedRole: null,
             selectedScenario: null,
@@ -1439,36 +968,40 @@
         let customCharacterData = null;
         let customScenarioData = null;
 
-        // Debug logging function
+        // Debug logging function - defined very early
         function debugLog(message, data = null) {
             const timestamp = new Date().toLocaleTimeString();
             console.log(`🔍 [${timestamp}] ${message}`, data || '');
+        }
 
-            // Update debug panel
-            const debugPanel = document.getElementById('debugPanel');
-            const debugContent = document.getElementById('debugContent');
-
-            if (debugPanel && debugContent) {
-                let debugText = `[${timestamp}] ${message}`;
-                if (data) {
-                    debugText += `<br><small>${JSON.stringify(data).substring(0, 100)}...</small>`;
-                }
-                debugContent.innerHTML = debugText;
-
-                // Show debug panel temporarily
-                debugPanel.classList.add('show');
+        // Message functions - defined early
+        function showSuccessMessage(message) {
+            const successMsg = document.getElementById('successMessage');
+            if (successMsg) {
+                successMsg.textContent = message;
+                successMsg.style.display = 'block';
                 setTimeout(() => {
-                    debugPanel.classList.remove('show');
+                    successMsg.style.display = 'none';
                 }, 4000);
             }
         }
 
-        // Screen switching functions with extensive debugging
+        function showErrorMessage(message) {
+            const errorMsg = document.getElementById('errorMessage');
+            if (errorMsg) {
+                errorMsg.textContent = message;
+                errorMsg.style.display = 'block';
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 6000);
+            }
+        }
+
+        // Screen switching functions
         function switchToChat() {
             debugLog('🎬 SWITCHING TO CHAT SCREEN');
 
             try {
-                // Get elements
                 const setupScreen = document.getElementById('setupScreen');
                 const chatScreen = document.getElementById('chatScreen');
 
@@ -1481,26 +1014,15 @@
                     throw new Error('Missing required screen elements');
                 }
 
-                // Hide setup screen
-                debugLog('🚫 Hiding setup screen');
                 setupScreen.style.display = 'none';
                 setupScreen.classList.add('hidden');
 
-                // Show chat screen
-                debugLog('✅ Showing chat screen');
                 chatScreen.style.display = 'flex';
                 chatScreen.classList.add('active');
 
-                // Force layout recalculation
-                chatScreen.offsetHeight;
+                chatScreen.offsetHeight; // Force layout recalculation
 
                 debugLog('🎯 Screen switch completed successfully');
-                debugLog('📏 Chat screen computed style', {
-                    display: window.getComputedStyle(chatScreen).display,
-                    visibility: window.getComputedStyle(chatScreen).visibility,
-                    height: window.getComputedStyle(chatScreen).height
-                });
-
                 return true;
 
             } catch (error) {
@@ -1527,10 +1049,7 @@
             }
         }
 
-        // ============================================
-        // CUSTOM CHARACTER FUNCTIONS
-        // ============================================
-
+        // Custom Character Functions
         function showCustomCharacterModal() {
             debugLog('Opening custom character modal');
             const modal = document.getElementById('customCharacterModal');
@@ -1552,30 +1071,37 @@
             debugLog('Saving custom character');
             try {
                 const name = document.getElementById('customName').value.trim();
+                const role = document.getElementById('customRole').value.trim();
                 const personality = document.getElementById('customPersonality').value.trim();
                 const motivations = document.getElementById('customMotivations').value.trim();
 
-                if (!name || !personality) {
-                    alert('Please provide at least a name and personality description.');
+                if (!name) {
+                    alert('Please provide at least a name for the colleague.');
                     return;
                 }
 
-                customCharacterData = {
+                const characterData = {
                     name: name,
+                    role: role,
                     personality: personality,
                     motivations: motivations,
-                    type: 'custom'
+                    type: 'custom',
+                    created: new Date().toISOString()
                 };
 
-                debugLog('Custom character data created', customCharacterData);
+                debugLog('Character data created', characterData);
 
+                customCharacterData = characterData;
+
+                // Update UI
                 const customOption = document.getElementById('customCharacterOption');
                 if (customOption) {
                     customOption.classList.add('selected');
                     customOption.querySelector('.option-title').textContent = name;
-                    customOption.querySelector('.option-description').textContent = `Custom character: ${personality.substring(0, 100)}...`;
+                    customOption.querySelector('.option-description').textContent = `${role} • Custom character`;
                 }
 
+                // Remove selection from other personality options
                 document.querySelectorAll('[data-personality="skeptical_councillor"], [data-personality="frustrated_resident"]').forEach(card => {
                     card.classList.remove('selected');
                 });
@@ -1586,8 +1112,8 @@
                 document.getElementById('customCharacterModal').style.display = 'none';
                 updateStartButton();
 
-                debugLog('Custom character created successfully', name);
-                showSuccessMessage('Custom character created! You can now start a practice session.');
+                debugLog('Character created successfully', name);
+                showSuccessMessage(`Custom colleague "${name}" created! You can now start a practice session.`);
 
             } catch (error) {
                 debugLog('Error creating custom character', error);
@@ -1597,14 +1123,12 @@
 
         function clearCustomCharacterForm() {
             document.getElementById('customName').value = '';
+            document.getElementById('customRole').value = '';
             document.getElementById('customPersonality').value = '';
             document.getElementById('customMotivations').value = '';
         }
 
-        // ============================================
-        // CUSTOM SCENARIO FUNCTIONS
-        // ============================================
-
+        // Custom Scenario Functions
         function showCustomScenarioModal() {
             debugLog('Opening custom scenario modal');
             const modal = document.getElementById('customScenarioModal');
@@ -1688,81 +1212,7 @@
             document.getElementById('customScenarioType').value = 'budget_review';
         }
 
-        // Enhanced request data building to include all new character data
-        function buildCharacterPersonalityPrompt(characterData) {
-            let prompt = `You are ${characterData.name}`;
-
-            if (characterData.role) {
-                prompt += `, ${characterData.role}`;
-            }
-
-            if (characterData.age) {
-                prompt += ` in your ${characterData.age}`;
-            }
-
-            if (characterData.gender && characterData.gender !== 'prefer-not-to-say') {
-                prompt += ` (${characterData.gender} pronouns)`;
-            }
-
-            prompt += '.\n\n';
-
-            // Add DISC personality information
-            if (characterData.discScores) {
-                const primaryDisc = Object.entries(characterData.discScores)
-                    .filter(([key, value]) => value > 0)
-                    .sort(([,a], [,b]) => b - a)[0];
-
-                if (primaryDisc) {
-                    const discType = discProfiles[primaryDisc[0]];
-                    prompt += `PERSONALITY PROFILE: You have a ${discType.name} (${primaryDisc[0]}) personality style. This means you tend to be ${discType.traits.join(', ')}.\n\n`;
-                }
-            }
-
-            // Add communication style
-            if (characterData.commPace) {
-                const paceDescriptions = {
-                    'very-fast': 'You speak very quickly and expect rapid responses. You get impatient with slow conversations.',
-                    'fast': 'You prefer efficient, quick exchanges and direct answers.',
-                    'moderate': 'You take a measured, thoughtful approach to conversations.',
-                    'slow': 'You speak deliberately and thoroughly, considering each response carefully.',
-                    'very-slow': 'You are extremely cautious in your responses and take time to think things through.'
-                };
-                prompt += `COMMUNICATION PACE: ${paceDescriptions[characterData.commPace] || characterData.commPace}\n\n`;
-            }
-
-            if (characterData.directness) {
-                const directnessDescriptions = {
-                    'very-direct': 'You are blunt and direct, with no sugar-coating. You say exactly what you think.',
-                    'direct': 'You communicate clearly and straightforwardly without beating around the bush.',
-                    'diplomatic': 'You use a tactful approach and consider others\' feelings when speaking.',
-                    'indirect': 'You prefer to hint at things rather than state them directly.',
-                    'very-indirect': 'You avoid direct confrontation and communicate very carefully.'
-                };
-                prompt += `COMMUNICATION STYLE: ${directnessDescriptions[characterData.directness] || characterData.directness}\n\n`;
-            }
-
-            // Add workplace behavior
-            if (characterData.personality) {
-                prompt += `MEETING BEHAVIOR: ${characterData.personality}\n\n`;
-            }
-
-            if (characterData.motivations) {
-                prompt += `MOTIVATIONS: ${characterData.motivations}\n\n`;
-            }
-
-            if (characterData.stressors) {
-                prompt += `STRESS TRIGGERS: ${characterData.stressors}\n\n`;
-            }
-
-            prompt += 'Respond as this person would in a workplace conversation. Stay completely in character, using their communication style, pace, and personality traits. Be realistic and authentic to how this person would actually behave.';
-
-            return prompt;
-        }
-
-        // ============================================
-        // CORE SELECTION HANDLER
-        // ============================================
-
+        // Core selection handler
         function handleSelection(event) {
             debugLog('Selection handler called');
             const card = event.currentTarget;
@@ -1785,39 +1235,7 @@
             updateStartButton();
         }
 
-        // ============================================
-        // REQUEST DATA BUILDING
-        // ============================================
-
-        function getRequestData() {
-            debugLog('Building enhanced request data');
-            const baseData = {
-                user_name: `${appState.selectedRole}_user`,
-                personality_type: appState.selectedPersonality
-            };
-
-            // Handle enhanced custom character
-            if (appState.selectedPersonality === 'custom_character' && customCharacterData) {
-                baseData.custom_character = customCharacterData;
-                // Build comprehensive personality prompt
-                baseData.personality_prompt = buildCharacterPersonalityPrompt(customCharacterData);
-                debugLog('Added enhanced custom character data with personality prompt');
-            }
-
-            // Handle custom scenario
-            if (appState.selectedScenario === 'custom_scenario' && customScenarioData) {
-                baseData.custom_scenario = customScenarioData;
-                baseData.scenario = buildCustomScenarioDescription(customScenarioData);
-                debugLog('Added custom scenario data');
-            } else {
-                baseData.scenario = getScenarioDescription(appState.selectedScenario);
-                debugLog('Added standard scenario');
-            }
-
-            debugLog('Enhanced request data built', baseData);
-            return baseData;
-        }
-
+        // Request data building
         function buildCustomScenarioDescription(scenarioData) {
             return `${scenarioData.title}
 
@@ -1838,10 +1256,32 @@ MEETING TYPE: ${scenarioData.type}`;
             return scenarios[scenarioKey] || 'Practice conversation scenario';
         }
 
-        // ============================================
-        // START BUTTON MANAGEMENT
-        // ============================================
+        function getRequestData() {
+            debugLog('Building request data');
+            const baseData = {
+                user_name: `${appState.selectedRole}_user`,
+                personality_type: appState.selectedPersonality
+            };
 
+            if (appState.selectedPersonality === 'custom_character' && customCharacterData) {
+                baseData.custom_character = customCharacterData;
+                debugLog('Added custom character data');
+            }
+
+            if (appState.selectedScenario === 'custom_scenario' && customScenarioData) {
+                baseData.custom_scenario = customScenarioData;
+                baseData.scenario = buildCustomScenarioDescription(customScenarioData);
+                debugLog('Added custom scenario data');
+            } else {
+                baseData.scenario = getScenarioDescription(appState.selectedScenario);
+                debugLog('Added standard scenario');
+            }
+
+            debugLog('Request data built', baseData);
+            return baseData;
+        }
+
+        // Start button management
         function updateStartButton() {
             const startBtn = document.getElementById('startConversation');
             const isReady = appState.selectedRole && appState.selectedScenario && appState.selectedPersonality;
@@ -1859,10 +1299,7 @@ MEETING TYPE: ${scenarioData.type}`;
             debugLog('Start button updated', { ready: isReady, connected: appState.isConnected });
         }
 
-        // ============================================
-        // API CONNECTION TESTING
-        // ============================================
-
+        // API connection testing
         async function testAPIConnection() {
             try {
                 debugLog('Testing API connection');
@@ -1886,27 +1323,15 @@ MEETING TYPE: ${scenarioData.type}`;
             }
         }
 
-        async function loadAvailableOptions() {
-            try {
-                const [personalitiesResponse, scenariosResponse] = await Promise.all([
-                    fetch(`${API_BASE_URL}/api/personalities`),
-                    fetch(`${API_BASE_URL}/api/scenarios`)
-                ]);
-
-                if (personalitiesResponse.ok && scenariosResponse.ok) {
-                    const personalities = await personalitiesResponse.json();
-                    const scenarios = await scenariosResponse.json();
-                    debugLog('Loaded options', { personalities, scenarios });
-                }
-            } catch (error) {
-                debugLog('Could not load dynamic options', error);
-            }
+        function showConnectionError() {
+            const statusIndicator = document.querySelector('.status-indicator');
+            statusIndicator.innerHTML = '<div style="width: 8px; height: 8px; background: #dc2626; border-radius: 50%;"></div><span>Service Offline</span>';
+            statusIndicator.style.background = '#fef2f2';
+            statusIndicator.style.borderColor = '#fecaca';
+            statusIndicator.style.color = '#dc2626';
         }
 
-        // ============================================
-        // CONVERSATION MANAGEMENT
-        // ============================================
-
+        // Conversation management
         async function startConversation() {
             debugLog('🚀 START CONVERSATION CALLED');
 
@@ -1952,14 +1377,12 @@ MEETING TYPE: ${scenarioData.type}`;
 
                     debugLog('🎬 About to switch to chat screen');
 
-                    // Switch to chat screen
                     const switchSuccess = switchToChat();
 
                     if (!switchSuccess) {
                         throw new Error('Failed to switch to chat screen');
                     }
 
-                    // Initialize chat interface
                     debugLog('🎨 Initializing chat interface');
 
                     const messagesArea = document.getElementById('messagesArea');
@@ -2003,11 +1426,9 @@ MEETING TYPE: ${scenarioData.type}`;
 
                 addUserMessage(message);
                 input.value = '';
-                autoResizeTextarea();
 
                 input.disabled = true;
                 document.getElementById('sendButton').disabled = true;
-                showTyping();
 
                 const requestData = {
                     conversation_id: appState.currentConversation.conversation_id,
@@ -2030,7 +1451,6 @@ MEETING TYPE: ${scenarioData.type}`;
                 debugLog('Message response', data);
 
                 if (data.success) {
-                    hideTyping();
                     addAIMessage(data.ai_response);
 
                     appState.conversationHistory.push({
@@ -2053,7 +1473,6 @@ MEETING TYPE: ${scenarioData.type}`;
                 }
             } catch (error) {
                 debugLog('Error sending message', error);
-                hideTyping();
                 addSystemMessage('Sorry, there was an error processing your message. Please try again.');
                 showErrorMessage('Error sending message. Please try again.');
             } finally {
@@ -2106,10 +1525,7 @@ MEETING TYPE: ${scenarioData.type}`;
             }
         }
 
-        // ============================================
-        // CHAT UI FUNCTIONS
-        // ============================================
-
+        // Chat UI functions
         function updateChatHeader() {
             const personalities = {
                 'skeptical_councillor': {
@@ -2125,7 +1541,7 @@ MEETING TYPE: ${scenarioData.type}`;
                 'custom_character': {
                     name: customCharacterData ? customCharacterData.name : 'Custom Character',
                     avatar: customCharacterData ? customCharacterData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'CC',
-                    description: customCharacterData ? `Custom colleague • ${customCharacterData.personality.substring(0, 50)}...` : 'Custom character'
+                    description: customCharacterData ? `Custom colleague • ${customCharacterData.role || 'Custom character'}` : 'Custom character'
                 }
             };
 
@@ -2179,15 +1595,6 @@ MEETING TYPE: ${scenarioData.type}`;
             scrollToBottom();
         }
 
-        function showTyping() {
-            document.getElementById('typingIndicator').style.display = 'block';
-            scrollToBottom();
-        }
-
-        function hideTyping() {
-            document.getElementById('typingIndicator').style.display = 'none';
-        }
-
         function scrollToBottom() {
             const messagesArea = document.getElementById('messagesArea');
             messagesArea.scrollTop = messagesArea.scrollHeight;
@@ -2200,28 +1607,11 @@ MEETING TYPE: ${scenarioData.type}`;
             }
         }
 
-        function autoResizeTextarea() {
-            const textarea = document.getElementById('messageInput');
-            textarea.style.height = 'auto';
-            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
-        }
-
-        function showConnectionError() {
-            const statusIndicator = document.querySelector('.status-indicator');
-            statusIndicator.innerHTML = '<div style="width: 8px; height: 8px; background: #dc2626; border-radius: 50%;"></div><span>Service Offline</span>';
-            statusIndicator.style.background = '#fef2f2';
-            statusIndicator.style.borderColor = '#fecaca';
-            statusIndicator.style.color = '#dc2626';
-        }
-
-        // ============================================
-        // EVENT LISTENERS SETUP
-        // ============================================
-
+        // Event listeners setup
         function setupEventListeners() {
             debugLog('Setting up event listeners');
 
-            // CORE SELECTION HANDLING
+            // Core selection handling
             document.querySelectorAll('.option-card').forEach(card => {
                 if (card.id === 'customCharacterOption' || card.id === 'customScenarioOption') {
                     return;
@@ -2229,12 +1619,12 @@ MEETING TYPE: ${scenarioData.type}`;
                 card.addEventListener('click', handleSelection);
             });
 
-            // BUTTON HANDLERS
+            // Button handlers
             document.getElementById('startConversation').addEventListener('click', startConversation);
             document.getElementById('endConversation').addEventListener('click', endConversation);
             document.getElementById('sendButton').addEventListener('click', sendMessage);
 
-            // CUSTOM CHARACTER HANDLERS
+            // Custom character handlers
             const customCharacterOption = document.getElementById('customCharacterOption');
             if (customCharacterOption) {
                 customCharacterOption.addEventListener('click', function(e) {
@@ -2253,16 +1643,7 @@ MEETING TYPE: ${scenarioData.type}`;
                 saveCharacterBtn.addEventListener('click', saveCustomCharacter);
             }
 
-            // Create New Colleague button handler
-            const createNewColleagueBtn = document.getElementById('createNewColleague');
-            if (createNewColleagueBtn) {
-                createNewColleagueBtn.addEventListener('click', function() {
-                    clearCustomCharacterForm();
-                    showCharacterCreationForm();
-                });
-            }
-
-            // CUSTOM SCENARIO HANDLERS
+            // Custom scenario handlers
             const customScenarioOption = document.getElementById('customScenarioOption');
             if (customScenarioOption) {
                 customScenarioOption.addEventListener('click', function(e) {
@@ -2281,14 +1662,13 @@ MEETING TYPE: ${scenarioData.type}`;
                 saveScenarioBtn.addEventListener('click', saveCustomScenario);
             }
 
-            // INPUT HANDLERS
+            // Input handlers
             const messageInput = document.getElementById('messageInput');
             if (messageInput) {
                 messageInput.addEventListener('keydown', handleInputKeydown);
-                messageInput.addEventListener('input', autoResizeTextarea);
             }
 
-            // MODAL OVERLAY HANDLERS
+            // Modal overlay handlers
             const customCharacterModal = document.getElementById('customCharacterModal');
             if (customCharacterModal) {
                 customCharacterModal.addEventListener('click', function(e) {
@@ -2310,41 +1690,11 @@ MEETING TYPE: ${scenarioData.type}`;
             debugLog('All event listeners set up');
         }
 
-        // ============================================
-        // INITIALIZATION
-        // ============================================
-
+        // Initialization
         function initializeApp() {
             debugLog('🚀 Initializing Professional Conversation Trainer');
-
-            // Initialize localStorage
-            clearStorageIfNeeded();
-            loadSavedColleaguesFromStorage();
-
-            // Hide storage notice after a few seconds
-            setTimeout(() => {
-                const storageNotice = document.getElementById('storageNotice');
-                if (storageNotice) {
-                    storageNotice.style.display = 'none';
-                }
-            }, 5000);
-
             setupEventListeners();
             testAPIConnection();
-            loadAvailableOptions();
-
-            // Test screen elements exist
-            setTimeout(() => {
-                const setupScreen = document.getElementById('setupScreen');
-                const chatScreen = document.getElementById('chatScreen');
-                debugLog('🔍 Screen elements check', {
-                    setupScreen: setupScreen ? 'exists' : 'MISSING',
-                    chatScreen: chatScreen ? 'exists' : 'MISSING',
-                    setupDisplay: setupScreen ? window.getComputedStyle(setupScreen).display : 'N/A',
-                    chatDisplay: chatScreen ? window.getComputedStyle(chatScreen).display : 'N/A',
-                    savedColleagues: savedColleagues.length
-                });
-            }, 1000);
         }
 
         // Initialize Application
