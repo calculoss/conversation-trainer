@@ -2588,7 +2588,24 @@ function setupCustomScenarioListeners() {
         debugLog('✅ Scenario modal overlay listener attached');
     }
 }
+// ============================================
+// DYNAMIC CONTENT LOADING (PHASE 1)
+// ============================================
+function loadSavedColleagues() {
+    debugLog('📚 Loading saved colleagues into personality grid');
 
+    const savedColleagues = getStoredColleagues();
+    const colleagueCount = Object.keys(savedColleagues).length;
+
+    console.log(`Phase 1 Test: Found ${colleagueCount} saved colleagues in storage`);
+
+    if (colleagueCount > 0) {
+        console.log('Saved colleagues found:', Object.keys(savedColleagues));
+        console.log('First colleague:', Object.values(savedColleagues)[0]);
+    } else {
+        console.log('No saved colleagues found - import some to test!');
+    }
+}
 // ============================================
 // INITIALIZATION
 // ============================================
@@ -2597,6 +2614,9 @@ function initializeApp() {
     setupEventListeners();
     testAPIConnection();
     updateStorageCounts();
+
+    // NEW: Test loading saved colleagues
+    loadSavedColleagues();
 }
 
 // Initialize Application
