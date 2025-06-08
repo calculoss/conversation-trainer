@@ -656,7 +656,155 @@
         .btn-primary:hover {
             background: #2563eb;
         }
+        /* Enhanced Personality Grid */
+.personality-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
 
+.personality-card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.personality-card:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.personality-card.selected {
+    border-color: #3b82f6;
+    background: #eff6ff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.personality-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 20px;
+    height: 20px;
+    background: #3b82f6;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.personality-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.personality-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.personality-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #1e293b;
+}
+
+.personality-role {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.disc-preview {
+    margin-bottom: 1rem;
+    background: #f8fafc;
+    padding: 0.75rem;
+    border-radius: 8px;
+}
+
+.disc-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+}
+
+.disc-bar:last-child {
+    margin-bottom: 0;
+}
+
+.disc-label {
+    font-weight: 600;
+    font-size: 0.8rem;
+    width: 15px;
+    color: #374151;
+}
+
+.disc-fill {
+    height: 8px;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    flex: 1;
+    max-width: 100px;
+}
+
+.disc-score {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #64748b;
+    min-width: 30px;
+    text-align: right;
+}
+
+.personality-description {
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.custom-personality-preview {
+    background: #f8fafc;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.custom-personality-preview p {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Responsive adjustments for personality grid */
+@media (max-width: 768px) {
+    .personality-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .personality-card {
+        padding: 0.75rem;
+    }
+}
         /* Responsive */
         @media (max-width: 768px) {
             .setup-container {
@@ -783,18 +931,217 @@
                             <div class="panel-icon personality">🎭</div>
                             <h2 class="panel-title">AI Conversation Partner</h2>
                         </div>
-                        <div class="selection-grid">
-                            <div class="option-card" data-personality="skeptical_councillor">
-                                <div class="option-title">Councillor Margaret Stevens</div>
-                                <div class="option-description">Experienced councillor known for thorough questioning, budget scrutiny, and representing ratepayer interests. Expects detailed justifications and fiscal responsibility.</div>
+                        <div class="personality-grid">
+                            <!-- NSW Local Government Personalities -->
+                            <div class="personality-card" data-personality="infrastructure_engineer">
+                                <div class="personality-header">
+                                    <div class="personality-avatar">TM</div>
+                                    <div class="personality-info">
+                                        <div class="personality-name">Terry Mitchell</div>
+                                        <div class="personality-role">Senior Infrastructure Engineer</div>
+                                    </div>
+                                </div>
+                                <div class="disc-preview">
+                                    <div class="disc-bar">
+                                        <span class="disc-label">D</span>
+                                        <div class="disc-fill" style="width: 65%; background: #dc2626;"></div>
+                                        <span class="disc-score">65%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">I</span>
+                                        <div class="disc-fill" style="width: 25%; background: #d97706;"></div>
+                                        <span class="disc-score">25%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">S</span>
+                                        <div class="disc-fill" style="width: 35%; background: #16a34a;"></div>
+                                        <span class="disc-score">35%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">C</span>
+                                        <div class="disc-fill" style="width: 85%; background: #2563eb;"></div>
+                                        <span class="disc-score">85%</span>
+                                    </div>
+                                </div>
+                                <div class="personality-description">Technical expert, detail-oriented, skeptical of quick fixes. Expects thorough engineering analysis.</div>
                             </div>
-                            <div class="option-card" data-personality="frustrated_resident">
-                                <div class="option-title">Robert Chen - Local Business Owner</div>
-                                <div class="option-description">Long-term resident and business owner who feels underserved by council. Articulate but frustrated, expects value for rates and responsive service.</div>
+
+                            <div class="personality-card" data-personality="community_engagement">
+                                <div class="personality-header">
+                                    <div class="personality-avatar">SC</div>
+                                    <div class="personality-info">
+                                        <div class="personality-name">Sarah Chen</div>
+                                        <div class="personality-role">Community Engagement Officer</div>
+                                    </div>
+                                </div>
+                                <div class="disc-preview">
+                                    <div class="disc-bar">
+                                        <span class="disc-label">D</span>
+                                        <div class="disc-fill" style="width: 35%; background: #dc2626;"></div>
+                                        <span class="disc-score">35%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">I</span>
+                                        <div class="disc-fill" style="width: 85%; background: #d97706;"></div>
+                                        <span class="disc-score">85%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">S</span>
+                                        <div class="disc-fill" style="width: 70%; background: #16a34a;"></div>
+                                        <span class="disc-score">70%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">C</span>
+                                        <div class="disc-fill" style="width: 40%; background: #2563eb;"></div>
+                                        <span class="disc-score">40%</span>
+                                    </div>
+                                </div>
+                                <div class="personality-description">People-focused, enthusiastic about community consultation. Diplomatic but can be overly optimistic.</div>
                             </div>
-                            <div class="option-card" data-personality="custom_character" id="customCharacterOption">
-                                <div class="option-title">🛠️ Create Custom Colleague</div>
-                                <div class="option-description">Design a virtual version of someone from your workplace. Perfect for practicing specific challenging conversations.</div>
+
+                            <div class="personality-card" data-personality="budget_director">
+                                <div class="personality-header">
+                                    <div class="personality-avatar">DW</div>
+                                    <div class="personality-info">
+                                        <div class="personality-name">David Walsh</div>
+                                        <div class="personality-role">Budget & Finance Director</div>
+                                    </div>
+                                </div>
+                                <div class="disc-preview">
+                                    <div class="disc-bar">
+                                        <span class="disc-label">D</span>
+                                        <div class="disc-fill" style="width: 80%; background: #dc2626;"></div>
+                                        <span class="disc-score">80%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">I</span>
+                                        <div class="disc-fill" style="width: 20%; background: #d97706;"></div>
+                                        <span class="disc-score">20%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">S</span>
+                                        <div class="disc-fill" style="width: 30%; background: #16a34a;"></div>
+                                        <span class="disc-score">30%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">C</span>
+                                        <div class="disc-fill" style="width: 90%; background: #2563eb;"></div>
+                                        <span class="disc-score">90%</span>
+                                    </div>
+                                </div>
+                                <div class="personality-description">Numbers-driven, direct about financial constraints. Challenges spending proposals with detailed questions.</div>
+                            </div>
+
+                            <div class="personality-card" data-personality="union_rep">
+                                <div class="personality-header">
+                                    <div class="personality-avatar">MS</div>
+                                    <div class="personality-info">
+                                        <div class="personality-name">Maria Santos</div>
+                                        <div class="personality-role">Union Representative</div>
+                                    </div>
+                                </div>
+                                <div class="disc-preview">
+                                    <div class="disc-bar">
+                                        <span class="disc-label">D</span>
+                                        <div class="disc-fill" style="width: 85%; background: #dc2626;"></div>
+                                        <span class="disc-score">85%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">I</span>
+                                        <div class="disc-fill" style="width: 60%; background: #d97706;"></div>
+                                        <span class="disc-score">60%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">S</span>
+                                        <div class="disc-fill" style="width: 45%; background: #16a34a;"></div>
+                                        <span class="disc-score">45%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">C</span>
+                                        <div class="disc-fill" style="width: 55%; background: #2563eb;"></div>
+                                        <span class="disc-score">55%</span>
+                                    </div>
+                                </div>
+                                <div class="personality-description">Assertive advocate for workers' rights. Direct communicator who challenges management decisions affecting staff.</div>
+                            </div>
+
+                            <div class="personality-card" data-personality="councillor_thompson">
+                                <div class="personality-header">
+                                    <div class="personality-avatar">RT</div>
+                                    <div class="personality-info">
+                                        <div class="personality-name">Robert Thompson</div>
+                                        <div class="personality-role">Long-term Councillor</div>
+                                    </div>
+                                </div>
+                                <div class="disc-preview">
+                                    <div class="disc-bar">
+                                        <span class="disc-label">D</span>
+                                        <div class="disc-fill" style="width: 40%; background: #dc2626;"></div>
+                                        <span class="disc-score">40%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">I</span>
+                                        <div class="disc-fill" style="width: 50%; background: #d97706;"></div>
+                                        <span class="disc-score">50%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">S</span>
+                                        <div class="disc-fill" style="width: 85%; background: #16a34a;"></div>
+                                        <span class="disc-score">85%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">C</span>
+                                        <div class="disc-fill" style="width: 65%; background: #2563eb;"></div>
+                                        <span class="disc-score">65%</span>
+                                    </div>
+                                </div>
+                                <div class="personality-description">Steady, consensus-building approach. Values tradition and established processes. Asks thoughtful questions.</div>
+                            </div>
+
+                            <div class="personality-card" data-personality="strategic_planner">
+                                <div class="personality-header">
+                                    <div class="personality-avatar">EK</div>
+                                    <div class="personality-info">
+                                        <div class="personality-name">Emily Kim</div>
+                                        <div class="personality-role">Strategic Planner</div>
+                                    </div>
+                                </div>
+                                <div class="disc-preview">
+                                    <div class="disc-bar">
+                                        <span class="disc-label">D</span>
+                                        <div class="disc-fill" style="width: 50%; background: #dc2626;"></div>
+                                        <span class="disc-score">50%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">I</span>
+                                        <div class="disc-fill" style="width: 75%; background: #d97706;"></div>
+                                        <span class="disc-score">75%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">S</span>
+                                        <div class="disc-fill" style="width: 45%; background: #16a34a;"></div>
+                                        <span class="disc-score">45%</span>
+                                    </div>
+                                    <div class="disc-bar">
+                                        <span class="disc-label">C</span>
+                                        <div class="disc-fill" style="width: 80%; background: #2563eb;"></div>
+                                        <span class="disc-score">80%</span>
+                                    </div>
+                                </div>
+                                <div class="personality-description">Analytical yet enthusiastic about new ideas. Balances data-driven decisions with stakeholder engagement.</div>
+                            </div>
+
+                            <div class="personality-card" data-personality="custom_character" id="customCharacterOption">
+                                <div class="personality-header">
+                                    <div class="personality-avatar">🛠️</div>
+                                    <div class="personality-info">
+                                        <div class="personality-name">Create Custom</div>
+                                        <div class="personality-role">Build Your Own</div>
+                                    </div>
+                                </div>
+                                <div class="custom-personality-preview">
+                                    <p>Design a virtual version of someone from your workplace with custom DISC profile and behaviors.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
