@@ -1,0 +1,461 @@
+/* ============================================
+   CARD COMPONENTS STYLING
+   ============================================ */
+
+/* Base Option Cards */
+.option-card {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.option-card:hover {
+    border-color: #cbd5e1;
+    background: #f1f5f9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.option-card.selected {
+    border-color: #3b82f6;
+    background: #eff6ff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.option-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 20px;
+    height: 20px;
+    background: #3b82f6;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.option-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.25rem;
+}
+
+.option-description {
+    font-size: 0.875rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* Personality Cards */
+.personality-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.personality-card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.personality-card:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.personality-card.selected {
+    border-color: #3b82f6;
+    background: #eff6ff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.personality-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 20px;
+    height: 20px;
+    background: #3b82f6;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.personality-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.personality-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.personality-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #1e293b;
+}
+
+.personality-role {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.personality-description {
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* DISC Preview */
+.disc-preview {
+    margin-bottom: 1rem;
+    background: #f8fafc;
+    padding: 0.75rem;
+    border-radius: 8px;
+}
+
+.disc-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+}
+
+.disc-bar:last-child {
+    margin-bottom: 0;
+}
+
+.disc-label {
+    font-weight: 600;
+    font-size: 0.8rem;
+    width: 15px;
+    color: #374151;
+}
+
+.disc-fill {
+    height: 8px;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    flex: 1;
+    max-width: 100px;
+}
+
+.disc-score {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #64748b;
+    min-width: 30px;
+    text-align: right;
+}
+
+/* Saved Content Cards */
+.personality-card.saved-colleague {
+    border: 2px solid #f59e0b;
+    background: linear-gradient(135deg, #fef3c7, #fbbf24);
+    position: relative;
+}
+
+.personality-card.saved-colleague:hover {
+    border-color: #d97706;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px -2px rgba(245, 158, 11, 0.25);
+}
+
+.personality-card.saved-colleague.selected {
+    border-color: #f59e0b;
+    background: linear-gradient(135deg, #fef3c7, #fbbf24);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
+
+.saved-avatar {
+    background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+    color: white !important;
+}
+
+.saved-badge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: #065f46;
+    color: #d1fae5;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.saved-personality-preview {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.saved-description {
+    font-size: 0.85rem;
+    color: #374151;
+    line-height: 1.4;
+    margin: 0;
+    font-style: italic;
+}
+
+.option-card.saved-scenario {
+    border: 2px solid #10b981;
+    background: linear-gradient(135deg, #d1fae5, #6ee7b7);
+    position: relative;
+}
+
+.option-card.saved-scenario:hover {
+    border-color: #059669;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px -1px rgba(16, 185, 129, 0.25);
+}
+
+.option-card.saved-scenario.selected {
+    border-color: #10b981;
+    background: linear-gradient(135deg, #d1fae5, #6ee7b7);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.saved-badge-small {
+    display: inline-block;
+    font-size: 0.8rem;
+    margin-right: 0.3rem;
+}
+
+/* Enhanced Cards (Tab Management) */
+.colleagues-grid,
+.scenarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.enhanced-colleague-card,
+.enhanced-scenario-card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.enhanced-colleague-card:hover,
+.enhanced-scenario-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: #cbd5e1;
+}
+
+.enhanced-colleague-card {
+    border-left: 4px solid #f59e0b;
+}
+
+.enhanced-scenario-card {
+    border-left: 4px solid #10b981;
+}
+
+.enhanced-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.enhanced-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+}
+
+.enhanced-info {
+    flex: 1;
+}
+
+.enhanced-info h4 {
+    color: #1e293b;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+    line-height: 1.2;
+}
+
+.enhanced-info p {
+    color: #64748b;
+    font-size: 0.85rem;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.enhanced-badge {
+    background: #065f46;
+    color: #d1fae5;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.scenario-type-badge {
+    background: #1e40af;
+    color: #dbeafe;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.enhanced-title {
+    margin-bottom: 1rem;
+}
+
+.enhanced-title h4 {
+    color: #1e293b;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.enhanced-description {
+    color: #4b5563;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.enhanced-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.metadata-item {
+    font-size: 0.8rem;
+    color: #64748b;
+    background: #f8fafc;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+.enhanced-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* Custom Character Preview */
+.custom-personality-preview {
+    background: #f8fafc;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.custom-personality-preview p {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Responsive Cards */
+@media (max-width: 768px) {
+    .personality-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .personality-card {
+        padding: 0.75rem;
+    }
+
+    .enhanced-colleague-card,
+    .enhanced-scenario-card {
+        padding: 1rem;
+    }
+
+    .enhanced-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .enhanced-info {
+        width: 100%;
+    }
+
+    .enhanced-actions {
+        flex-direction: column;
+    }
+
+    .saved-badge {
+        top: 0.3rem;
+        right: 0.3rem;
+        font-size: 0.6rem;
+        padding: 0.1rem 0.3rem;
+    }
+
+    .saved-personality-preview {
+        padding: 0.5rem;
+    }
+
+    .saved-description {
+        font-size: 0.8rem;
+    }
+
+    .metadata-item {
+        font-size: 0.75rem;
+    }
+}

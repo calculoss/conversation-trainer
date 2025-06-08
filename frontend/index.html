@@ -4,1641 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conversation Trainer - Professional Development Platform</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+             <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Conversation Trainer - Professional Development Platform</title>
+
+            <!-- External CSS Files -->
+            <link rel="stylesheet" href="css/main.css">
+            <link rel="stylesheet" href="css/tabs.css">
+            <link rel="stylesheet" href="css/cards.css">
+            <link rel="stylesheet" href="css/components.css">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f8fafc;
-            color: #334155;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .app-container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-            border-bottom: 1px solid #e2e8f0;
-            padding: 1rem 2rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #3b82f6, #1e40af);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .logo-text h1 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: -2px;
-        }
-
-        .logo-text p {
-            font-size: 0.875rem;
-            color: #64748b;
-            font-weight: 400;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            color: #166534;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #16a34a;
-            border-radius: 50%;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            width: 100%;
-        }
-
-        /* Setup Screen */
-        .setup-screen {
-            display: block;
-        }
-
-        .setup-screen.hidden {
-            display: none !important;
-        }
-
-        .setup-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .setup-panel {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            border: 1px solid #f1f5f9;
-        }
-
-        .panel-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .panel-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-
-        .panel-icon.role {
-            background: #eff6ff;
-            color: #2563eb;
-        }
-
-        .panel-icon.scenario {
-            background: #f0fdf4;
-            color: #16a34a;
-        }
-
-        .panel-icon.personality {
-            background: #fef3c7;
-            color: #d97706;
-        }
-
-        .panel-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .selection-grid {
-            display: grid;
-            gap: 0.75rem;
-        }
-
-        .option-card {
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .option-card:hover {
-            border-color: #cbd5e1;
-            background: #f1f5f9;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .option-card.selected {
-            border-color: #3b82f6;
-            background: #eff6ff;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .option-card.selected::after {
-            content: '✓';
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            width: 20px;
-            height: 20px;
-            background: #3b82f6;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .option-title {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.25rem;
-        }
-
-        .option-description {
-            font-size: 0.875rem;
-            color: #64748b;
-            line-height: 1.4;
-        }
-
-        /* Enhanced Personality Grid */
-        .personality-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-        }
-
-        .personality-card {
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .personality-card:hover {
-            border-color: #cbd5e1;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .personality-card.selected {
-            border-color: #3b82f6;
-            background: #eff6ff;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .personality-card.selected::after {
-            content: '✓';
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            width: 20px;
-            height: 20px;
-            background: #3b82f6;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .personality-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .personality-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #3b82f6, #1e40af);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .personality-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: #1e293b;
-        }
-
-        .personality-role {
-            font-size: 0.8rem;
-            color: #64748b;
-        }
-
-        .disc-preview {
-            margin-bottom: 1rem;
-            background: #f8fafc;
-            padding: 0.75rem;
-            border-radius: 8px;
-        }
-
-        .disc-bar {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.4rem;
-        }
-
-        .disc-bar:last-child {
-            margin-bottom: 0;
-        }
-
-        .disc-label {
-            font-weight: 600;
-            font-size: 0.8rem;
-            width: 15px;
-            color: #374151;
-        }
-
-        .disc-fill {
-            height: 8px;
-            border-radius: 4px;
-            transition: width 0.3s ease;
-            flex: 1;
-            max-width: 100px;
-        }
-
-        .disc-score {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #64748b;
-            min-width: 30px;
-            text-align: right;
-        }
-
-        .personality-description {
-            font-size: 0.85rem;
-            color: #64748b;
-            line-height: 1.4;
-        }
-
-        .custom-personality-preview {
-            background: #f8fafc;
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .custom-personality-preview p {
-            font-size: 0.85rem;
-            color: #64748b;
-            margin: 0;
-        }
-
-        /* Chat Screen */
-        .chat-screen {
-            display: none;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            border: 1px solid #f1f5f9;
-            height: 75vh;
-            overflow: hidden;
-            flex-direction: column;
-        }
-
-        .chat-screen.active {
-            display: flex !important;
-        }
-
-        .chat-header {
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid #f1f5f9;
-            background: #f8fafc;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
-        .chat-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .participant-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
-
-        .chat-details h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 2px;
-        }
-
-        .chat-details p {
-            font-size: 0.875rem;
-            color: #64748b;
-        }
-
-        .messages-area {
-            flex: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-            background: #fafbfc;
-        }
-
-        .message {
-            display: flex;
-            margin-bottom: 1.5rem;
-            align-items: flex-end;
-            gap: 0.75rem;
-        }
-
-        .message.user {
-            flex-direction: row-reverse;
-        }
-
-        .message-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #64748b;
-            flex-shrink: 0;
-        }
-
-        .message.user .message-avatar {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .message.ai .message-avatar {
-            background: #f59e0b;
-            color: white;
-        }
-
-        .message-content {
-            max-width: 70%;
-            min-width: 250px;
-            padding: 1rem 1.25rem;
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
-            position: relative;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        .message.user .message-content {
-            background: #3b82f6;
-            color: white;
-            border-color: #3b82f6;
-        }
-
-        .message-text {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin: 0;
-            white-space: pre-wrap;
-        }
-
-        .message-time {
-            font-size: 0.8rem;
-            opacity: 0.7;
-            margin-top: 0.5rem;
-        }
-
-        .input-area {
-            padding: 2rem;
-            border-top: 1px solid #f1f5f9;
-            background: white;
-            flex-shrink: 0;
-        }
-
-        .input-container {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-end;
-        }
-
-        .message-input {
-            flex: 1;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 1rem 1.25rem;
-            font-size: 1rem;
-            line-height: 1.5;
-            resize: none;
-            min-height: 48px;
-            max-height: 120px;
-            outline: none;
-            transition: border-color 0.2s ease;
-            font-family: inherit;
-        }
-
-        .message-input:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .send-button {
-            background: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            min-width: 90px;
-            justify-content: center;
-        }
-
-        .send-button:hover:not(:disabled) {
-            background: #2563eb;
-            transform: translateY(-1px);
-        }
-
-        .send-button:disabled {
-            background: #cbd5e1;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Action Panel */
-        .action-panel {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            border: 1px solid #f1f5f9;
-            text-align: center;
-        }
-
-        .start-button {
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .start-button:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .start-button:disabled {
-            background: #cbd5e1;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .secondary-button {
-            background: #f8fafc;
-            color: #64748b;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin: 0 0.5rem;
-        }
-
-        .secondary-button:hover {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
-        }
-
-        /* System Messages */
-        .system-message {
-            text-align: center;
-            padding: 1.5rem;
-            color: #64748b;
-            font-size: 0.9rem;
-            font-style: italic;
-            margin: 1rem 0;
-            background: #f8fafc;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-        }
-
-        /* Messages */
-        .success-message, .error-message {
-            padding: 1rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            font-size: 0.95rem;
-            display: none;
-        }
-
-        .success-message {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            color: #166534;
-        }
-
-        .error-message {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #dc2626;
-        }
-
-        /* Enhanced Custom Character Modal Styles */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            backdrop-filter: blur(4px);
-        }
-        /* ============================================
-   SAVED CONTENT STYLING (PHASE 1)
-   ============================================ */
-
-        /* Saved Colleague Cards */
-        .personality-card.saved-colleague {
-            border: 2px solid #f59e0b;
-            background: linear-gradient(135deg, #fef3c7, #fbbf24);
-            position: relative;
-        }
-
-        .personality-card.saved-colleague:hover {
-            border-color: #d97706;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px -2px rgba(245, 158, 11, 0.25);
-        }
-
-        .personality-card.saved-colleague.selected {
-            border-color: #f59e0b;
-            background: linear-gradient(135deg, #fef3c7, #fbbf24);
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
-        }
-
-        .saved-avatar {
-            background: linear-gradient(135deg, #f59e0b, #d97706) !important;
-            color: white !important;
-        }
-
-        .saved-badge {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: #065f46;
-            color: #d1fae5;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        .saved-personality-preview {
-            background: rgba(255, 255, 255, 0.7);
-            padding: 0.75rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .saved-description {
-            font-size: 0.85rem;
-            color: #374151;
-            line-height: 1.4;
-            margin: 0;
-            font-style: italic;
-        }
-        .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 700px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        .modal-header {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .modal-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin: 0;
-        }
-
-        .form-section {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .form-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .section-description {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-bottom: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #374151;
-            font-size: 0.95rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            transition: border-color 0.2s ease;
-            font-family: inherit;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .btn-secondary {
-            background: #f8fafc;
-            border-color: #e2e8f0;
-            color: #64748b;
-        }
-
-        .btn-secondary:hover {
-            background: #f1f5f9;
-        }
-
-        .btn-primary {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #2563eb;
-        }
-
-        /* Responsive adjustments for personality grid */
-        @media (max-width: 768px) {
-            .personality-grid {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-            }
-
-            .personality-card {
-                padding: 0.75rem;
-            }
-
-            .setup-container {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .main-content {
-                padding: 1rem;
-            }
-
-            .setup-panel {
-                padding: 1.5rem;
-            }
-
-            .message-content {
-                max-width: 90%;
-            }
-
-            .messages-area {
-                padding: 1rem;
-            }
-
-            .input-area {
-                padding: 1.5rem;
-            }
-
-            .modal-content {
-                width: 95%;
-                padding: 1.5rem;
-            }
-
-            .form-row {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-        }
-        /* Saved Scenario Cards */
-        .option-card.saved-scenario {
-            border: 2px solid #10b981;
-            background: linear-gradient(135deg, #d1fae5, #6ee7b7);
-            position: relative;
-        }
-
-        .option-card.saved-scenario:hover {
-            border-color: #059669;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px -1px rgba(16, 185, 129, 0.25);
-        }
-
-        .option-card.saved-scenario.selected {
-            border-color: #10b981;
-            background: linear-gradient(135deg, #d1fae5, #6ee7b7);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-        }
-
-        .saved-badge-small {
-            display: inline-block;
-            font-size: 0.8rem;
-            margin-right: 0.3rem;
-        }
-        /* ============================================
-           TAB INTERFACE STYLING (PHASE 2)
-           ============================================ */
-
-        /* Tab Navigation */
-        .tab-navigation {
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-            margin-bottom: 2rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-        }
-
-        .tab-nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            padding: 0 2rem;
-        }
-
-        .tab-button {
-            background: none;
-            border: none;
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            color: #64748b;
-            font-weight: 500;
-            font-size: 0.95rem;
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .tab-button:hover {
-            color: #3b82f6;
-            background: #f8fafc;
-        }
-
-        .tab-button.active {
-            color: #3b82f6;
-            border-bottom-color: #3b82f6;
-            background: #eff6ff;
-        }
-
-        .tab-icon {
-            font-size: 1.1rem;
-        }
-
-        .tab-label {
-            white-space: nowrap;
-        }
-
-        .tab-count {
-            background: #3b82f6;
-            color: white;
-            font-size: 0.75rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 12px;
-            min-width: 1.5rem;
-            text-align: center;
-            line-height: 1;
-        }
-
-        /* Tab Content */
-        .tab-content-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .tab-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .tab-header h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-        }
-
-        .tab-header p {
-            color: #64748b;
-            font-size: 1rem;
-        }
-
-        /* Enhanced Colleague Management */
-        .colleague-management,
-        .scenario-management {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-            border: 1px solid #f1f5f9;
-        }
-
-        .colleagues-toolbar,
-        .scenarios-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            gap: 1rem;
-        }
-
-        .search-filter-section {
-            display: flex;
-            gap: 1rem;
-            flex: 1;
-            max-width: 500px;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 0.75rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.2s ease;
-        }
-
-        .search-input:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .filter-select {
-            padding: 0.75rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            background: white;
-            cursor: pointer;
-            min-width: 150px;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .btn {
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            white-space: nowrap;
-        }
-
-        .btn-primary {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #2563eb;
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: #f8fafc;
-            border-color: #e2e8f0;
-            color: #64748b;
-        }
-
-        .btn-secondary:hover {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
-        }
-
-        /* Grids */
-        .colleagues-grid,
-        .scenarios-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        /* Empty States */
-        .empty-state {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: #64748b;
-            border: 2px dashed #e2e8f0;
-            border-radius: 12px;
-            background: #f8fafc;
-        }
-
-        .empty-state h3 {
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-        }
-
-        .empty-state p {
-            margin-bottom: 1.5rem;
-        }
-
-        .empty-state.hidden {
-            display: none;
-        }
-
-        /* DISC Explorer */
-        .disc-content {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-            border: 1px solid #f1f5f9;
-        }
-
-        .disc-overview {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .disc-overview h3 {
-            color: #1e293b;
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .disc-types-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .disc-type-card {
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.2s ease;
-        }
-
-        .disc-type-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .disc-type-header {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .disc-type-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 0.5rem;
-        }
-
-        .disc-type-icon.dominant {
-            background: linear-gradient(135deg, #dc2626, #991b1b);
-        }
-
-        .disc-type-icon.influence {
-            background: linear-gradient(135deg, #d97706, #92400e);
-        }
-
-        .disc-type-icon.steadiness {
-            background: linear-gradient(135deg, #16a34a, #15803d);
-        }
-
-        .disc-type-icon.conscientiousness {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-        }
-
-        .disc-type-header h4 {
-            color: #1e293b;
-            margin-bottom: 0.25rem;
-        }
-
-        .disc-percentage {
-            background: #e2e8f0;
-            color: #64748b;
-            font-size: 0.8rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-        }
-
-        .disc-type-content p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 0.75rem;
-        }
-
-        .disc-type-content p:last-child {
-            margin-bottom: 0;
-        }
-
-        .disc-workplace-section {
-            margin: 2rem 0;
-            padding: 1.5rem;
-            background: #f8fafc;
-            border-radius: 12px;
-        }
-
-        .disc-workplace-section h3 {
-            color: #1e293b;
-            margin-bottom: 1rem;
-        }
-
-        .workplace-examples {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .workplace-example {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 4px solid #3b82f6;
-        }
-
-        .workplace-example h4 {
-            color: #1e293b;
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .workplace-example p {
-            font-size: 0.85rem;
-            color: #64748b;
-            margin: 0;
-        }
-
-        .coming-soon-section {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);
-            border-radius: 12px;
-            border: 1px solid #bfdbfe;
-        }
-
-        .coming-soon-section h3 {
-            color: #1e40af;
-            margin-bottom: 1rem;
-        }
-
-        .feature-preview {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid #bfdbfe;
-        }
-
-        .feature-preview h4 {
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-preview p {
-            color: #64748b;
-            margin: 0;
-        }
-
-        /* Panel width adjustment for Quick Start */
-        .setup-panel.full-width {
-            grid-column: 1 / -1;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .tab-nav-container {
-                padding: 0 1rem;
-                overflow-x: auto;
-            }
-
-            .tab-button {
-                padding: 0.75rem 1rem;
-                flex-shrink: 0;
-            }
-
-            .tab-label {
-                display: none;
-            }
-
-            .colleagues-toolbar,
-            .scenarios-toolbar {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 1rem;
-            }
-
-            .search-filter-section {
-                max-width: none;
-            }
-
-            .action-buttons {
-                justify-content: stretch;
-            }
-
-            .btn {
-                flex: 1;
-                justify-content: center;
-            }
-
-            .disc-types-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .workplace-examples {
-                grid-template-columns: 1fr;
-            }
-        }
-        /* ============================================
-           ENHANCED CARDS STYLING (PHASE 2)
-           ============================================ */
-
-        /* Enhanced Colleague Cards */
-        .enhanced-colleague-card,
-        .enhanced-scenario-card {
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.2s ease;
-            position: relative;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-        }
-
-        .enhanced-colleague-card:hover,
-        .enhanced-scenario-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border-color: #cbd5e1;
-        }
-
-        .enhanced-colleague-card {
-            border-left: 4px solid #f59e0b;
-        }
-
-        .enhanced-scenario-card {
-            border-left: 4px solid #10b981;
-        }
-
-        .enhanced-card-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .enhanced-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-right: 0.75rem;
-            flex-shrink: 0;
-        }
-
-        .enhanced-info {
-            flex: 1;
-        }
-
-        .enhanced-info h4 {
-            color: #1e293b;
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 0 0 0.25rem 0;
-            line-height: 1.2;
-        }
-
-        .enhanced-info p {
-            color: #64748b;
-            font-size: 0.85rem;
-            margin: 0;
-            line-height: 1.3;
-        }
-
-        .enhanced-badge {
-            background: #065f46;
-            color: #d1fae5;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        .scenario-type-badge {
-            background: #1e40af;
-            color: #dbeafe;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .enhanced-title {
-            margin-bottom: 1rem;
-        }
-
-        .enhanced-title h4 {
-            color: #1e293b;
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 0;
-            line-height: 1.3;
-        }
-
-        .enhanced-description {
-            color: #4b5563;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 1rem;
-            font-style: italic;
-        }
-
-        .enhanced-metadata {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .metadata-item {
-            font-size: 0.8rem;
-            color: #64748b;
-            background: #f8fafc;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .enhanced-actions {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 0.5rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.25rem;
-        }
-
-        .action-btn.primary {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .action-btn.primary:hover {
-            background: #2563eb;
-            transform: translateY(-1px);
-        }
-
-        .action-btn.secondary {
-            background: #f8fafc;
-            border-color: #e2e8f0;
-            color: #64748b;
-        }
-
-        .action-btn.secondary:hover {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
-            color: #475569;
-        }
-
-        /* Search and Filter Styling */
-        .search-input::placeholder {
-            color: #9ca3af;
-        }
-
-        .filter-select {
-            color: #374151;
-        }
-
-        .filter-select:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        /* Loading States */
-        .loading-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .loading-card {
-            background: #f8fafc;
-            border: 2px dashed #cbd5e1;
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            color: #64748b;
-            font-style: italic;
-        }
-
-        /* Responsive Enhanced Cards */
-        @media (max-width: 768px) {
-            .enhanced-colleague-card,
-            .enhanced-scenario-card {
-                padding: 1rem;
-            }
-
-            .enhanced-card-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-
-            .enhanced-info {
-                width: 100%;
-            }
-
-            .enhanced-actions {
-                flex-direction: column;
-            }
-
-            .action-btn {
-                padding: 0.75rem;
-            }
-
-            .metadata-item {
-                font-size: 0.75rem;
-            }
-        }
-
-        /* Quick Start Enhancements */
-        #quickStartPersonalities .personality-card {
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        #quickStartPersonalities .personality-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        #quickStartPersonalities .personality-card.selected {
-            border-color: #3b82f6;
-            background: #eff6ff;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        #quickStartPersonalities .personality-card.selected::after {
-            content: '✓';
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            width: 20px;
-            height: 20px;
-            background: #3b82f6;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        /* Tab Count Badges */
-        .tab-count {
-            transition: all 0.2s ease;
-        }
-
-        .tab-button.active .tab-count {
-            background: #1d4ed8;
-        }
-    </style>
 </head>
 
 <body>
@@ -1943,11 +318,113 @@
                             </div>
                         </div>
 
-                        <div class="coming-soon-section">
-                            <h3>🚀 Coming Soon</h3>
-                            <div class="feature-preview">
-                                <h4>Interactive DISC Quadrant</h4>
-                                <p>Visualize population distribution, explore your colleague library placement, and discover DISC patterns in your practice sessions.</p>
+                        <div class="interactive-quadrant-section">
+                <h3>🎯 Interactive DISC Quadrant</h3>
+                <p>Explore realistic population distribution and NSW Local Government insights</p>
+
+                <div class="quadrant-controls">
+                    <div class="view-toggles">
+                        <button class="toggle-btn active" data-view="population">Population View</button>
+                        <button class="toggle-btn" data-view="department">Department View</button>
+                        <button class="toggle-btn" data-view="generation">Generation View</button>
+                    </div>
+                    <div class="filter-info">
+                        <span id="currentViewInfo">Showing: General Population Distribution</span>
+                    </div>
+                </div>
+
+                <div class="disc-quadrant-container">
+                    <div class="quadrant-grid">
+                        <!-- D Quadrant -->
+                        <div class="quadrant d-quadrant" data-type="D">
+                            <div class="quadrant-header">
+                                <div class="quadrant-icon">D</div>
+                                <div class="quadrant-title">Dominance</div>
+                            </div>
+                            <div class="population-display">
+                                <div class="population-bar">
+                                    <div class="population-fill d-fill" style="width: 7%"></div>
+                                </div>
+                                <span class="population-text">3-11% of population</span>
+                            </div>
+                            <div class="quadrant-examples">
+                                <div class="example-role">Infrastructure Directors</div>
+                                <div class="example-role">Project Managers</div>
+                                <div class="example-role">Crisis Managers</div>
+                            </div>
+                        </div>
+
+                        <!-- I Quadrant -->
+                        <div class="quadrant i-quadrant" data-type="I">
+                            <div class="quadrant-header">
+                                <div class="quadrant-icon">I</div>
+                                <div class="quadrant-title">Influence</div>
+                            </div>
+                            <div class="population-display">
+                                <div class="population-bar">
+                                    <div class="population-fill i-fill" style="width: 25%"></div>
+                                </div>
+                                <span class="population-text">11-40% of population</span>
+                            </div>
+                            <div class="quadrant-examples">
+                                <div class="example-role">Community Engagement</div>
+                                <div class="example-role">Customer Service</div>
+                                <div class="example-role">Elected Councillors</div>
+                            </div>
+                        </div>
+
+                        <!-- S Quadrant -->
+                        <div class="quadrant s-quadrant" data-type="S">
+                            <div class="quadrant-header">
+                                <div class="quadrant-icon">S</div>
+                                <div class="quadrant-title">Steadiness</div>
+                            </div>
+                            <div class="population-display">
+                                <div class="population-bar">
+                                    <div class="population-fill s-fill" style="width: 69%"></div>
+                                </div>
+                                <span class="population-text">69% of population</span>
+                            </div>
+                            <div class="quadrant-examples">
+                                <div class="example-role">Administrative Staff</div>
+                                <div class="example-role">Service Delivery</div>
+                                <div class="example-role">Policy Implementation</div>
+                            </div>
+                        </div>
+
+                        <!-- C Quadrant -->
+                        <div class="quadrant c-quadrant" data-type="C">
+                            <div class="quadrant-header">
+                                <div class="quadrant-icon">C</div>
+                                <div class="quadrant-title">Conscientiousness</div>
+                            </div>
+                            <div class="population-display">
+                                <div class="population-bar">
+                                    <div class="population-fill c-fill" style="width: 17%"></div>
+                                </div>
+                                <span class="population-text">17% of population</span>
+                            </div>
+                            <div class="quadrant-examples">
+                                <div class="example-role">Budget Analysts</div>
+                                <div class="example-role">Engineers</div>
+                                <div class="example-role">Compliance Officers</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quadrant-insights">
+                        <div class="insight-panel" id="insightPanel">
+                            <h4>💡 NSW Local Government Insights</h4>
+                            <p>Click on any quadrant above to explore specific insights for that DISC type in NSW councils.</p>
+                            <div class="insight-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">69%</span>
+                                    <span class="stat-label">S-types form the backbone of council operations</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">43</span>
+                                    <span class="stat-label">Median age in NSW councils</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -4425,6 +2902,231 @@ function testStorage() {
     console.log('================================================');
 
     showSuccessMessage('Storage report generated. Check browser console for detailed information.');
+}
+// ============================================
+// ENHANCED DISC QUADRANT FUNCTIONALITY
+// ============================================
+
+// DISC insights data based on NSW research
+const discInsights = {
+    D: {
+        population: {
+            title: "Dominance (D) - 3-11% of Population",
+            content: "The smallest but most visible group in NSW councils. These are your change agents and crisis leaders.",
+            stats: [
+                { number: "7%", label: "Average in NSW councils" },
+                { number: "Fast", label: "Decision making style" }
+            ],
+            examples: "Infrastructure Directors pushing major projects, Crisis managers during natural disasters, Reform leaders driving organisational change"
+        },
+        department: {
+            title: "D-Types by Department",
+            content: "Dominance personalities gravitate toward leadership and project-driven roles across council departments.",
+            stats: [
+                { number: "Directors", label: "Senior leadership" },
+                { number: "Projects", label: "Infrastructure focus" }
+            ],
+            examples: "Executive leadership, Major project managers, Emergency response coordinators, Reform implementation leaders"
+        },
+        generation: {
+            title: "Generational D-Type Patterns",
+            content: "Generation X (44-60) shows highest D-type representation in NSW councils, often in senior leadership.",
+            stats: [
+                { number: "Gen X", label: "Highest D representation" },
+                { number: "Leadership", label: "Common career path" }
+            ],
+            examples: "Gen X: Results-focused directors. Millennials: Collaborative change agents. Boomers: Authoritative traditionalists"
+        }
+    },
+    I: {
+        population: {
+            title: "Influence (I) - 11-40% of Population",
+            content: "The people-connectors of councils. Essential for community engagement and stakeholder relationships.",
+            stats: [
+                { number: "25%", label: "Average in NSW councils" },
+                { number: "High", label: "Community engagement" }
+            ],
+            examples: "Community consultation coordinators, Public relations specialists, Elected councillors in people-facing roles"
+        },
+        department: {
+            title: "I-Types by Department",
+            content: "Influence personalities dominate community-facing roles and collaborative departments.",
+            stats: [
+                { number: "Community", label: "Services focus" },
+                { number: "External", label: "Stakeholder roles" }
+            ],
+            examples: "Community engagement, Customer service, Communications, Economic development, Tourism promotion"
+        },
+        generation: {
+            title: "Generational I-Type Patterns",
+            content: "Millennials (29-43) trending toward I-style behaviours, valuing collaboration and social connection.",
+            stats: [
+                { number: "Millennials", label: "Trending I-style" },
+                { number: "Purpose", label: "Driven motivation" }
+            ],
+            examples: "Millennials: Purpose-driven collaborators. Gen Z: Authentic communicators. Gen X: Relationship builders"
+        }
+    },
+    S: {
+        population: {
+            title: "Steadiness (S) - 69% of Population",
+            content: "The backbone of NSW councils. These reliable team members ensure consistent service delivery.",
+            stats: [
+                { number: "69%", label: "Largest group" },
+                { number: "Stable", label: "Service delivery" }
+            ],
+            examples: "Long-serving administrative staff, Service delivery coordinators, Policy implementation specialists"
+        },
+        department: {
+            title: "S-Types by Department",
+            content: "Steadiness personalities form the operational core across all council departments.",
+            stats: [
+                { number: "Operations", label: "Core strength" },
+                { number: "Stability", label: "Key contribution" }
+            ],
+            examples: "Administrative support, Customer service, Records management, Asset maintenance, Library services"
+        },
+        generation: {
+            title: "Generational S-Type Patterns",
+            content: "Baby Boomers (61-79) show strong S-type tendencies, valuing security and institutional knowledge.",
+            stats: [
+                { number: "Boomers", label: "Strong S tendencies" },
+                { number: "Institutional", label: "Knowledge holders" }
+            ],
+            examples: "Boomers: Security-focused veterans. Gen X: Work-life balance seekers. Millennials: Team-oriented supporters"
+        }
+    },
+    C: {
+        population: {
+            title: "Conscientiousness (C) - 17% of Population",
+            content: "The quality guardians ensuring accuracy, compliance, and technical excellence in council operations.",
+            stats: [
+                { number: "17%", label: "Technical specialists" },
+                { number: "High", label: "Quality standards" }
+            ],
+            examples: "Budget analysts, Compliance officers, Strategic planners, Technical specialists, Quality assurance professionals"
+        },
+        department: {
+            title: "C-Types by Department",
+            content: "Conscientiousness personalities concentrate in technical, financial, and analytical roles.",
+            stats: [
+                { number: "Technical", label: "Roles focus" },
+                { number: "Accuracy", label: "Core value" }
+            ],
+            examples: "Engineering, Finance, Legal, Strategic planning, IT, Environmental health, Building certification"
+        },
+        generation: {
+            title: "Generational C-Type Patterns",
+            content: "Generation Z (13-28) early data suggests trending toward C-style behaviours with digital-first thinking.",
+            stats: [
+                { number: "Gen Z", label: "Trending C-style" },
+                { number: "Digital", label: "Native skills" }
+            ],
+            examples: "Gen Z: Data-driven analysts. Millennials: Process improvers. Gen X: Systems thinkers. Boomers: Detail masters"
+        }
+    }
+};
+
+function initializeDISCQuadrant() {
+    debugLog('🧠 Initializing interactive DISC quadrant');
+
+    // Add click handlers to quadrants
+    document.querySelectorAll('.quadrant').forEach(quadrant => {
+        quadrant.addEventListener('click', function() {
+            const discType = this.dataset.type;
+            const currentView = document.querySelector('.toggle-btn.active').dataset.view;
+            showDISCInsights(discType, currentView);
+        });
+    });
+
+    // Add click handlers to view toggles
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Update active toggle
+            document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const view = this.dataset.view;
+            updateQuadrantView(view);
+        });
+    });
+
+    debugLog('✅ DISC quadrant initialized with interactive features');
+}
+
+function showDISCInsights(discType, view) {
+    debugLog(`📊 Showing ${discType} insights for ${view} view`);
+
+    const insight = discInsights[discType][view];
+    const insightPanel = document.getElementById('insightPanel');
+
+    if (insight && insightPanel) {
+        insightPanel.innerHTML = `
+            <h4>💡 ${insight.title}</h4>
+            <p>${insight.content}</p>
+            <div class="insight-stats">
+                ${insight.stats.map(stat => `
+                    <div class="stat-item">
+                        <span class="stat-number">${stat.number}</span>
+                        <span class="stat-label">${stat.label}</span>
+                    </div>
+                `).join('')}
+            </div>
+            <div style="margin-top: 1rem; padding: 1rem; background: rgba(59, 130, 246, 0.1); border-radius: 8px; border-left: 3px solid #3b82f6;">
+                <strong>Examples in NSW Councils:</strong><br>
+                <span style="font-size: 0.875rem; color: #374151;">${insight.examples}</span>
+            </div>
+        `;
+
+        // Add visual feedback
+        document.querySelectorAll('.quadrant').forEach(q => q.style.opacity = '0.7');
+        document.querySelector(`[data-type="${discType}"]`).style.opacity = '1';
+
+        setTimeout(() => {
+            document.querySelectorAll('.quadrant').forEach(q => q.style.opacity = '1');
+        }, 2000);
+    }
+}
+
+function updateQuadrantView(view) {
+    debugLog(`🔄 Updating quadrant view to: ${view}`);
+
+    const viewInfo = document.getElementById('currentViewInfo');
+    const viewLabels = {
+        population: 'General Population Distribution',
+        department: 'NSW Council Department Patterns',
+        generation: 'Generational DISC Trends'
+    };
+
+    if (viewInfo) {
+        viewInfo.textContent = `Showing: ${viewLabels[view]}`;
+    }
+
+    // Update visual styling based on view
+    const quadrants = document.querySelectorAll('.quadrant');
+    quadrants.forEach(quadrant => {
+        quadrant.classList.remove('population-view', 'department-view', 'generation-view');
+        quadrant.classList.add(`${view}-view`);
+    });
+
+    // Reset insight panel
+    const insightPanel = document.getElementById('insightPanel');
+    if (insightPanel) {
+        insightPanel.innerHTML = `
+            <h4>💡 NSW Local Government Insights</h4>
+            <p>Click on any quadrant above to explore specific insights for that DISC type in ${viewLabels[view].toLowerCase()}.</p>
+            <div class="insight-stats">
+                <div class="stat-item">
+                    <span class="stat-number">69%</span>
+                    <span class="stat-label">S-types form the backbone of council operations</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">43</span>
+                    <span class="stat-label">Median age in NSW councils</span>
+                </div>
+            </div>
+        `;
+    }
 }
 
 debugLog('🎨 Professional Conversation Trainer Loaded');
