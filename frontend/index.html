@@ -1565,9 +1565,13 @@
             const card = event.currentTarget;
             const parent = card.parentElement;
 
-            parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+            // Remove selection from siblings
+            parent.querySelectorAll('.option-card, .personality-card').forEach(c => c.classList.remove('selected'));
+
+            // Add selection to clicked card
             card.classList.add('selected');
 
+            // Update state based on data attributes
             if (card.dataset.role) {
                 appState.selectedRole = card.dataset.role;
                 debugLog('Selected role', appState.selectedRole);
@@ -1962,6 +1966,14 @@ MEETING TYPE: ${scenarioData.type}`;
             document.querySelectorAll('.option-card').forEach(card => {
                 if (card.id === 'customCharacterOption' || card.id === 'customScenarioOption') {
                     return;
+                }
+                card.addEventListener('click', handleSelection);
+            });
+
+            // Enhanced personality card handling
+            document.querySelectorAll('.personality-card').forEach(card => {
+                if (card.id === 'customCharacterOption') {
+                    return; // Skip custom character option (has its own handler)
                 }
                 card.addEventListener('click', handleSelection);
             });
