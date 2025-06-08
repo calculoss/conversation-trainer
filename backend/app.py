@@ -350,7 +350,9 @@ def start_conversation():
         conversation_id = str(uuid.uuid4())
 
         # Handle custom characters vs preset characters
-        if personality_type == 'custom_character' and custom_character:
+        # Handle custom characters vs preset characters
+        if (personality_type == 'custom_character' and custom_character) or (
+                personality_type and personality_type.startswith('saved_colleague_') and custom_character):
             print(f"🎭 Creating custom character: {custom_character.get('name')}")
             personality_name = custom_character.get('name', 'Custom Character')
             character_prompt = create_custom_character_prompt(custom_character, scenario, custom_scenario)
