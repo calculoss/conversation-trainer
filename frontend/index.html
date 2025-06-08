@@ -1155,28 +1155,46 @@
                             Select your role, scenario, and AI partner to start practicing
                         </p>
 
-                        <!-- TEMPORARY TEST BUTTONS - Storage Management -->
+                        <!-- UPDATED STORAGE MANAGEMENT SECTION -->
+                        <!-- Replace the existing storage management section in your action panel -->
+
                         <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
-                            <h4 style="font-size: 0.9rem; font-weight: 600; color: #64748b; margin-bottom: 1rem;">Storage Management (Testing)</h4>
+                            <h4 style="font-size: 0.9rem; font-weight: 600; color: #64748b; margin-bottom: 1rem;">Storage Management</h4>
 
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+                                <!-- View & Export -->
                                 <button class="secondary-button" onclick="showStoredColleagues()" style="font-size: 0.85rem;">
                                     📚 View Colleagues (<span id="colleagueCount">0</span>)
                                 </button>
                                 <button class="secondary-button" onclick="showStoredScenarios()" style="font-size: 0.85rem;">
                                     📋 View Scenarios (<span id="scenarioCount">0</span>)
                                 </button>
+
+                                <!-- Export -->
                                 <button class="secondary-button" onclick="exportColleagues()" style="font-size: 0.85rem;">
                                     💾 Export Colleagues
                                 </button>
                                 <button class="secondary-button" onclick="exportScenarios()" style="font-size: 0.85rem;">
                                     💾 Export Scenarios
                                 </button>
+
+                                <!-- Import -->
+                                <button class="secondary-button" onclick="importColleagues()" style="font-size: 0.85rem;">
+                                    📂 Import Colleagues
+                                </button>
+                                <button class="secondary-button" onclick="importScenarios()" style="font-size: 0.85rem;">
+                                    📂 Import Scenarios
+                                </button>
                             </div>
 
-                            <button class="secondary-button" onclick="testStorage()" style="width: 100%; font-size: 0.85rem;">
-                                🔍 Debug Storage (Check Console)
-                            </button>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                <button class="secondary-button" onclick="testStorage()" style="font-size: 0.85rem;">
+                                    🔍 Debug Storage (Console)
+                                </button>
+                                <button class="secondary-button" onclick="clearAllStorage()" style="font-size: 0.85rem; color: #dc2626;">
+                                    🗑️ Clear All Data
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2588,6 +2606,402 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update storage counts periodically
     setInterval(updateStorageCounts, 2000);
 });
+// ============================================
+// IMPORT FUNCTIONS - Add these to your script
+// ============================================
+
+function importColleagues() {
+    debugLog('📂 Starting colleague import process');
+
+    // Create file input element
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+    fileInput.style.display = 'none';
+
+    fileInput.onchange = function(event) {
+        const file = event.target.files[0];
+        if (!file) {
+            debugLog('❌ No file selected');
+            return;
+        }
+
+        debugLog('📄 File selected:', file.name);
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const importData = JSON.parse(e.target.result);
+                debugLog('📋 Import data parsed:', importData);
+
+                // Validate file structure
+                if (!importData.type || importData.type !== 'conversation_trainer_colleagues') {
+                    throw new Error('Invalid file format. Please select a valid colleagues export file.');
+                }
+
+                if (!importData.colleagues || typeof importData.colleagues !== 'object') {
+                    throw new Error('No colleague data found in file.');
+                }
+
+                // Get existing colleagues
+                const existingColleagues = getStoredColleagues();
+                const importedColleagues = importData.colleagues;
+
+                let importedCount = 0;
+                let duplicateCount = 0;
+
+                // Process each imported colleague
+                Object.values(importedColleagues).forEach(colleague => {
+                    // Check for duplicates by name and role
+                    const isDuplicate = Object.values(existingColleagues).some(existing =>
+                        existing.name === colleague.name && existing.role === colleague.role
+                    );
+
+                    if (isDuplicate) {
+                        duplicateCount++;
+                        debugLog('⚠️ Duplicate found, skipping:', colleague.name);
+                    } else {
+                        // Generate new ID and add to storage
+                        const newId = `colleague_imported_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+                        colleague.id = newId;
+                        colleague.imported_at = new Date().toISOString();
+
+                        existingColleagues[newId] = colleague;
+                        importedCount++;
+                        debugLog('✅ Imported colleague:', colleague.name);
+                    }
+                });
+
+                // Save updated colleagues to storage
+                localStorage.setItem('conversation_trainer_colleagues', JSON.stringify(existingColleagues));
+                updateStorageCounts();
+
+                // Show success message
+                let message = `Successfully imported ${importedCount} colleague${importedCount === 1 ? '' : 's'}!`;
+                if (duplicateCount > 0) {
+                    message += ` (${duplicateCount} duplicate${duplicateCount === 1 ? '' : 's'} skipped)`;
+                }
+
+                showSuccessMessage(message);
+                debugLog('🎉 Import completed', { imported: importedCount, duplicates: duplicateCount });
+
+            } catch (error) {
+                debugLog('❌ Import error:', error);
+                showErrorMessage(`Import failed: ${error.message}`);
+            }
+        };
+
+        reader.onerror = function() {
+            debugLog('❌ File reading error');
+            showErrorMessage('Error reading file. Please try again.');
+        };
+
+        reader.readAsText(file);
+    };
+
+    // Trigger file selection
+    document.body.appendChild(fileInput);
+    fileInput.click();
+    document.body.removeChild(fileInput);
+}
+
+function importScenarios() {
+    debugLog('📂 Starting scenario import process');
+
+    // Create file input element
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+    fileInput.style.display = 'none';
+
+    fileInput.onchange = function(event) {
+        const file = event.target.files[0];
+        if (!file) {
+            debugLog('❌ No file selected');
+            return;
+        }
+
+        debugLog('📄 File selected:', file.name);
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const importData = JSON.parse(e.target.result);
+                debugLog('📋 Import data parsed:', importData);
+
+                // Validate file structure
+                if (!importData.type || importData.type !== 'conversation_trainer_scenarios') {
+                    throw new Error('Invalid file format. Please select a valid scenarios export file.');
+                }
+
+                if (!importData.scenarios || typeof importData.scenarios !== 'object') {
+                    throw new Error('No scenario data found in file.');
+                }
+
+                // Get existing scenarios
+                const existingScenarios = getStoredScenarios();
+                const importedScenarios = importData.scenarios;
+
+                let importedCount = 0;
+                let duplicateCount = 0;
+
+                // Process each imported scenario
+                Object.values(importedScenarios).forEach(scenario => {
+                    // Check for duplicates by title
+                    const isDuplicate = Object.values(existingScenarios).some(existing =>
+                        existing.title === scenario.title
+                    );
+
+                    if (isDuplicate) {
+                        duplicateCount++;
+                        debugLog('⚠️ Duplicate found, skipping:', scenario.title);
+                    } else {
+                        // Generate new ID and add to storage
+                        const newId = `scenario_imported_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+                        scenario.id = newId;
+                        scenario.imported_at = new Date().toISOString();
+
+                        existingScenarios[newId] = scenario;
+                        importedCount++;
+                        debugLog('✅ Imported scenario:', scenario.title);
+                    }
+                });
+
+                // Save updated scenarios to storage
+                localStorage.setItem('conversation_trainer_scenarios', JSON.stringify(existingScenarios));
+                updateStorageCounts();
+
+                // Show success message
+                let message = `Successfully imported ${importedCount} scenario${importedCount === 1 ? '' : 's'}!`;
+                if (duplicateCount > 0) {
+                    message += ` (${duplicateCount} duplicate${duplicateCount === 1 ? '' : 's'} skipped)`;
+                }
+
+                showSuccessMessage(message);
+                debugLog('🎉 Import completed', { imported: importedCount, duplicates: duplicateCount });
+
+            } catch (error) {
+                debugLog('❌ Import error:', error);
+                showErrorMessage(`Import failed: ${error.message}`);
+            }
+        };
+
+        reader.onerror = function() {
+            debugLog('❌ File reading error');
+            showErrorMessage('Error reading file. Please try again.');
+        };
+
+        reader.readAsText(file);
+    };
+
+    // Trigger file selection
+    document.body.appendChild(fileInput);
+    fileInput.click();
+    document.body.removeChild(fileInput);
+}
+
+// ============================================
+// BULK IMPORT FUNCTION (Import Both Types)
+// ============================================
+
+function importData() {
+    debugLog('📂 Starting bulk data import process');
+
+    // Create file input element
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+    fileInput.style.display = 'none';
+
+    fileInput.onchange = function(event) {
+        const file = event.target.files[0];
+        if (!file) {
+            debugLog('❌ No file selected');
+            return;
+        }
+
+        debugLog('📄 File selected:', file.name);
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const importData = JSON.parse(e.target.result);
+                debugLog('📋 Import data parsed:', importData);
+
+                // Determine file type and import accordingly
+                if (importData.type === 'conversation_trainer_colleagues') {
+                    // Import colleagues
+                    importColleaguesData(importData);
+                } else if (importData.type === 'conversation_trainer_scenarios') {
+                    // Import scenarios
+                    importScenariosData(importData);
+                } else {
+                    throw new Error('Unknown file format. Please select a valid export file.');
+                }
+
+            } catch (error) {
+                debugLog('❌ Import error:', error);
+                showErrorMessage(`Import failed: ${error.message}`);
+            }
+        };
+
+        reader.onerror = function() {
+            debugLog('❌ File reading error');
+            showErrorMessage('Error reading file. Please try again.');
+        };
+
+        reader.readAsText(file);
+    };
+
+    // Trigger file selection
+    document.body.appendChild(fileInput);
+    fileInput.click();
+    document.body.removeChild(fileInput);
+}
+
+// Helper functions for bulk import
+function importColleaguesData(importData) {
+    if (!importData.colleagues || typeof importData.colleagues !== 'object') {
+        throw new Error('No colleague data found in file.');
+    }
+
+    const existingColleagues = getStoredColleagues();
+    const importedColleagues = importData.colleagues;
+
+    let importedCount = 0;
+    let duplicateCount = 0;
+
+    Object.values(importedColleagues).forEach(colleague => {
+        const isDuplicate = Object.values(existingColleagues).some(existing =>
+            existing.name === colleague.name && existing.role === colleague.role
+        );
+
+        if (isDuplicate) {
+            duplicateCount++;
+        } else {
+            const newId = `colleague_imported_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            colleague.id = newId;
+            colleague.imported_at = new Date().toISOString();
+            existingColleagues[newId] = colleague;
+            importedCount++;
+        }
+    });
+
+    localStorage.setItem('conversation_trainer_colleagues', JSON.stringify(existingColleagues));
+    updateStorageCounts();
+
+    let message = `Successfully imported ${importedCount} colleague${importedCount === 1 ? '' : 's'}!`;
+    if (duplicateCount > 0) {
+        message += ` (${duplicateCount} duplicate${duplicateCount === 1 ? '' : 's'} skipped)`;
+    }
+
+    showSuccessMessage(message);
+}
+
+function importScenariosData(importData) {
+    if (!importData.scenarios || typeof importData.scenarios !== 'object') {
+        throw new Error('No scenario data found in file.');
+    }
+
+    const existingScenarios = getStoredScenarios();
+    const importedScenarios = importData.scenarios;
+
+    let importedCount = 0;
+    let duplicateCount = 0;
+
+    Object.values(importedScenarios).forEach(scenario => {
+        const isDuplicate = Object.values(existingScenarios).some(existing =>
+            existing.title === scenario.title
+        );
+
+        if (isDuplicate) {
+            duplicateCount++;
+        } else {
+            const newId = `scenario_imported_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            scenario.id = newId;
+            scenario.imported_at = new Date().toISOString();
+            existingScenarios[newId] = scenario;
+            importedCount++;
+        }
+    });
+
+    localStorage.setItem('conversation_trainer_scenarios', JSON.stringify(existingScenarios));
+    updateStorageCounts();
+
+    let message = `Successfully imported ${importedCount} scenario${importedCount === 1 ? '' : 's'}!`;
+    if (duplicateCount > 0) {
+        message += ` (${duplicateCount} duplicate${duplicateCount === 1 ? '' : 's'} skipped)`;
+    }
+
+    showSuccessMessage(message);
+}
+// ============================================
+// ADDITIONAL STORAGE MANAGEMENT FUNCTIONS
+// ============================================
+
+function clearAllStorage() {
+    const colleagues = getStoredColleagues();
+    const scenarios = getStoredScenarios();
+
+    const colleagueCount = Object.keys(colleagues).length;
+    const scenarioCount = Object.keys(scenarios).length;
+
+    if (colleagueCount === 0 && scenarioCount === 0) {
+        showSuccessMessage('No data to clear. Storage is already empty.');
+        return;
+    }
+
+    const message = `Are you sure you want to delete all stored data?\n\nThis will permanently remove:\n• ${colleagueCount} saved colleague${colleagueCount === 1 ? '' : 's'}\n• ${scenarioCount} saved scenario${scenarioCount === 1 ? '' : 's'}\n\nThis action cannot be undone.`;
+
+    if (confirm(message)) {
+        try {
+            localStorage.removeItem('conversation_trainer_colleagues');
+            localStorage.removeItem('conversation_trainer_scenarios');
+            updateStorageCounts();
+
+            debugLog('🗑️ All storage cleared');
+            showSuccessMessage('All stored data has been cleared successfully.');
+
+        } catch (error) {
+            debugLog('❌ Error clearing storage:', error);
+            showErrorMessage('Error clearing storage. Please try again.');
+        }
+    }
+}
+
+// Enhanced test storage function with more details
+function testStorage() {
+    const colleagues = getStoredColleagues();
+    const scenarios = getStoredScenarios();
+
+    console.log('📊 === CONVERSATION TRAINER STORAGE REPORT ===');
+    console.log('📚 Stored Colleagues:', colleagues);
+    console.log('📋 Stored Scenarios:', scenarios);
+    console.log('📈 Storage Statistics:', {
+        colleagues: {
+            count: Object.keys(colleagues).length,
+            totalSize: JSON.stringify(colleagues).length + ' characters'
+        },
+        scenarios: {
+            count: Object.keys(scenarios).length,
+            totalSize: JSON.stringify(scenarios).length + ' characters'
+        },
+        lastUpdated: new Date().toISOString()
+    });
+
+    // Test localStorage availability
+    try {
+        localStorage.setItem('test', 'test');
+        localStorage.removeItem('test');
+        console.log('✅ localStorage is working properly');
+    } catch (error) {
+        console.log('❌ localStorage error:', error);
+    }
+
+    console.log('================================================');
+
+    showSuccessMessage('Storage report generated. Check browser console for detailed information.');
+}
 
 debugLog('🎨 Professional Conversation Trainer Loaded');
 </script>
