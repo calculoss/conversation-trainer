@@ -229,6 +229,144 @@
             line-height: 1.4;
         }
 
+        /* Enhanced Personality Grid */
+        .personality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .personality-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .personality-card:hover {
+            border-color: #cbd5e1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .personality-card.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .personality-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 20px;
+            height: 20px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .personality-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .personality-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .personality-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #1e293b;
+        }
+
+        .personality-role {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .disc-preview {
+            margin-bottom: 1rem;
+            background: #f8fafc;
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+
+        .disc-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .disc-bar:last-child {
+            margin-bottom: 0;
+        }
+
+        .disc-label {
+            font-weight: 600;
+            font-size: 0.8rem;
+            width: 15px;
+            color: #374151;
+        }
+
+        .disc-fill {
+            height: 8px;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            flex: 1;
+            max-width: 100px;
+        }
+
+        .disc-score {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #64748b;
+            min-width: 30px;
+            text-align: right;
+        }
+
+        .personality-description {
+            font-size: 0.85rem;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        .custom-personality-preview {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .custom-personality-preview p {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin: 0;
+        }
+
         /* Chat Screen */
         .chat-screen {
             display: none;
@@ -656,157 +794,18 @@
         .btn-primary:hover {
             background: #2563eb;
         }
-        /* Enhanced Personality Grid */
-.personality-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
-}
 
-.personality-card {
-    background: white;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 1rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-}
-
-.personality-card:hover {
-    border-color: #cbd5e1;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.personality-card.selected {
-    border-color: #3b82f6;
-    background: #eff6ff;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.personality-card.selected::after {
-    content: '✓';
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    width: 20px;
-    height: 20px;
-    background: #3b82f6;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.personality-header {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-}
-
-.personality-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #3b82f6, #1e40af);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.personality-name {
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: #1e293b;
-}
-
-.personality-role {
-    font-size: 0.8rem;
-    color: #64748b;
-}
-
-.disc-preview {
-    margin-bottom: 1rem;
-    background: #f8fafc;
-    padding: 0.75rem;
-    border-radius: 8px;
-}
-
-.disc-bar {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.4rem;
-}
-
-.disc-bar:last-child {
-    margin-bottom: 0;
-}
-
-.disc-label {
-    font-weight: 600;
-    font-size: 0.8rem;
-    width: 15px;
-    color: #374151;
-}
-
-.disc-fill {
-    height: 8px;
-    border-radius: 4px;
-    transition: width 0.3s ease;
-    flex: 1;
-    max-width: 100px;
-}
-
-.disc-score {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #64748b;
-    min-width: 30px;
-    text-align: right;
-}
-
-.personality-description {
-    font-size: 0.85rem;
-    color: #64748b;
-    line-height: 1.4;
-}
-
-.custom-personality-preview {
-    background: #f8fafc;
-    padding: 1rem;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.custom-personality-preview p {
-    font-size: 0.85rem;
-    color: #64748b;
-    margin: 0;
-}
-
-/* Responsive adjustments for personality grid */
-@media (max-width: 768px) {
-    .personality-grid {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-    }
-
-    .personality-card {
-        padding: 0.75rem;
-    }
-}
-        /* Responsive */
+        /* Responsive adjustments for personality grid */
         @media (max-width: 768px) {
+            .personality-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .personality-card {
+                padding: 0.75rem;
+            }
+
             .setup-container {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
@@ -1155,6 +1154,30 @@
                         <p style="margin-top: 1rem; color: #64748b; font-size: 0.875rem;">
                             Select your role, scenario, and AI partner to start practicing
                         </p>
+
+                        <!-- TEMPORARY TEST BUTTONS - Storage Management -->
+                        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
+                            <h4 style="font-size: 0.9rem; font-weight: 600; color: #64748b; margin-bottom: 1rem;">Storage Management (Testing)</h4>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+                                <button class="secondary-button" onclick="showStoredColleagues()" style="font-size: 0.85rem;">
+                                    📚 View Colleagues (<span id="colleagueCount">0</span>)
+                                </button>
+                                <button class="secondary-button" onclick="showStoredScenarios()" style="font-size: 0.85rem;">
+                                    📋 View Scenarios (<span id="scenarioCount">0</span>)
+                                </button>
+                                <button class="secondary-button" onclick="exportColleagues()" style="font-size: 0.85rem;">
+                                    💾 Export Colleagues
+                                </button>
+                                <button class="secondary-button" onclick="exportScenarios()" style="font-size: 0.85rem;">
+                                    💾 Export Scenarios
+                                </button>
+                            </div>
+
+                            <button class="secondary-button" onclick="testStorage()" style="width: 100%; font-size: 0.85rem;">
+                                🔍 Debug Storage (Check Console)
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1298,297 +1321,701 @@
     </div>
 
 <script>
-        // Configuration
-        const API_BASE_URL = 'https://conversation-trainer-production.up.railway.app';
+// ============================================
+// CONFIGURATION & STATE
+// ============================================
+const API_BASE_URL = 'https://conversation-trainer-production.up.railway.app';
 
-        // Application State - defined first
-        let appState = {
-            selectedRole: null,
-            selectedScenario: null,
-            selectedPersonality: null,
-            currentConversation: null,
-            conversationHistory: [],
-            isConnected: false
+let appState = {
+    selectedRole: null,
+    selectedScenario: null,
+    selectedPersonality: null,
+    currentConversation: null,
+    conversationHistory: [],
+    isConnected: false
+};
+
+let customCharacterData = null;
+let customScenarioData = null;
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+function debugLog(message, data = null) {
+    const timestamp = new Date().toLocaleTimeString();
+    console.log(`🔍 [${timestamp}] ${message}`, data || '');
+}
+
+function showSuccessMessage(message) {
+    const successMsg = document.getElementById('successMessage');
+    if (successMsg) {
+        successMsg.textContent = message;
+        successMsg.style.display = 'block';
+        setTimeout(() => {
+            successMsg.style.display = 'none';
+        }, 4000);
+    }
+}
+
+function showErrorMessage(message) {
+    const errorMsg = document.getElementById('errorMessage');
+    if (errorMsg) {
+        errorMsg.textContent = message;
+        errorMsg.style.display = 'block';
+        setTimeout(() => {
+            errorMsg.style.display = 'none';
+        }, 6000);
+    }
+}
+
+// ============================================
+// STORAGE FUNCTIONS
+// ============================================
+function saveColleagueToStorage(colleagueData) {
+    try {
+        const colleagues = getStoredColleagues();
+        const colleagueId = `colleague_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+        colleagueData.id = colleagueId;
+        colleagueData.saved_at = new Date().toISOString();
+
+        colleagues[colleagueId] = colleagueData;
+        localStorage.setItem('conversation_trainer_colleagues', JSON.stringify(colleagues));
+
+        debugLog('✅ Colleague saved to storage', colleagueData);
+        updateStorageCounts();
+        return colleagueId;
+    } catch (error) {
+        debugLog('❌ Error saving colleague', error);
+        throw error;
+    }
+}
+
+function getStoredColleagues() {
+    try {
+        const stored = localStorage.getItem('conversation_trainer_colleagues');
+        return stored ? JSON.parse(stored) : {};
+    } catch (error) {
+        debugLog('⚠️ Error reading stored colleagues, returning empty object', error);
+        return {};
+    }
+}
+
+function saveScenarioToStorage(scenarioData) {
+    try {
+        const scenarios = getStoredScenarios();
+        const scenarioId = `scenario_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+        scenarioData.id = scenarioId;
+        scenarioData.saved_at = new Date().toISOString();
+
+        scenarios[scenarioId] = scenarioData;
+        localStorage.setItem('conversation_trainer_scenarios', JSON.stringify(scenarios));
+
+        debugLog('✅ Scenario saved to storage', scenarioData);
+        updateStorageCounts();
+        return scenarioId;
+    } catch (error) {
+        debugLog('❌ Error saving scenario', error);
+        throw error;
+    }
+}
+
+function getStoredScenarios() {
+    try {
+        const stored = localStorage.getItem('conversation_trainer_scenarios');
+        return stored ? JSON.parse(stored) : {};
+    } catch (error) {
+        debugLog('⚠️ Error reading stored scenarios, returning empty object', error);
+        return {};
+    }
+}
+
+function updateStorageCounts() {
+    try {
+        const colleagues = getStoredColleagues();
+        const scenarios = getStoredScenarios();
+
+        const colleagueCount = Object.keys(colleagues).length;
+        const scenarioCount = Object.keys(scenarios).length;
+
+        const colleagueCountElement = document.getElementById('colleagueCount');
+        const scenarioCountElement = document.getElementById('scenarioCount');
+
+        if (colleagueCountElement) colleagueCountElement.textContent = colleagueCount;
+        if (scenarioCountElement) scenarioCountElement.textContent = scenarioCount;
+
+    } catch (error) {
+        debugLog('Error updating storage counts', error);
+    }
+}
+
+// ============================================
+// STORAGE MANAGEMENT FUNCTIONS
+// ============================================
+function showStoredColleagues() {
+    const colleagues = getStoredColleagues();
+    const count = Object.keys(colleagues).length;
+
+    if (count === 0) {
+        showSuccessMessage('No saved colleagues yet. Create some custom characters to build your library!');
+        return;
+    }
+
+    console.log('📚 Stored Colleagues:', colleagues);
+    showSuccessMessage(`You have ${count} saved colleague${count === 1 ? '' : 's'}. Check console for details.`);
+}
+
+function showStoredScenarios() {
+    const scenarios = getStoredScenarios();
+    const count = Object.keys(scenarios).length;
+
+    if (count === 0) {
+        showSuccessMessage('No saved scenarios yet. Create some custom scenarios to build your library!');
+        return;
+    }
+
+    console.log('📋 Stored Scenarios:', scenarios);
+    showSuccessMessage(`You have ${count} saved scenario${count === 1 ? '' : 's'}. Check console for details.`);
+}
+
+function exportColleagues() {
+    try {
+        const colleagues = getStoredColleagues();
+        const count = Object.keys(colleagues).length;
+
+        if (count === 0) {
+            showErrorMessage('No colleagues to export. Create some custom characters first.');
+            return;
+        }
+
+        const exportData = {
+            type: 'conversation_trainer_colleagues',
+            version: '1.0',
+            exported_at: new Date().toISOString(),
+            count: count,
+            colleagues: colleagues
         };
 
-        // Custom data storage
-        let customCharacterData = null;
-        let customScenarioData = null;
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const dataBlob = new Blob([dataStr], {type: 'application/json'});
 
-        // Debug logging function - defined very early
-        function debugLog(message, data = null) {
-            const timestamp = new Date().toLocaleTimeString();
-            console.log(`🔍 [${timestamp}] ${message}`, data || '');
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(dataBlob);
+        link.download = `conversation_trainer_colleagues_${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+
+        showSuccessMessage(`Successfully exported ${count} colleague${count === 1 ? '' : 's'}!`);
+        debugLog('✅ Colleagues exported', exportData);
+
+    } catch (error) {
+        debugLog('❌ Error exporting colleagues', error);
+        showErrorMessage('Error exporting colleagues. Please try again.');
+    }
+}
+
+function exportScenarios() {
+    try {
+        const scenarios = getStoredScenarios();
+        const count = Object.keys(scenarios).length;
+
+        if (count === 0) {
+            showErrorMessage('No scenarios to export. Create some custom scenarios first.');
+            return;
         }
 
-        // Message functions - defined early
-        function showSuccessMessage(message) {
-            const successMsg = document.getElementById('successMessage');
-            if (successMsg) {
-                successMsg.textContent = message;
-                successMsg.style.display = 'block';
-                setTimeout(() => {
-                    successMsg.style.display = 'none';
-                }, 4000);
-            }
+        const exportData = {
+            type: 'conversation_trainer_scenarios',
+            version: '1.0',
+            exported_at: new Date().toISOString(),
+            count: count,
+            scenarios: scenarios
+        };
+
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const dataBlob = new Blob([dataStr], {type: 'application/json'});
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(dataBlob);
+        link.download = `conversation_trainer_scenarios_${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+
+        showSuccessMessage(`Successfully exported ${count} scenario${count === 1 ? '' : 's'}!`);
+        debugLog('✅ Scenarios exported', exportData);
+
+    } catch (error) {
+        debugLog('❌ Error exporting scenarios', error);
+        showErrorMessage('Error exporting scenarios. Please try again.');
+    }
+}
+
+function testStorage() {
+    console.log('📚 Stored Colleagues:', getStoredColleagues());
+    console.log('📋 Stored Scenarios:', getStoredScenarios());
+    console.log('📊 Storage Status:', {
+        colleagues: Object.keys(getStoredColleagues()).length,
+        scenarios: Object.keys(getStoredScenarios()).length
+    });
+}
+
+// ============================================
+// SCREEN SWITCHING
+// ============================================
+function switchToChat() {
+    debugLog('🎬 SWITCHING TO CHAT SCREEN');
+
+    try {
+        const setupScreen = document.getElementById('setupScreen');
+        const chatScreen = document.getElementById('chatScreen');
+
+        if (!setupScreen || !chatScreen) {
+            throw new Error('Missing required screen elements');
         }
 
-        function showErrorMessage(message) {
-            const errorMsg = document.getElementById('errorMessage');
-            if (errorMsg) {
-                errorMsg.textContent = message;
-                errorMsg.style.display = 'block';
-                setTimeout(() => {
-                    errorMsg.style.display = 'none';
-                }, 6000);
-            }
+        setupScreen.style.display = 'none';
+        setupScreen.classList.add('hidden');
+
+        chatScreen.style.display = 'flex';
+        chatScreen.classList.add('active');
+
+        chatScreen.offsetHeight; // Force layout recalculation
+
+        debugLog('🎯 Screen switch completed successfully');
+        return true;
+
+    } catch (error) {
+        debugLog('❌ Error switching screens', error);
+        showErrorMessage(`Screen switching error: ${error.message}`);
+        return false;
+    }
+}
+
+function switchToSetup() {
+    debugLog('🏠 Switching back to setup screen');
+
+    const setupScreen = document.getElementById('setupScreen');
+    const chatScreen = document.getElementById('chatScreen');
+
+    if (chatScreen) {
+        chatScreen.style.display = 'none';
+        chatScreen.classList.remove('active');
+    }
+
+    if (setupScreen) {
+        setupScreen.style.display = 'block';
+        setupScreen.classList.remove('hidden');
+    }
+}
+
+// ============================================
+// CUSTOM CHARACTER FUNCTIONS
+// ============================================
+function showCustomCharacterModal() {
+    debugLog('📝 Opening custom character modal');
+
+    const modal = document.getElementById('customCharacterModal');
+    if (!modal) {
+        debugLog('❌ Custom character modal not found in DOM');
+        showErrorMessage('Custom character modal not found. Please refresh the page.');
+        return;
+    }
+
+    clearCustomCharacterForm();
+    modal.style.display = 'block';
+
+    setTimeout(() => {
+        const nameInput = document.getElementById('customName');
+        if (nameInput) nameInput.focus();
+    }, 100);
+
+    debugLog('✅ Custom character modal opened');
+}
+
+function cancelCustomCharacter() {
+    debugLog('❌ Cancelling custom character creation');
+
+    const modal = document.getElementById('customCharacterModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+
+    clearCustomCharacterForm();
+
+    if (appState.selectedPersonality === 'custom_character') {
+        const customOption = document.getElementById('customCharacterOption');
+        if (customOption) {
+            customOption.classList.remove('selected');
+            resetCustomCharacterCard();
+        }
+        appState.selectedPersonality = null;
+        customCharacterData = null;
+        updateStartButton();
+    }
+
+    debugLog('✅ Custom character creation cancelled');
+}
+
+function saveCustomCharacter() {
+    debugLog('💾 Attempting to save custom character');
+
+    try {
+        const nameInput = document.getElementById('customName');
+        const roleInput = document.getElementById('customRole');
+        const personalityInput = document.getElementById('customPersonality');
+        const motivationsInput = document.getElementById('customMotivations');
+
+        if (!nameInput || !roleInput || !personalityInput || !motivationsInput) {
+            throw new Error('Form elements not found. Please refresh the page.');
         }
 
-        // Screen switching functions
-        function switchToChat() {
-            debugLog('🎬 SWITCHING TO CHAT SCREEN');
+        const name = nameInput.value?.trim() || '';
+        const role = roleInput.value?.trim() || '';
+        const personality = personalityInput.value?.trim() || '';
+        const motivations = motivationsInput.value?.trim() || '';
 
-            try {
-                const setupScreen = document.getElementById('setupScreen');
-                const chatScreen = document.getElementById('chatScreen');
+        debugLog('📝 Form data collected', { name, role, personality, motivations });
 
-                debugLog('📍 Found elements', {
-                    setupScreen: setupScreen ? 'found' : 'NOT FOUND',
-                    chatScreen: chatScreen ? 'found' : 'NOT FOUND'
-                });
-
-                if (!setupScreen || !chatScreen) {
-                    throw new Error('Missing required screen elements');
-                }
-
-                setupScreen.style.display = 'none';
-                setupScreen.classList.add('hidden');
-
-                chatScreen.style.display = 'flex';
-                chatScreen.classList.add('active');
-
-                chatScreen.offsetHeight; // Force layout recalculation
-
-                debugLog('🎯 Screen switch completed successfully');
-                return true;
-
-            } catch (error) {
-                debugLog('❌ Error switching screens', error);
-                showErrorMessage(`Screen switching error: ${error.message}`);
-                return false;
-            }
+        if (!name) {
+            showErrorMessage('Please provide a name for the colleague.');
+            nameInput.focus();
+            return false;
         }
 
-        function switchToSetup() {
-            debugLog('🏠 Switching back to setup screen');
-
-            const setupScreen = document.getElementById('setupScreen');
-            const chatScreen = document.getElementById('chatScreen');
-
-            if (chatScreen) {
-                chatScreen.style.display = 'none';
-                chatScreen.classList.remove('active');
-            }
-
-            if (setupScreen) {
-                setupScreen.style.display = 'block';
-                setupScreen.classList.remove('hidden');
-            }
+        if (!role) {
+            showErrorMessage('Please provide a job title/role for the colleague.');
+            roleInput.focus();
+            return false;
         }
 
-        // Custom Character Functions
-        function showCustomCharacterModal() {
-            debugLog('Opening custom character modal');
-            const modal = document.getElementById('customCharacterModal');
-            if (modal) {
-                modal.style.display = 'block';
-            }
+        if (!personality) {
+            showErrorMessage('Please describe how this person behaves in meetings.');
+            personalityInput.focus();
+            return false;
         }
 
-        function cancelCustomCharacter() {
-            debugLog('Cancelling custom character');
-            const modal = document.getElementById('customCharacterModal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
-            clearCustomCharacterForm();
+        const characterData = {
+            name: name,
+            role: role,
+            personality: personality,
+            motivations: motivations || 'Professional success and recognition',
+            type: 'custom',
+            created: new Date().toISOString()
+        };
+
+        debugLog('✅ Character data created', characterData);
+
+        const colleagueId = saveColleagueToStorage(characterData);
+        characterData.id = colleagueId;
+
+        customCharacterData = characterData;
+        updateCustomCharacterCard(characterData);
+
+        appState.selectedPersonality = 'custom_character';
+        debugLog('🎯 App state updated', appState);
+
+        const modal = document.getElementById('customCharacterModal');
+        if (modal) {
+            modal.style.display = 'none';
         }
 
-        function saveCustomCharacter() {
-            debugLog('Saving custom character');
-            try {
-                const name = document.getElementById('customName').value.trim();
-                const role = document.getElementById('customRole').value.trim();
-                const personality = document.getElementById('customPersonality').value.trim();
-                const motivations = document.getElementById('customMotivations').value.trim();
+        updateStartButton();
 
-                if (!name) {
-                    alert('Please provide at least a name for the colleague.');
-                    return;
-                }
+        debugLog('🎉 Custom character created successfully:', name);
+        showSuccessMessage(`Custom colleague "${name}" created and saved! You can now start a practice session.`);
 
-                const characterData = {
-                    name: name,
-                    role: role,
-                    personality: personality,
-                    motivations: motivations,
-                    type: 'custom',
-                    created: new Date().toISOString()
-                };
+        return true;
 
-                debugLog('Character data created', characterData);
+    } catch (error) {
+        debugLog('💥 Error creating custom character:', error);
+        showErrorMessage(`Error creating custom character: ${error.message}`);
+        return false;
+    }
+}
 
-                customCharacterData = characterData;
+function updateCustomCharacterCard(characterData) {
+    debugLog('🎨 Updating custom character card UI');
 
-                // Update UI
-                const customOption = document.getElementById('customCharacterOption');
-                if (customOption) {
-                    customOption.classList.add('selected');
-                    customOption.querySelector('.option-title').textContent = name;
-                    customOption.querySelector('.option-description').textContent = `${role} • Custom character`;
-                }
+    const customOption = document.getElementById('customCharacterOption');
+    if (!customOption) {
+        debugLog('❌ Custom character card not found');
+        return;
+    }
 
-                // Remove selection from other personality options
-                document.querySelectorAll('[data-personality="skeptical_councillor"], [data-personality="frustrated_resident"]').forEach(card => {
-                    card.classList.remove('selected');
-                });
+    document.querySelectorAll('.personality-card').forEach(card => {
+        if (card !== customOption) {
+            card.classList.remove('selected');
+        }
+    });
 
-                appState.selectedPersonality = 'custom_character';
-                debugLog('App state updated', appState);
+    customOption.classList.add('selected');
 
-                document.getElementById('customCharacterModal').style.display = 'none';
-                updateStartButton();
+    const nameElement = customOption.querySelector('.personality-name');
+    const roleElement = customOption.querySelector('.personality-role');
+    const descElement = customOption.querySelector('.personality-description');
 
-                debugLog('Character created successfully', name);
-                showSuccessMessage(`Custom colleague "${name}" created! You can now start a practice session.`);
+    if (nameElement) {
+        nameElement.textContent = characterData.name;
+    }
+    if (roleElement) {
+        roleElement.textContent = characterData.role;
+    }
+    if (descElement) {
+        const description = characterData.personality.length > 80
+            ? characterData.personality.substring(0, 80) + '...'
+            : characterData.personality;
+        descElement.textContent = `Custom colleague: ${description}`;
+    }
 
-            } catch (error) {
-                debugLog('Error creating custom character', error);
-                showErrorMessage('Error creating custom character. Please try again.');
-            }
+    debugLog('✅ Custom character card updated');
+}
+
+function resetCustomCharacterCard() {
+    debugLog('🔄 Resetting custom character card to default');
+
+    const customOption = document.getElementById('customCharacterOption');
+    if (!customOption) return;
+
+    const nameElement = customOption.querySelector('.personality-name');
+    const roleElement = customOption.querySelector('.personality-role');
+    const descElement = customOption.querySelector('.personality-description');
+
+    if (nameElement) nameElement.textContent = 'Create Custom';
+    if (roleElement) roleElement.textContent = 'Build Your Own';
+    if (descElement) descElement.textContent = 'Design a virtual version of someone from your workplace with custom DISC profile and behaviors.';
+}
+
+function clearCustomCharacterForm() {
+    debugLog('🧹 Clearing custom character form');
+
+    const fields = ['customName', 'customRole', 'customPersonality', 'customMotivations'];
+    fields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.value = '';
+        }
+    });
+}
+
+// ============================================
+// CUSTOM SCENARIO FUNCTIONS
+// ============================================
+function showCustomScenarioModal() {
+    debugLog('📋 Opening custom scenario modal');
+
+    const modal = document.getElementById('customScenarioModal');
+    if (!modal) {
+        debugLog('❌ Custom scenario modal not found in DOM');
+        showErrorMessage('Custom scenario modal not found. Please refresh the page.');
+        return;
+    }
+
+    clearCustomScenarioForm();
+    modal.style.display = 'block';
+
+    setTimeout(() => {
+        const titleInput = document.getElementById('customScenarioTitle');
+        if (titleInput) titleInput.focus();
+    }, 100);
+
+    debugLog('✅ Custom scenario modal opened');
+}
+
+function cancelCustomScenario() {
+    debugLog('❌ Cancelling custom scenario creation');
+
+    const modal = document.getElementById('customScenarioModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+
+    clearCustomScenarioForm();
+
+    if (appState.selectedScenario === 'custom_scenario') {
+        const customOption = document.getElementById('customScenarioOption');
+        if (customOption) {
+            customOption.classList.remove('selected');
+            resetCustomScenarioCard();
+        }
+        appState.selectedScenario = null;
+        customScenarioData = null;
+        updateStartButton();
+    }
+
+    debugLog('✅ Custom scenario creation cancelled');
+}
+
+function saveCustomScenario() {
+    debugLog('💾 Attempting to save custom scenario');
+
+    try {
+        const titleInput = document.getElementById('customScenarioTitle');
+        const contextInput = document.getElementById('customScenarioContext');
+        const objectiveInput = document.getElementById('customScenarioObjective');
+        const challengesInput = document.getElementById('customScenarioChallenges');
+        const typeInput = document.getElementById('customScenarioType');
+
+        if (!titleInput || !contextInput || !objectiveInput || !challengesInput || !typeInput) {
+            throw new Error('Form elements not found. Please refresh the page.');
         }
 
-        function clearCustomCharacterForm() {
-            document.getElementById('customName').value = '';
-            document.getElementById('customRole').value = '';
-            document.getElementById('customPersonality').value = '';
-            document.getElementById('customMotivations').value = '';
+        const title = titleInput.value?.trim() || '';
+        const context = contextInput.value?.trim() || '';
+        const objective = objectiveInput.value?.trim() || '';
+        const challenges = challengesInput.value?.trim() || '';
+        const type = typeInput.value || 'budget_review';
+
+        debugLog('📝 Scenario form data collected', { title, context, objective, challenges, type });
+
+        if (!title) {
+            showErrorMessage('Please provide a title for the scenario.');
+            titleInput.focus();
+            return false;
         }
 
-        // Custom Scenario Functions
-        function showCustomScenarioModal() {
-            debugLog('Opening custom scenario modal');
-            const modal = document.getElementById('customScenarioModal');
-            if (modal) {
-                modal.style.display = 'block';
-            }
+        if (!context) {
+            showErrorMessage('Please describe the meeting context and background.');
+            contextInput.focus();
+            return false;
         }
 
-        function cancelCustomScenario() {
-            debugLog('Cancelling custom scenario');
-            const modal = document.getElementById('customScenarioModal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
-            clearCustomScenarioForm();
+        if (!objective) {
+            showErrorMessage('Please describe your role and objective in this meeting.');
+            objectiveInput.focus();
+            return false;
         }
 
-        function saveCustomScenario() {
-            debugLog('saveCustomScenario function called');
+        const scenarioData = {
+            title: title,
+            context: context,
+            objective: objective,
+            challenges: challenges || 'Standard workplace challenges',
+            type: type,
+            created: new Date().toISOString()
+        };
 
-            try {
-                const title = document.getElementById('customScenarioTitle').value.trim();
-                const context = document.getElementById('customScenarioContext').value.trim();
-                const objective = document.getElementById('customScenarioObjective').value.trim();
-                const challenges = document.getElementById('customScenarioChallenges').value.trim();
-                const type = document.getElementById('customScenarioType').value;
+        debugLog('✅ Scenario data created', scenarioData);
 
-                debugLog('Form values collected', { title, context, objective, challenges, type });
+        const scenarioId = saveScenarioToStorage(scenarioData);
+        scenarioData.id = scenarioId;
 
-                if (!title || !context || !objective) {
-                    debugLog('Validation failed - missing required fields');
-                    alert('Please provide at least a title, context, and your objective.');
-                    return;
-                }
+        customScenarioData = scenarioData;
+        updateCustomScenarioCard(scenarioData);
 
-                customScenarioData = {
-                    title: title,
-                    context: context,
-                    objective: objective,
-                    challenges: challenges,
-                    type: type,
-                    created: new Date().toISOString()
-                };
+        appState.selectedScenario = 'custom_scenario';
+        debugLog('🎯 App state updated', appState);
 
-                debugLog('Scenario data created', customScenarioData);
-
-                const customOption = document.getElementById('customScenarioOption');
-                if (customOption) {
-                    customOption.classList.add('selected');
-                    customOption.querySelector('.option-title').textContent = title;
-                    customOption.querySelector('.option-description').textContent = `Custom scenario: ${context.substring(0, 100)}...`;
-                }
-
-                document.querySelectorAll('[data-scenario="budget_cuts"], [data-scenario="angry_resident"]').forEach(card => {
-                    card.classList.remove('selected');
-                });
-
-                appState.selectedScenario = 'custom_scenario';
-                debugLog('Updated app state', appState);
-
-                const modal = document.getElementById('customScenarioModal');
-                if (modal) {
-                    modal.style.display = 'none';
-                }
-
-                updateStartButton();
-                debugLog('Custom scenario created successfully', title);
-                showSuccessMessage('Custom scenario created! You can now start a practice session.');
-
-            } catch (error) {
-                debugLog('Error in saveCustomScenario', error);
-                showErrorMessage('There was an error creating the scenario.');
-            }
+        const modal = document.getElementById('customScenarioModal');
+        if (modal) {
+            modal.style.display = 'none';
         }
 
-        function clearCustomScenarioForm() {
-            document.getElementById('customScenarioTitle').value = '';
-            document.getElementById('customScenarioContext').value = '';
-            document.getElementById('customScenarioObjective').value = '';
-            document.getElementById('customScenarioChallenges').value = '';
-            document.getElementById('customScenarioType').value = 'budget_review';
+        updateStartButton();
+
+        debugLog('🎉 Custom scenario created successfully:', title);
+        showSuccessMessage(`Custom scenario "${title}" created and saved! You can now start a practice session.`);
+
+        return true;
+
+    } catch (error) {
+        debugLog('💥 Error creating custom scenario:', error);
+        showErrorMessage(`Error creating custom scenario: ${error.message}`);
+        return false;
+    }
+}
+
+function updateCustomScenarioCard(scenarioData) {
+    debugLog('🎨 Updating custom scenario card UI');
+
+    const customOption = document.getElementById('customScenarioOption');
+    if (!customOption) {
+        debugLog('❌ Custom scenario card not found');
+        return;
+    }
+
+    document.querySelectorAll('[data-scenario]').forEach(card => {
+        if (card !== customOption) {
+            card.classList.remove('selected');
         }
+    });
 
-        // Core selection handler
-        function handleSelection(event) {
-            debugLog('Selection handler called');
-            const card = event.currentTarget;
-            const parent = card.parentElement;
+    customOption.classList.add('selected');
 
-            // Remove selection from siblings
-            parent.querySelectorAll('.option-card, .personality-card').forEach(c => c.classList.remove('selected'));
+    const titleElement = customOption.querySelector('.option-title');
+    const descElement = customOption.querySelector('.option-description');
 
-            // Add selection to clicked card
-            card.classList.add('selected');
+    if (titleElement) {
+        titleElement.textContent = scenarioData.title;
+    }
+    if (descElement) {
+        const description = scenarioData.context.length > 100
+            ? scenarioData.context.substring(0, 100) + '...'
+            : scenarioData.context;
+        descElement.textContent = `Custom scenario: ${description}`;
+    }
 
-            // Update state based on data attributes
-            if (card.dataset.role) {
-                appState.selectedRole = card.dataset.role;
-                debugLog('Selected role', appState.selectedRole);
-            } else if (card.dataset.scenario) {
-                appState.selectedScenario = card.dataset.scenario;
-                debugLog('Selected scenario', appState.selectedScenario);
-            } else if (card.dataset.personality) {
-                appState.selectedPersonality = card.dataset.personality;
-                debugLog('Selected personality', appState.selectedPersonality);
-            }
+    debugLog('✅ Custom scenario card updated');
+}
 
-            updateStartButton();
+function resetCustomScenarioCard() {
+    debugLog('🔄 Resetting custom scenario card to default');
+
+    const customOption = document.getElementById('customScenarioOption');
+    if (!customOption) return;
+
+    const titleElement = customOption.querySelector('.option-title');
+    const descElement = customOption.querySelector('.option-description');
+
+    if (titleElement) titleElement.textContent = '🎯 Create Custom Scenario';
+    if (descElement) descElement.textContent = 'Design your specific meeting situation. Perfect for practicing upcoming real conversations.';
+}
+
+function clearCustomScenarioForm() {
+    debugLog('🧹 Clearing custom scenario form');
+
+    const fields = ['customScenarioTitle', 'customScenarioContext', 'customScenarioObjective', 'customScenarioChallenges'];
+    fields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.value = '';
         }
+    });
 
-        // Request data building
-        function buildCustomScenarioDescription(scenarioData) {
-            return `${scenarioData.title}
+    const typeField = document.getElementById('customScenarioType');
+    if (typeField) {
+        typeField.value = 'budget_review';
+    }
+}
+
+// ============================================
+// SELECTION HANDLING
+// ============================================
+function handleSelection(event) {
+    debugLog('Selection handler called');
+    const card = event.currentTarget;
+    const parent = card.parentElement;
+
+    parent.querySelectorAll('.option-card, .personality-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+
+    if (card.dataset.role) {
+        appState.selectedRole = card.dataset.role;
+        debugLog('Selected role', appState.selectedRole);
+    } else if (card.dataset.scenario) {
+        appState.selectedScenario = card.dataset.scenario;
+        debugLog('Selected scenario', appState.selectedScenario);
+    } else if (card.dataset.personality) {
+        appState.selectedPersonality = card.dataset.personality;
+        debugLog('Selected personality', appState.selectedPersonality);
+    }
+
+    updateStartButton();
+}
+
+// ============================================
+// REQUEST DATA BUILDING
+// ============================================
+function buildCustomScenarioDescription(scenarioData) {
+    return `${scenarioData.title}
 
 CONTEXT: ${scenarioData.context}
 
@@ -1597,523 +2024,572 @@ YOUR OBJECTIVE: ${scenarioData.objective}
 EXPECTED CHALLENGES: ${scenarioData.challenges}
 
 MEETING TYPE: ${scenarioData.type}`;
+}
+
+function getScenarioDescription(scenarioKey) {
+    const scenarios = {
+        'budget_cuts': 'You need to discuss budget reductions with your team while maintaining morale and finding creative solutions.',
+        'angry_resident': 'Handle a frustrated ratepayer who is upset about service levels and rate increases.'
+    };
+    return scenarios[scenarioKey] || 'Practice conversation scenario';
+}
+
+function getRequestData() {
+    debugLog('Building request data');
+    const baseData = {
+        user_name: `${appState.selectedRole}_user`,
+        personality_type: appState.selectedPersonality
+    };
+
+    debugLog('🔍 REQUEST DATA DEBUG:', {
+        selectedRole: appState.selectedRole,
+        selectedScenario: appState.selectedScenario,
+        selectedPersonality: appState.selectedPersonality,
+        hasCustomCharacter: !!customCharacterData,
+        hasCustomScenario: !!customScenarioData
+    });
+
+    if (appState.selectedPersonality === 'custom_character' && customCharacterData) {
+        baseData.custom_character = customCharacterData;
+        debugLog('Added custom character data');
+    }
+
+    if (appState.selectedScenario === 'custom_scenario' && customScenarioData) {
+        baseData.custom_scenario = customScenarioData;
+        baseData.scenario = buildCustomScenarioDescription(customScenarioData);
+        debugLog('Added custom scenario data');
+    } else {
+        baseData.scenario = getScenarioDescription(appState.selectedScenario);
+        debugLog('Added standard scenario');
+    }
+
+    debugLog('🚀 FINAL REQUEST DATA:', baseData);
+    return baseData;
+}
+
+// ============================================
+// START BUTTON MANAGEMENT
+// ============================================
+function updateStartButton() {
+    const startBtn = document.getElementById('startConversation');
+    const isReady = appState.selectedRole && appState.selectedScenario && appState.selectedPersonality;
+
+    startBtn.disabled = !isReady || !appState.isConnected;
+
+    if (!appState.isConnected) {
+        startBtn.innerHTML = '<span>⚠️</span><span>Connecting to Service...</span>';
+    } else if (!isReady) {
+        startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+    } else {
+        startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+    }
+
+    debugLog('Start button updated', { ready: isReady, connected: appState.isConnected });
+}
+
+// ============================================
+// API CONNECTION
+// ============================================
+async function testAPIConnection() {
+    try {
+        debugLog('Testing API connection');
+        const response = await fetch(`${API_BASE_URL}/health`);
+        const data = await response.json();
+
+        if (response.ok) {
+            appState.isConnected = true;
+            showSuccessMessage('✅ Connected to conversation service successfully');
+            debugLog('API connection successful', data);
+        } else {
+            throw new Error('API health check failed');
         }
-
-        function getScenarioDescription(scenarioKey) {
-            const scenarios = {
-                'budget_cuts': 'You need to discuss budget reductions with your team while maintaining morale and finding creative solutions.',
-                'angry_resident': 'Handle a frustrated ratepayer who is upset about service levels and rate increases.'
-            };
-            return scenarios[scenarioKey] || 'Practice conversation scenario';
-        }
-
-        // Enhanced request data function with debugging
-        function getRequestData() {
-            debugLog('Building request data');
-            const baseData = {
-                user_name: `${appState.selectedRole}_user`,
-                personality_type: appState.selectedPersonality
-            };
-
-            // Debug logging to see what's being sent
-            debugLog('🔍 REQUEST DATA DEBUG:', {
-                selectedRole: appState.selectedRole,
-                selectedScenario: appState.selectedScenario,
-                selectedPersonality: appState.selectedPersonality,
-                hasCustomCharacter: !!customCharacterData,
-                hasCustomScenario: !!customScenarioData
-            });
-
-            if (appState.selectedPersonality === 'custom_character' && customCharacterData) {
-                baseData.custom_character = customCharacterData;
-                debugLog('Added custom character data');
-            }
-
-            if (appState.selectedScenario === 'custom_scenario' && customScenarioData) {
-                baseData.custom_scenario = customScenarioData;
-                baseData.scenario = buildCustomScenarioDescription(customScenarioData);
-                debugLog('Added custom scenario data');
-            } else {
-                baseData.scenario = getScenarioDescription(appState.selectedScenario);
-                debugLog('Added standard scenario');
-            }
-
-            debugLog('🚀 FINAL REQUEST DATA:', baseData);
-            return baseData;
-        }
-
-        // Start button management
-        function updateStartButton() {
-            const startBtn = document.getElementById('startConversation');
-            const isReady = appState.selectedRole && appState.selectedScenario && appState.selectedPersonality;
-
-            startBtn.disabled = !isReady || !appState.isConnected;
-
-            if (!appState.isConnected) {
-                startBtn.innerHTML = '<span>⚠️</span><span>Connecting to Service...</span>';
-            } else if (!isReady) {
-                startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
-            } else {
-                startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
-            }
-
-            debugLog('Start button updated', { ready: isReady, connected: appState.isConnected });
-        }
-
-        // API connection testing
-        async function testAPIConnection() {
-            try {
-                debugLog('Testing API connection');
-                const response = await fetch(`${API_BASE_URL}/health`);
-                const data = await response.json();
-
-                if (response.ok) {
-                    appState.isConnected = true;
-                    showSuccessMessage('✅ Connected to conversation service successfully');
-                    debugLog('API connection successful', data);
-                } else {
-                    throw new Error('API health check failed');
-                }
-            } catch (error) {
-                debugLog('API Connection Error', error);
-                appState.isConnected = false;
-                showConnectionError();
-                showErrorMessage('⚠️ Cannot connect to conversation service. Please check your internet connection.');
-            } finally {
-                updateStartButton();
-            }
-        }
-
-        function showConnectionError() {
-            const statusIndicator = document.querySelector('.status-indicator');
-            statusIndicator.innerHTML = '<div style="width: 8px; height: 8px; background: #dc2626; border-radius: 50%;"></div><span>Service Offline</span>';
-            statusIndicator.style.background = '#fef2f2';
-            statusIndicator.style.borderColor = '#fecaca';
-            statusIndicator.style.color = '#dc2626';
-        }
-
-        // Enhanced start conversation with better error handling
-        async function startConversation() {
-            debugLog('🚀 START CONVERSATION CALLED');
-            debugLog('🎯 Current app state:', appState);
-
-            try {
-                const startBtn = document.getElementById('startConversation');
-                startBtn.disabled = true;
-                startBtn.innerHTML = '<span>⏳</span><span>Starting Session...</span>';
-
-                const requestData = getRequestData();
-                debugLog('📤 Sending request to backend:', requestData);
-
-                const response = await fetch(`${API_BASE_URL}/api/conversations/start`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestData)
-                });
-
-                debugLog('📥 Backend response status:', response.status);
-
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    debugLog('❌ Backend error response:', errorText);
-                    throw new Error(`Backend error (${response.status}): ${errorText}`);
-                }
-
-                const data = await response.json();
-                debugLog('✅ Backend success response:', data);
-
-                if (data.success) {
-                    appState.currentConversation = data;
-                    appState.conversationHistory = [{
-                        sender: data.personality_name,
-                        content: data.opening_message,
-                        timestamp: data.timestamp || new Date().toISOString(),
-                        sender_type: 'ai_personality'
-                    }];
-
-                    const switchSuccess = switchToChat();
-                    if (!switchSuccess) {
-                        throw new Error('Failed to switch to chat screen');
-                    }
-
-                    const messagesArea = document.getElementById('messagesArea');
-                    if (messagesArea) {
-                        messagesArea.innerHTML = '';
-                    }
-
-                    const messageInput = document.getElementById('messageInput');
-                    const sendButton = document.getElementById('sendButton');
-
-                    if (messageInput) messageInput.disabled = false;
-                    if (sendButton) sendButton.disabled = false;
-
-                    updateChatHeader();
-                    addSystemMessage('Practice session started. Your conversation partner is ready.');
-                    addAIMessage(data.opening_message);
-
-                    debugLog('🎉 Conversation started successfully');
-
-                } else {
-                    throw new Error(data.error || 'Backend reported failure');
-                }
-            } catch (error) {
-                debugLog('💥 CONVERSATION START ERROR:', error);
-                showErrorMessage(`Failed to start conversation: ${error.message}`);
-
-                const startBtn = document.getElementById('startConversation');
-                startBtn.disabled = false;
-                startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
-            }
-        }
-
-        async function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
-
-            if (!message || !appState.currentConversation) return;
-
-            try {
-                debugLog('Sending message', message);
-
-                addUserMessage(message);
-                input.value = '';
-
-                input.disabled = true;
-                document.getElementById('sendButton').disabled = true;
-
-                const requestData = {
-                    conversation_id: appState.currentConversation.conversation_id,
-                    user_message: message,
-                    personality_data: appState.currentConversation.conversation_data.personality,
-                    conversation_history: appState.conversationHistory
-                };
-
-                debugLog('Sending message request', requestData);
-
-                const response = await fetch(`${API_BASE_URL}/api/conversations/message`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestData)
-                });
-
-                const data = await response.json();
-                debugLog('Message response', data);
-
-                if (data.success) {
-                    addAIMessage(data.ai_response);
-
-                    appState.conversationHistory.push({
-                        sender: 'user',
-                        content: message,
-                        timestamp: new Date().toISOString(),
-                        sender_type: 'user'
-                    });
-
-                    appState.conversationHistory.push({
-                        sender: appState.currentConversation.personality_name,
-                        content: data.ai_response,
-                        timestamp: data.timestamp,
-                        sender_type: 'ai_personality'
-                    });
-
-                    debugLog('Message exchange completed');
-                } else {
-                    throw new Error(data.error || 'Failed to get AI response');
-                }
-            } catch (error) {
-                debugLog('Error sending message', error);
-                addSystemMessage('Sorry, there was an error processing your message. Please try again.');
-                showErrorMessage('Error sending message. Please try again.');
-            } finally {
-                input.disabled = false;
-                document.getElementById('sendButton').disabled = false;
-                input.focus();
-            }
-        }
-
-        function endConversation() {
-            if (confirm('Are you sure you want to end this practice session?')) {
-                debugLog('Ending conversation');
-
-                switchToSetup();
-
-                document.getElementById('messagesArea').innerHTML = '';
-                document.querySelectorAll('.option-card').forEach(card => {
-                    card.classList.remove('selected');
-                });
-
-                // Reset custom options
-                if (appState.selectedPersonality === 'custom_character') {
-                    const customCharacterOption = document.getElementById('customCharacterOption');
-                    customCharacterOption.querySelector('.option-title').textContent = '🛠️ Create Custom Colleague';
-                    customCharacterOption.querySelector('.option-description').textContent = 'Design a virtual version of someone from your workplace. Perfect for practicing specific challenging conversations.';
-                }
-
-                if (appState.selectedScenario === 'custom_scenario') {
-                    const customScenarioOption = document.getElementById('customScenarioOption');
-                    customScenarioOption.querySelector('.option-title').textContent = '🎯 Create Custom Scenario';
-                    customScenarioOption.querySelector('.option-description').textContent = 'Design your specific meeting situation. Perfect for practicing upcoming real conversations.';
-                }
-
-                // Reset state
-                appState.selectedRole = null;
-                appState.selectedScenario = null;
-                appState.selectedPersonality = null;
-                appState.currentConversation = null;
-                appState.conversationHistory = [];
-                customCharacterData = null;
-                customScenarioData = null;
-
-                const messageInput = document.getElementById('messageInput');
-                messageInput.value = '';
-                messageInput.disabled = true;
-                document.getElementById('sendButton').disabled = true;
-
-                updateStartButton();
-                debugLog('Conversation ended and reset complete');
-            }
-        }
-
-        // Chat UI functions
-        function updateChatHeader() {
-            // Complete mapping for all DISC-based personalities
-            const personalities = {
-                // New DISC-based personalities
-                'infrastructure_engineer': {
-                    name: 'Terry Mitchell',
-                    avatar: 'TM',
-                    description: 'Senior Infrastructure Engineer • Technical expert, detail-oriented'
-                },
-                'community_engagement': {
-                    name: 'Sarah Chen',
-                    avatar: 'SC',
-                    description: 'Community Engagement Officer • People-focused, diplomatic'
-                },
-                'budget_director': {
-                    name: 'David Walsh',
-                    avatar: 'DW',
-                    description: 'Budget & Finance Director • Numbers-driven, direct about constraints'
-                },
-                'union_rep': {
-                    name: 'Maria Santos',
-                    avatar: 'MS',
-                    description: 'Union Representative • Assertive advocate for workers\' rights'
-                },
-                'councillor_thompson': {
-                    name: 'Robert Thompson',
-                    avatar: 'RT',
-                    description: 'Long-term Councillor • Steady, consensus-building approach'
-                },
-                'strategic_planner': {
-                    name: 'Emily Kim',
-                    avatar: 'EK',
-                    description: 'Strategic Planner • Analytical yet enthusiastic about new ideas'
-                },
-                // Legacy personalities (if still needed)
-                'skeptical_councillor': {
-                    name: 'Councillor Margaret Stevens',
-                    avatar: 'MS',
-                    description: 'Budget-focused councillor • Expects detailed justifications'
-                },
-                'frustrated_resident': {
-                    name: 'Robert Chen',
-                    avatar: 'RC',
-                    description: 'Local business owner • Concerned about service value'
-                },
-                // Custom character
-                'custom_character': {
-                    name: customCharacterData ? customCharacterData.name : 'Custom Character',
-                    avatar: customCharacterData ? customCharacterData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'CC',
-                    description: customCharacterData ? `Custom colleague • ${customCharacterData.role || 'Custom character'}` : 'Custom character'
-                }
-            };
-
-            const personality = personalities[appState.selectedPersonality];
-            if (personality) {
-                document.getElementById('participantAvatar').textContent = personality.avatar;
-                document.getElementById('participantName').textContent = personality.name;
-                document.getElementById('scenarioDescription').textContent = personality.description;
-                debugLog('Chat header updated', { selectedPersonality: appState.selectedPersonality, personality });
-            } else {
-                debugLog('⚠️ Unknown personality type', appState.selectedPersonality);
-                // Fallback
-                document.getElementById('participantAvatar').textContent = 'AI';
-                document.getElementById('participantName').textContent = 'Practice Partner';
-                document.getElementById('scenarioDescription').textContent = 'Conversation practice session';
-            }
-        }
-
-        function addSystemMessage(content) {
-            const messagesArea = document.getElementById('messagesArea');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'system-message';
-            messageDiv.textContent = content;
-            messagesArea.appendChild(messageDiv);
-            scrollToBottom();
-        }
-
-        function addUserMessage(content) {
-            addMessage('user', content, 'You');
-        }
-
-        function addAIMessage(content) {
-            // Updated avatar mapping for all personalities
-            const personalities = {
-                'infrastructure_engineer': 'TM',
-                'community_engagement': 'SC',
-                'budget_director': 'DW',
-                'union_rep': 'MS',
-                'councillor_thompson': 'RT',
-                'strategic_planner': 'EK',
-                'skeptical_councillor': 'MS',
-                'frustrated_resident': 'RC',
-                'custom_character': customCharacterData ? customCharacterData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'CC'
-            };
-
-            const avatar = personalities[appState.selectedPersonality] || 'AI';
-            debugLog('Adding AI message', { personality: appState.selectedPersonality, avatar, content: content.substring(0, 50) + '...' });
-            addMessage('ai', content, avatar);
-        }
-
-        function addMessage(type, content, avatar) {
-            const messagesArea = document.getElementById('messagesArea');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${type}`;
-
-            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-            messageDiv.innerHTML = [
-                '<div class="message-avatar">' + avatar + '</div>',
-                '<div class="message-content">',
-                    '<div class="message-text">' + content + '</div>',
-                    '<div class="message-time">' + timestamp + '</div>',
-                '</div>'
-            ].join('');
-
-            messagesArea.appendChild(messageDiv);
-            scrollToBottom();
-        }
-
-        function scrollToBottom() {
-            const messagesArea = document.getElementById('messagesArea');
-            messagesArea.scrollTop = messagesArea.scrollHeight;
-        }
-
-        function handleInputKeydown(event) {
-            if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                sendMessage();
-            }
-        }
-
-        // Event listeners setup
-        function setupEventListeners() {
-            debugLog('Setting up event listeners');
-
-            // Core selection handling
-            document.querySelectorAll('.option-card').forEach(card => {
-                if (card.id === 'customCharacterOption' || card.id === 'customScenarioOption') {
-                    return;
-                }
-                card.addEventListener('click', handleSelection);
-            });
-
-            // Enhanced personality card handling
-            document.querySelectorAll('.personality-card').forEach(card => {
-                if (card.id === 'customCharacterOption') {
-                    return; // Skip custom character option (has its own handler)
-                }
-                card.addEventListener('click', handleSelection);
-            });
-
-            // Button handlers
-            document.getElementById('startConversation').addEventListener('click', startConversation);
-            document.getElementById('endConversation').addEventListener('click', endConversation);
-            document.getElementById('sendButton').addEventListener('click', sendMessage);
-
-            // Custom character handlers
-            const customCharacterOption = document.getElementById('customCharacterOption');
-            if (customCharacterOption) {
-                customCharacterOption.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    showCustomCharacterModal();
-                });
-            }
-
-            const cancelCharacterBtn = document.getElementById('cancelCustomCharacter');
-            if (cancelCharacterBtn) {
-                cancelCharacterBtn.addEventListener('click', cancelCustomCharacter);
-            }
-
-            const saveCharacterBtn = document.getElementById('saveCustomCharacter');
-            if (saveCharacterBtn) {
-                saveCharacterBtn.addEventListener('click', saveCustomCharacter);
-            }
-
-            // Custom scenario handlers
-            const customScenarioOption = document.getElementById('customScenarioOption');
-            if (customScenarioOption) {
-                customScenarioOption.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    showCustomScenarioModal();
-                });
-            }
-
-            const cancelScenarioBtn = document.getElementById('cancelCustomScenario');
-            if (cancelScenarioBtn) {
-                cancelScenarioBtn.addEventListener('click', cancelCustomScenario);
-            }
-
-            const saveScenarioBtn = document.getElementById('saveCustomScenario');
-            if (saveScenarioBtn) {
-                saveScenarioBtn.addEventListener('click', saveCustomScenario);
-            }
-
-            // Input handlers
-            const messageInput = document.getElementById('messageInput');
-            if (messageInput) {
-                messageInput.addEventListener('keydown', handleInputKeydown);
-            }
-
-            // Modal overlay handlers
-            const customCharacterModal = document.getElementById('customCharacterModal');
-            if (customCharacterModal) {
-                customCharacterModal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        cancelCustomCharacter();
-                    }
-                });
-            }
-
-            const customScenarioModal = document.getElementById('customScenarioModal');
-            if (customScenarioModal) {
-                customScenarioModal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        cancelCustomScenario();
-                    }
-                });
-            }
-
-            debugLog('All event listeners set up');
-        }
-
-        // Initialization
-        function initializeApp() {
-            debugLog('🚀 Initializing Professional Conversation Trainer');
-            setupEventListeners();
-            testAPIConnection();
-        }
-
-        // Initialize Application
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeApp();
+    } catch (error) {
+        debugLog('API Connection Error', error);
+        appState.isConnected = false;
+        showConnectionError();
+        showErrorMessage('⚠️ Cannot connect to conversation service. Please check your internet connection.');
+    } finally {
+        updateStartButton();
+    }
+}
+
+function showConnectionError() {
+    const statusIndicator = document.querySelector('.status-indicator');
+    statusIndicator.innerHTML = '<div style="width: 8px; height: 8px; background: #dc2626; border-radius: 50%;"></div><span>Service Offline</span>';
+    statusIndicator.style.background = '#fef2f2';
+    statusIndicator.style.borderColor = '#fecaca';
+    statusIndicator.style.color = '#dc2626';
+}
+
+// ============================================
+// CONVERSATION MANAGEMENT
+// ============================================
+async function startConversation() {
+    debugLog('🚀 START CONVERSATION CALLED');
+    debugLog('🎯 Current app state:', appState);
+
+    try {
+        const startBtn = document.getElementById('startConversation');
+        startBtn.disabled = true;
+        startBtn.innerHTML = '<span>⏳</span><span>Starting Session...</span>';
+
+        const requestData = getRequestData();
+        debugLog('📤 Sending request to backend:', requestData);
+
+        const response = await fetch(`${API_BASE_URL}/api/conversations/start`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData)
         });
 
-        debugLog('🎨 Professional Conversation Trainer Loaded');
+        debugLog('📥 Backend response status:', response.status);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            debugLog('❌ Backend error response:', errorText);
+            throw new Error(`Backend error (${response.status}): ${errorText}`);
+        }
+
+        const data = await response.json();
+        debugLog('✅ Backend success response:', data);
+
+        if (data.success) {
+            appState.currentConversation = data;
+            appState.conversationHistory = [{
+                sender: data.personality_name,
+                content: data.opening_message,
+                timestamp: data.timestamp || new Date().toISOString(),
+                sender_type: 'ai_personality'
+            }];
+
+            const switchSuccess = switchToChat();
+            if (!switchSuccess) {
+                throw new Error('Failed to switch to chat screen');
+            }
+
+            const messagesArea = document.getElementById('messagesArea');
+            if (messagesArea) {
+                messagesArea.innerHTML = '';
+            }
+
+            const messageInput = document.getElementById('messageInput');
+            const sendButton = document.getElementById('sendButton');
+
+            if (messageInput) messageInput.disabled = false;
+            if (sendButton) sendButton.disabled = false;
+
+            updateChatHeader();
+            addSystemMessage('Practice session started. Your conversation partner is ready.');
+            addAIMessage(data.opening_message);
+
+            debugLog('🎉 Conversation started successfully');
+
+        } else {
+            throw new Error(data.error || 'Backend reported failure');
+        }
+    } catch (error) {
+        debugLog('💥 CONVERSATION START ERROR:', error);
+        showErrorMessage(`Failed to start conversation: ${error.message}`);
+
+        const startBtn = document.getElementById('startConversation');
+        startBtn.disabled = false;
+        startBtn.innerHTML = '<span>🚀</span><span>Begin Practice Session</span>';
+    }
+}
+
+async function sendMessage() {
+    const input = document.getElementById('messageInput');
+    const message = input.value.trim();
+
+    if (!message || !appState.currentConversation) return;
+
+    try {
+        debugLog('Sending message', message);
+
+        addUserMessage(message);
+        input.value = '';
+
+        input.disabled = true;
+        document.getElementById('sendButton').disabled = true;
+
+        const requestData = {
+            conversation_id: appState.currentConversation.conversation_id,
+            user_message: message,
+            personality_data: appState.currentConversation.conversation_data.personality,
+            conversation_history: appState.conversationHistory
+        };
+
+        debugLog('Sending message request', requestData);
+
+        const response = await fetch(`${API_BASE_URL}/api/conversations/message`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData)
+        });
+
+        const data = await response.json();
+        debugLog('Message response', data);
+
+        if (data.success) {
+            addAIMessage(data.ai_response);
+
+            appState.conversationHistory.push({
+                sender: 'user',
+                content: message,
+                timestamp: new Date().toISOString(),
+                sender_type: 'user'
+            });
+
+            appState.conversationHistory.push({
+                sender: appState.currentConversation.personality_name,
+                content: data.ai_response,
+                timestamp: data.timestamp,
+                sender_type: 'ai_personality'
+            });
+
+            debugLog('Message exchange completed');
+        } else {
+            throw new Error(data.error || 'Failed to get AI response');
+        }
+    } catch (error) {
+        debugLog('Error sending message', error);
+        addSystemMessage('Sorry, there was an error processing your message. Please try again.');
+        showErrorMessage('Error sending message. Please try again.');
+    } finally {
+        input.disabled = false;
+        document.getElementById('sendButton').disabled = false;
+        input.focus();
+    }
+}
+
+function endConversation() {
+    if (confirm('Are you sure you want to end this practice session?')) {
+        debugLog('Ending conversation');
+
+        switchToSetup();
+
+        document.getElementById('messagesArea').innerHTML = '';
+        document.querySelectorAll('.option-card, .personality-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+
+        // Reset custom options
+        if (appState.selectedPersonality === 'custom_character') {
+            resetCustomCharacterCard();
+        }
+
+        if (appState.selectedScenario === 'custom_scenario') {
+            resetCustomScenarioCard();
+        }
+
+        // Reset state
+        appState.selectedRole = null;
+        appState.selectedScenario = null;
+        appState.selectedPersonality = null;
+        appState.currentConversation = null;
+        appState.conversationHistory = [];
+        customCharacterData = null;
+        customScenarioData = null;
+
+        const messageInput = document.getElementById('messageInput');
+        messageInput.value = '';
+        messageInput.disabled = true;
+        document.getElementById('sendButton').disabled = true;
+
+        updateStartButton();
+        debugLog('Conversation ended and reset complete');
+    }
+}
+
+// ============================================
+// CHAT UI FUNCTIONS
+// ============================================
+function updateChatHeader() {
+    const personalities = {
+        'infrastructure_engineer': {
+            name: 'Terry Mitchell',
+            avatar: 'TM',
+            description: 'Senior Infrastructure Engineer • Technical expert, detail-oriented'
+        },
+        'community_engagement': {
+            name: 'Sarah Chen',
+            avatar: 'SC',
+            description: 'Community Engagement Officer • People-focused, diplomatic'
+        },
+        'budget_director': {
+            name: 'David Walsh',
+            avatar: 'DW',
+            description: 'Budget & Finance Director • Numbers-driven, direct about constraints'
+        },
+        'union_rep': {
+            name: 'Maria Santos',
+            avatar: 'MS',
+            description: 'Union Representative • Assertive advocate for workers\' rights'
+        },
+        'councillor_thompson': {
+            name: 'Robert Thompson',
+            avatar: 'RT',
+            description: 'Long-term Councillor • Steady, consensus-building approach'
+        },
+        'strategic_planner': {
+            name: 'Emily Kim',
+            avatar: 'EK',
+            description: 'Strategic Planner • Analytical yet enthusiastic about new ideas'
+        },
+        'custom_character': {
+            name: customCharacterData ? customCharacterData.name : 'Custom Character',
+            avatar: customCharacterData ? customCharacterData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'CC',
+            description: customCharacterData ? `Custom colleague • ${customCharacterData.role || 'Custom character'}` : 'Custom character'
+        }
+    };
+
+    const personality = personalities[appState.selectedPersonality];
+    if (personality) {
+        document.getElementById('participantAvatar').textContent = personality.avatar;
+        document.getElementById('participantName').textContent = personality.name;
+        document.getElementById('scenarioDescription').textContent = personality.description;
+        debugLog('Chat header updated', { selectedPersonality: appState.selectedPersonality, personality });
+    } else {
+        debugLog('⚠️ Unknown personality type', appState.selectedPersonality);
+        document.getElementById('participantAvatar').textContent = 'AI';
+        document.getElementById('participantName').textContent = 'Practice Partner';
+        document.getElementById('scenarioDescription').textContent = 'Conversation practice session';
+    }
+}
+
+function addSystemMessage(content) {
+    const messagesArea = document.getElementById('messagesArea');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'system-message';
+    messageDiv.textContent = content;
+    messagesArea.appendChild(messageDiv);
+    scrollToBottom();
+}
+
+function addUserMessage(content) {
+    addMessage('user', content, 'You');
+}
+
+function addAIMessage(content) {
+    const personalities = {
+        'infrastructure_engineer': 'TM',
+        'community_engagement': 'SC',
+        'budget_director': 'DW',
+        'union_rep': 'MS',
+        'councillor_thompson': 'RT',
+        'strategic_planner': 'EK',
+        'custom_character': customCharacterData ? customCharacterData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'CC'
+    };
+
+    const avatar = personalities[appState.selectedPersonality] || 'AI';
+    debugLog('Adding AI message', { personality: appState.selectedPersonality, avatar, content: content.substring(0, 50) + '...' });
+    addMessage('ai', content, avatar);
+}
+
+function addMessage(type, content, avatar) {
+    const messagesArea = document.getElementById('messagesArea');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${type}`;
+
+    const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    messageDiv.innerHTML = [
+        '<div class="message-avatar">' + avatar + '</div>',
+        '<div class="message-content">',
+            '<div class="message-text">' + content + '</div>',
+            '<div class="message-time">' + timestamp + '</div>',
+        '</div>'
+    ].join('');
+
+    messagesArea.appendChild(messageDiv);
+    scrollToBottom();
+}
+
+function scrollToBottom() {
+    const messagesArea = document.getElementById('messagesArea');
+    messagesArea.scrollTop = messagesArea.scrollHeight;
+}
+
+function handleInputKeydown(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+}
+
+// ============================================
+// EVENT LISTENERS SETUP
+// ============================================
+function setupEventListeners() {
+    debugLog('🔧 Setting up all event listeners');
+
+    // Core selection handling for roles and scenarios
+    document.querySelectorAll('.option-card').forEach(card => {
+        if (card.id === 'customCharacterOption' || card.id === 'customScenarioOption') {
+            return; // Skip - these have special handlers
+        }
+        card.addEventListener('click', handleSelection);
+    });
+
+    // Personality card handling (excluding custom)
+    document.querySelectorAll('.personality-card').forEach(card => {
+        if (card.id === 'customCharacterOption') {
+            return; // Skip - has special handler
+        }
+        card.addEventListener('click', handleSelection);
+    });
+
+    // Main action buttons
+    document.getElementById('startConversation').addEventListener('click', startConversation);
+    document.getElementById('endConversation').addEventListener('click', endConversation);
+    document.getElementById('sendButton').addEventListener('click', sendMessage);
+
+    // Message input
+    const messageInput = document.getElementById('messageInput');
+    if (messageInput) {
+        messageInput.addEventListener('keydown', handleInputKeydown);
+    }
+
+    // Setup custom character system
+    setupCustomCharacterListeners();
+
+    // Setup custom scenario system
+    setupCustomScenarioListeners();
+
+    debugLog('✅ All event listeners set up successfully');
+}
+
+function setupCustomCharacterListeners() {
+    debugLog('🔧 Setting up custom character event listeners');
+
+    const customCharacterOption = document.getElementById('customCharacterOption');
+    if (customCharacterOption) {
+        customCharacterOption.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            debugLog('🎭 Custom character option clicked');
+            showCustomCharacterModal();
+        });
+        debugLog('✅ Custom character option listener attached');
+    }
+
+    // Modal buttons
+    const cancelBtn = document.getElementById('cancelCustomCharacter');
+    const saveBtn = document.getElementById('saveCustomCharacter');
+
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            cancelCustomCharacter();
+        });
+        debugLog('✅ Cancel button listener attached');
+    }
+
+    if (saveBtn) {
+        saveBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            saveCustomCharacter();
+        });
+        debugLog('✅ Save button listener attached');
+    }
+
+    // Modal overlay click to close
+    const modal = document.getElementById('customCharacterModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                cancelCustomCharacter();
+            }
+        });
+        debugLog('✅ Modal overlay listener attached');
+    }
+
+    // Form keyboard shortcuts
+    const form = document.getElementById('characterCreationForm');
+    if (form) {
+        form.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                e.preventDefault();
+                saveCustomCharacter();
+            }
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                cancelCustomCharacter();
+            }
+        });
+        debugLog('✅ Form keyboard handlers attached');
+    }
+}
+
+function setupCustomScenarioListeners() {
+    debugLog('🔧 Setting up custom scenario event listeners');
+
+    const customScenarioOption = document.getElementById('customScenarioOption');
+    if (customScenarioOption) {
+        customScenarioOption.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            debugLog('📋 Custom scenario option clicked');
+            showCustomScenarioModal();
+        });
+        debugLog('✅ Custom scenario option listener attached');
+    }
+
+    // Modal buttons
+    const cancelBtn = document.getElementById('cancelCustomScenario');
+    const saveBtn = document.getElementById('saveCustomScenario');
+
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            cancelCustomScenario();
+        });
+        debugLog('✅ Scenario cancel button listener attached');
+    }
+
+    if (saveBtn) {
+        saveBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            saveCustomScenario();
+        });
+        debugLog('✅ Scenario save button listener attached');
+    }
+
+    // Modal overlay
+    const modal = document.getElementById('customScenarioModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                cancelCustomScenario();
+            }
+        });
+        debugLog('✅ Scenario modal overlay listener attached');
+    }
+}
+
+// ============================================
+// INITIALIZATION
+// ============================================
+function initializeApp() {
+    debugLog('🚀 Initializing Professional Conversation Trainer');
+    setupEventListeners();
+    testAPIConnection();
+    updateStorageCounts();
+}
+
+// Initialize Application
+document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
+
+    // Update storage counts periodically
+    setInterval(updateStorageCounts, 2000);
+});
+
+debugLog('🎨 Professional Conversation Trainer Loaded');
 </script>
 </body>
 </html>
