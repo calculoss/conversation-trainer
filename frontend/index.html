@@ -2144,12 +2144,21 @@ function getRequestData() {
         hasCustomScenario: !!customScenarioData
     });
 
-    if (appState.selectedPersonality === 'custom_character' && customCharacterData) {
+    // Handle saved colleagues (NEW)
+    if (appState.selectedPersonality && appState.selectedPersonality.startsWith('saved_colleague_')) {
+        baseData.custom_character = customCharacterData;
+        debugLog('Added saved colleague data:', customCharacterData.name);
+    } else if (appState.selectedPersonality === 'custom_character' && customCharacterData) {
         baseData.custom_character = customCharacterData;
         debugLog('Added custom character data');
     }
 
-    if (appState.selectedScenario === 'custom_scenario' && customScenarioData) {
+    // Handle saved scenarios (NEW)
+    if (appState.selectedScenario && appState.selectedScenario.startsWith('saved_scenario_')) {
+        baseData.custom_scenario = customScenarioData;
+        baseData.scenario = buildCustomScenarioDescription(customScenarioData);
+        debugLog('Added saved scenario data:', customScenarioData.title);
+    } else if (appState.selectedScenario === 'custom_scenario' && customScenarioData) {
         baseData.custom_scenario = customScenarioData;
         baseData.scenario = buildCustomScenarioDescription(customScenarioData);
         debugLog('Added custom scenario data');
@@ -2442,7 +2451,20 @@ function updateChatHeader() {
         }
     };
 
-    const personality = personalities[appState.selectedPersonality];
+    // NEW: Handle saved colleagues
+    let personality;
+    if (appState.selectedPersonality && appState.selectedPersonality.startsWith('saved_colleague_') && customCharacterData) {
+        personality = {
+            name: customCharacterData.name,
+            avatar: customCharacterData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2),
+            description: `Saved colleague • ${customCharacterData.role || 'Custom character'}`
+        };
+        console.log('Using saved colleague for chat header:', personality);
+    } else {
+        personality = personalities[appState.selectedPersonality];
+        console.log('Using built-in personality for chat header:', personality);
+    }
+
     if (personality) {
         document.getElementById('participantAvatar').textContent = personality.avatar;
         document.getElementById('participantName').textContent = personality.name;
@@ -2480,7 +2502,16 @@ function addAIMessage(content) {
         'custom_character': customCharacterData ? customCharacterData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'CC'
     };
 
-    const avatar = personalities[appState.selectedPersonality] || 'AI';
+    // NEW: Handle saved colleagues
+    let avatar;
+    if (appState.selectedPersonality && appState.selectedPersonality.startsWith('saved_colleague_') && customCharacterData) {
+        avatar = customCharacterData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+        console.log('Using saved colleague avatar for AI message:', avatar, 'from:', customCharacterData.name);
+    } else {
+        avatar = personalities[appState.selectedPersonality] || 'AI';
+        console.log('Using built-in avatar for AI message:', avatar);
+    }
+
     debugLog('Adding AI message', { personality: appState.selectedPersonality, avatar, content: content.substring(0, 50) + '...' });
     addMessage('ai', content, avatar);
 }
