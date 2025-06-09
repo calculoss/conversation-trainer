@@ -5413,50 +5413,39 @@ async function analyzeEmailEnhanced() {
 
 // Format backend analysis results for your existing UI
 function formatBackendAnalysisForUI(backendResults) {
-    // If already in correct format, return as-is
-    if (backendResults.overall_score !== undefined && backendResults.disc_scores !== undefined) {
-        return backendResults;
-    }
+    console.log('🔍 Raw backend results:', backendResults);
 
-    // Convert backend format to match your existing displayAnalysisResults function
-    return {
-        overall_score: backendResults.overall_score || 5,
-        overall_feedback: backendResults.overall_feedback || 'Analysis completed',
+    // Extract the actual analysis from Claude
+    const analysis = backendResults.analysis || backendResults;
+    console.log('🔍 Extracted analysis:', analysis);
 
-        // Convert code compliance to format expected by UI
-        code_compliance: backendResults.code_compliance || {
-            status: 'compliant',
-            issues: [],
-            risk_level: 'low'
-        },
+    // PRESERVE Claude's actual results - don't override with defaults!
+    const formattedResults = {
+        // Use Claude's actual score, not defaults
+        overall_score: analysis.overall_score,
+        overall_feedback: analysis.overall_feedback,
 
-        // Create DISC scores (your backend should provide these)
-        disc_scores: backendResults.disc_scores || {
-            D: backendResults.overall_score || 6,
-            I: backendResults.overall_score || 6,
-            S: backendResults.overall_score || 6,
-            C: backendResults.overall_score || 6
-        },
+        // PRESERVE Claude's code compliance results
+        code_compliance: analysis.code_compliance,
 
-        // Create DISC feedback
-        disc_feedback: backendResults.disc_feedback || {
-            D: 'Analysis completed with Claude AI',
-            I: 'Analysis completed with Claude AI',
-            S: 'Analysis completed with Claude AI',
-            C: 'Analysis completed with Claude AI'
-        },
+        // Use Claude's actual DISC scores
+        disc_scores: analysis.disc_scores,
 
-        suggestions: backendResults.suggestions || [],
-        strengths: backendResults.strengths || [],
-        quick_tips: backendResults.quick_tips || [
-            `Professional communication analysis completed`,
-            'Review feedback for improvement opportunities'
-        ],
+        // Use Claude's actual feedback
+        disc_feedback: analysis.disc_feedback,
 
-        analysis_timestamp: backendResults.analysis_timestamp || new Date().toISOString(),
-        analysis_type: backendResults.analysis_type || 'outgoing',
-        claude_powered: backendResults.claude_powered !== false
+        // Use Claude's suggestions and tips
+        suggestions: analysis.suggestions || [],
+        quick_tips: analysis.quick_tips || [],
+
+        // Preserve all other Claude data
+        channel_recommendation: analysis.channel_recommendation,
+        claude_powered: analysis.claude_powered !== false,
+        analysis_timestamp: analysis.analysis_timestamp || new Date().toISOString()
     };
+
+    console.log('🔍 Formatted results (should match Claude):', formattedResults);
+    return formattedResults;
 }
 
 // Basic fallback analysis for when backend is completely unavailable
