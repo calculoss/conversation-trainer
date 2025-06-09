@@ -122,129 +122,130 @@ Respond in character. Keep your response natural and conversational (2-4 sentenc
         return response_data['content'][0]['text']
 
 
-def analyze_email_professional(self, email_content: str, email_subject: str, colleague_info: Dict = None) -> Dict:
+    def analyze_email_professional(self, email_content: str, email_subject: str, colleague_info: Dict = None) -> Dict:
+        """
+        Analyze email for professional communication standards and Lake Macquarie Code of Conduct
+
+        Args:
+            email_content: The email body text
+            email_subject: The email subject line
+            colleague_info: Information about the recipient colleague
+
+        Returns:
+            Dictionary with analysis results
+        """
+
+        # Build colleague context
+        colleague_context = ""
+        if colleague_info:
+            colleague_name = colleague_info.get('name', 'colleague')
+            colleague_role = colleague_info.get('role', 'team member')
+            colleague_personality = colleague_info.get('personality', 'professional colleague')
+            colleague_context = f"""
+    RECIPIENT CONTEXT:
+    - Name: {colleague_name}
+    - Role: {colleague_role}  
+    - Communication Style: {colleague_personality}
     """
-    Analyze email for professional communication standards and Lake Macquarie Code of Conduct
 
-    Args:
-        email_content: The email body text
-        email_subject: The email subject line
-        colleague_info: Information about the recipient colleague
+        # System prompt for Lake Macquarie Code of Conduct
+        analysis_prompt = f"""You are a professional communication advisor for Lake Macquarie City Council staff.
+    
+    CRITICAL: Assess this email against Lake Macquarie Council's Code of Conduct standards:
+    - Must not bring Council into disrepute
+    - Must not involve intimidation or verbal abuse
+    - Must not constitute harassment or bullying behaviour  
+    - Must be lawful and honest
+    - Must consider issues consistently, promptly and fairly
+    
+    Core Values: Leading at all levels, Working together, Shaping our future
+    
+    {colleague_context}
+    
+    EMAIL TO ANALYZE:
+    Subject: {email_subject}
+    
+    Content: {email_content}
+    
+    Please analyze and respond with a JSON object containing:
+    {{
+        "overall_score": (number 1-10),
+        "overall_feedback": "brief assessment",
+        "code_compliance": {{
+            "status": "PASS" or "FAIL",
+            "issues": ["list of any compliance issues"],
+            "risk_level": "low" or "medium" or "high"
+        }},
+        "channel_recommendation": {{
+            "current": "email",
+            "recommended": "email" or "phone" or "in_person",
+            "reasoning": "explanation for recommendation"
+        }},
+        "disc_scores": {{
+            "D": (number 1-10),
+            "I": (number 1-10), 
+            "S": (number 1-10),
+            "C": (number 1-10)
+        }},
+        "disc_feedback": {{
+            "D": "feedback on directness/assertiveness",
+            "I": "feedback on interpersonal/collaborative tone",
+            "S": "feedback on supportiveness/patience", 
+            "C": "feedback on detail/accuracy"
+        }},
+        "suggestions": ["specific improvement recommendations"],
+        "quick_tips": ["practical communication tips"]
+    }}
+    
+    If email contains inappropriate language, harassment, or unprofessional content, score 1-3 and mark code_compliance as "FAIL"."""
 
-    Returns:
-        Dictionary with analysis results
-    """
+        try:
+            # Call Claude API for analysis
+            claude_response = self._make_claude_request(analysis_prompt, max_tokens=1000)
 
-    # Build colleague context
-    colleague_context = ""
-    if colleague_info:
-        colleague_name = colleague_info.get('name', 'colleague')
-        colleague_role = colleague_info.get('role', 'team member')
-        colleague_personality = colleague_info.get('personality', 'professional colleague')
-        colleague_context = f"""
-RECIPIENT CONTEXT:
-- Name: {colleague_name}
-- Role: {colleague_role}  
-- Communication Style: {colleague_personality}
-"""
+            # Try to parse JSON response
+            try:
+                import json
+                analysis_result = json.loads(claude_response)
+                analysis_result['claude_powered'] = True
+                analysis_result['analysis_timestamp'] = datetime.now().isoformat()
+                return analysis_result
+            except json.JSONDecodeError:
+                # Fallback if Claude doesn't return valid JSON
+                return {
+                    "overall_score": 5,
+                    "overall_feedback": "Analysis completed - see detailed feedback",
+                    "code_compliance": {"status": "UNKNOWN", "issues": [], "risk_level": "medium"},
+                    "channel_recommendation": {"current": "email", "recommended": "email",
+                                               "reasoning": "Standard email communication"},
+                    "disc_scores": {"D": 5, "I": 5, "S": 5, "C": 5},
+                    "disc_feedback": {"D": "Analysis completed", "I": "Analysis completed", "S": "Analysis completed",
+                                      "C": "Analysis completed"},
+                    "suggestions": ["Review for professional tone", "Ensure clear action items"],
+                    "quick_tips": ["Keep communication respectful", "Be clear and concise"],
+                    "analysis_text": claude_response,
+                    "claude_powered": True,
+                    "analysis_timestamp": datetime.now().isoformat()
+                }
 
-    # System prompt for Lake Macquarie Code of Conduct
-    analysis_prompt = f"""You are a professional communication advisor for Lake Macquarie City Council staff.
-
-CRITICAL: Assess this email against Lake Macquarie Council's Code of Conduct standards:
-- Must not bring Council into disrepute
-- Must not involve intimidation or verbal abuse
-- Must not constitute harassment or bullying behaviour  
-- Must be lawful and honest
-- Must consider issues consistently, promptly and fairly
-
-Core Values: Leading at all levels, Working together, Shaping our future
-
-{colleague_context}
-
-EMAIL TO ANALYZE:
-Subject: {email_subject}
-
-Content: {email_content}
-
-Please analyze and respond with a JSON object containing:
-{{
-    "overall_score": (number 1-10),
-    "overall_feedback": "brief assessment",
-    "code_compliance": {{
-        "status": "PASS" or "FAIL",
-        "issues": ["list of any compliance issues"],
-        "risk_level": "low" or "medium" or "high"
-    }},
-    "channel_recommendation": {{
-        "current": "email",
-        "recommended": "email" or "phone" or "in_person",
-        "reasoning": "explanation for recommendation"
-    }},
-    "disc_scores": {{
-        "D": (number 1-10),
-        "I": (number 1-10), 
-        "S": (number 1-10),
-        "C": (number 1-10)
-    }},
-    "disc_feedback": {{
-        "D": "feedback on directness/assertiveness",
-        "I": "feedback on interpersonal/collaborative tone",
-        "S": "feedback on supportiveness/patience", 
-        "C": "feedback on detail/accuracy"
-    }},
-    "suggestions": ["specific improvement recommendations"],
-    "quick_tips": ["practical communication tips"]
+        except Exception as e:
+            # Error fallback
+            return {
+                "overall_score": 1,
+                "overall_feedback": f"Analysis failed: {str(e)}",
+                "code_compliance": {"status": "ERROR", "issues": [f"Analysis error: {str(e)}"], "risk_level": "high"},
+                "channel_recommendation": {"current": "email", "recommended": "in_person",
+                                           "reasoning": "Analysis unavailable - consider direct discussion"},
+                "disc_scores": {"D": 1, "I": 1, "S": 1, "C": 1},
+                "disc_feedback": {"D": "Analysis failed", "I": "Analysis failed", "S": "Analysis failed",
+                                  "C": "Analysis failed"},
+                "suggestions": ["Analysis service unavailable", "Please try again later"],
+                "quick_tips": ["practical communication tips"]
 }}
 
-If email contains inappropriate language, harassment, or unprofessional content, score 1-3 and mark code_compliance as "FAIL"."""
-
-    try:
-        # Call Claude API for analysis
-        claude_response = self._make_claude_request(analysis_prompt, max_tokens=1000)
-
-        # Try to parse JSON response
-        try:
-            import json
-            analysis_result = json.loads(claude_response)
-            analysis_result['claude_powered'] = True
-            analysis_result['analysis_timestamp'] = datetime.now().isoformat()
-            return analysis_result
-        except json.JSONDecodeError:
-            # Fallback if Claude doesn't return valid JSON
-            return {
-                "overall_score": 5,
-                "overall_feedback": "Analysis completed - see detailed feedback",
-                "code_compliance": {"status": "UNKNOWN", "issues": [], "risk_level": "medium"},
-                "channel_recommendation": {"current": "email", "recommended": "email",
-                                           "reasoning": "Standard email communication"},
-                "disc_scores": {"D": 5, "I": 5, "S": 5, "C": 5},
-                "disc_feedback": {"D": "Analysis completed", "I": "Analysis completed", "S": "Analysis completed",
-                                  "C": "Analysis completed"},
-                "suggestions": ["Review for professional tone", "Ensure clear action items"],
-                "quick_tips": ["Keep communication respectful", "Be clear and concise"],
-                "analysis_text": claude_response,
-                "claude_powered": True,
-                "analysis_timestamp": datetime.now().isoformat()
-            }
-
-    except Exception as e:
-        # Error fallback
-        return {
-            "overall_score": 1,
-            "overall_feedback": f"Analysis failed: {str(e)}",
-            "code_compliance": {"status": "ERROR", "issues": [f"Analysis error: {str(e)}"], "risk_level": "high"},
-            "channel_recommendation": {"current": "email", "recommended": "in_person",
-                                       "reasoning": "Analysis unavailable - consider direct discussion"},
-            "disc_scores": {"D": 1, "I": 1, "S": 1, "C": 1},
-            "disc_feedback": {"D": "Analysis failed", "I": "Analysis failed", "S": "Analysis failed",
-                              "C": "Analysis failed"},
-            "suggestions": ["Analysis service unavailable", "Please try again later"],
-            "quick_tips": ["Ensure professional tone", "Co
-
-# ============================================
-# CONVERSATION ORCHESTRATOR
-# ============================================
+    # ============================================
+    # CONVERSATION ORCHESTRATOR
+    # ============================================
 
 class ConversationOrchestrator:
     """
