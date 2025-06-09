@@ -4239,7 +4239,11 @@ async function analyzeEmailEnhanced() {
         // Fallback to basic frontend analysis if backend completely fails
         try {
             debugLog('🔄 Attempting frontend fallback analysis');
-            const fallbackResults = generateBasicFrontendAnalysis(emailData);
+            const fallbackResults = generateBasicFrontendAnalysis({
+                content: content,
+                subject: subject,
+                colleague: emailState.selectedColleague
+            });
             displayEnhancedAnalysisResults(fallbackResults);
             emailState.analysisResults = fallbackResults;
             showSuccessMessage('Analysis completed using basic pattern matching (AI service unavailable).');

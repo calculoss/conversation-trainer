@@ -764,6 +764,68 @@ def get_scenarios():
 
 
 # ============================================
+# EMAIL ANALYSIS ENDPOINTS
+# ============================================
+
+@app.route('/api/email/analyze', methods=['POST'])
+def analyze_email():
+    """Analyze email for professional communication and Code of Conduct compliance"""
+    try:
+        data = request.get_json()
+        print(f"📧 Email analysis request received")
+
+        # Extract email data
+        email_subject = data.get('subject', '')
+        email_content = data.get('content', '')
+        colleague_info = data.get('colleague', {})
+
+        if not email_content:
+            return jsonify({
+                'success': False,
+                'error': 'Email content is required'
+            }), 400
+
+        print(f"📝 Analyzing email: Subject='{email_subject}', Content length={len(email_content)}")
+
+        # Use Claude integration for analysis
+        if claude_client:
+            analysis_result = claude_client.analyze_email_professional(
+                email_content=email_content,
+                email_subject=email_subject,
+                colleague_info=colleague_info
+            )
+
+            print(f"✅ Email analysis completed: Score={analysis_result.get('overall_score', 'N/A')}")
+
+            return jsonify({
+                'success': True,
+                'analysis': analysis_result
+            })
+        else:
+            # Fallback if Claude not available
+            return jsonify({
+                'success': False,
+                'error': 'AI analysis service not available'
+            }), 503
+
+    except Exception as e:
+        print(f"❌ Email analysis error: {e}")
+        return jsonify({
+            'success': False,
+            'error': f'Analysis failed: {str(e)}'
+        }), 500
+
+
+@app.route('/api/email/test', methods=['GET'])
+def test_email_endpoint():
+    """Test email analysis endpoint availability"""
+    return jsonify({
+        'status': 'working',
+        'message': 'Email analysis endpoint is available',
+        'claude_available': claude_client is not None,
+        'timestamp': datetime.now().isoformat()
+    })
+# ============================================
 # ERROR HANDLERS
 # ============================================
 
