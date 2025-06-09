@@ -13,7 +13,8 @@
             <link rel="stylesheet" href="css/tabs.css">
             <link rel="stylesheet" href="css/cards.css">
             <link rel="stylesheet" href="css/components.css">
-
+            <link rel="stylesheet" href="css/email.css">
+    <script src="config.js"></script>
 </head>
 
 <body>
@@ -60,6 +61,11 @@
                     <button class="tab-button" data-tab="disc-explorer">
                         <span class="tab-icon">🧠</span>
                         <span class="tab-label">DISC Explorer</span>
+                    </button>
+                    <button class="tab-button" data-tab="email-practice">
+                        <span class="tab-icon">📧</span>
+                        <span class="tab-label">Email Practice</span>
+                        <span class="tab-count" id="emailTabCount">0</span>
                     </button>
                 </div>
             </div>
@@ -319,145 +325,397 @@
                         </div>
 
                         <div class="interactive-quadrant-section">
-                <h3>🎯 Interactive DISC Quadrant</h3>
-                <p>Explore realistic population distribution and NSW Local Government insights</p>
+                            <h3>🎯 Interactive DISC Quadrant</h3>
+                            <p>Explore realistic population distribution and NSW Local Government insights</p>
 
-                <div class="quadrant-controls">
-                    <div class="view-toggles">
-                        <button class="toggle-btn active" data-view="population">Population View</button>
-                        <button class="toggle-btn" data-view="department">Department View</button>
-                        <button class="toggle-btn" data-view="generation">Generation View</button>
-                    </div>
-                    <div class="filter-info">
-                        <span id="currentViewInfo">Showing: General Population Distribution</span>
+                            <div class="quadrant-controls">
+                                <div class="view-toggles">
+                                    <button class="toggle-btn active" data-view="population">Population View</button>
+                                    <button class="toggle-btn" data-view="department">Department View</button>
+                                    <button class="toggle-btn" data-view="generation">Generation View</button>
+                                </div>
+                                <div class="filter-info">
+                                    <span id="currentViewInfo">Showing: General Population Distribution</span>
+                                </div>
+                            </div>
+
+                            <div class="disc-quadrant-container">
+                                <div class="quadrant-grid">
+                                    <!-- D Quadrant -->
+                                    <div class="quadrant d-quadrant" data-type="D">
+                                        <div class="quadrant-header">
+                                            <div class="quadrant-icon">D</div>
+                                            <div class="quadrant-title">Dominance</div>
+                                        </div>
+                                        <div class="population-display">
+                                            <div class="population-bar">
+                                                <div class="population-fill d-fill" style="width: 7%"></div>
+                                            </div>
+                                            <span class="population-text">3-11% of population</span>
+                                        </div>
+                                        <div class="quadrant-examples">
+                                            <div class="example-role">Infrastructure Directors</div>
+                                            <div class="example-role">Project Managers</div>
+                                            <div class="example-role">Crisis Managers</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- I Quadrant -->
+                                    <div class="quadrant i-quadrant" data-type="I">
+                                        <div class="quadrant-header">
+                                            <div class="quadrant-icon">I</div>
+                                            <div class="quadrant-title">Influence</div>
+                                        </div>
+                                        <div class="population-display">
+                                            <div class="population-bar">
+                                                <div class="population-fill i-fill" style="width: 25%"></div>
+                                            </div>
+                                            <span class="population-text">11-40% of population</span>
+                                        </div>
+                                        <div class="quadrant-examples">
+                                            <div class="example-role">Community Engagement</div>
+                                            <div class="example-role">Customer Service</div>
+                                            <div class="example-role">Elected Councillors</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- S Quadrant -->
+                                    <div class="quadrant s-quadrant" data-type="S">
+                                        <div class="quadrant-header">
+                                            <div class="quadrant-icon">S</div>
+                                            <div class="quadrant-title">Steadiness</div>
+                                        </div>
+                                        <div class="population-display">
+                                            <div class="population-bar">
+                                                <div class="population-fill s-fill" style="width: 69%"></div>
+                                            </div>
+                                            <span class="population-text">69% of population</span>
+                                        </div>
+                                        <div class="quadrant-examples">
+                                            <div class="example-role">Administrative Staff</div>
+                                            <div class="example-role">Service Delivery</div>
+                                            <div class="example-role">Policy Implementation</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- C Quadrant -->
+                                    <div class="quadrant c-quadrant" data-type="C">
+                                        <div class="quadrant-header">
+                                            <div class="quadrant-icon">C</div>
+                                            <div class="quadrant-title">Conscientiousness</div>
+                                        </div>
+                                        <div class="population-display">
+                                            <div class="population-bar">
+                                                <div class="population-fill c-fill" style="width: 17%"></div>
+                                            </div>
+                                            <span class="population-text">17% of population</span>
+                                        </div>
+                                        <div class="quadrant-examples">
+                                            <div class="example-role">Budget Analysts</div>
+                                            <div class="example-role">Engineers</div>
+                                            <div class="example-role">Compliance Officers</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="quadrant-insights">
+                                    <div class="insight-panel" id="insightPanel">
+                                        <h4>💡 NSW Local Government Insights</h4>
+                                        <p>Click on any quadrant above to explore specific insights for that DISC type in NSW councils.</p>
+                                        <div class="insight-stats">
+                                            <div class="stat-item">
+                                                <span class="stat-number">69%</span>
+                                                <span class="stat-label">S-types form the backbone of council operations</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="stat-number">43</span>
+                                                <span class="stat-label">Median age in NSW councils</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="disc-quadrant-container">
-                    <div class="quadrant-grid">
-                        <!-- D Quadrant -->
-                        <div class="quadrant d-quadrant" data-type="D">
-                            <div class="quadrant-header">
-                                <div class="quadrant-icon">D</div>
-                                <div class="quadrant-title">Dominance</div>
-                            </div>
-                            <div class="population-display">
-                                <div class="population-bar">
-                                    <div class="population-fill d-fill" style="width: 7%"></div>
-                                </div>
-                                <span class="population-text">3-11% of population</span>
-                            </div>
-                            <div class="quadrant-examples">
-                                <div class="example-role">Infrastructure Directors</div>
-                                <div class="example-role">Project Managers</div>
-                                <div class="example-role">Crisis Managers</div>
-                            </div>
-                        </div>
+                <!-- Email Practice Tab -->
+                <div class="tab-content" id="email-practice-tab">
+                    <div class="tab-header">
+                        <h2>📧 Email Practice & Analysis</h2>
+                        <p>Improve your email communication with AI-powered analysis and DISC insights</p>
+                    </div>
 
-                        <!-- I Quadrant -->
-                        <div class="quadrant i-quadrant" data-type="I">
-                            <div class="quadrant-header">
-                                <div class="quadrant-icon">I</div>
-                                <div class="quadrant-title">Influence</div>
-                            </div>
-                            <div class="population-display">
-                                <div class="population-bar">
-                                    <div class="population-fill i-fill" style="width: 25%"></div>
-                                </div>
-                                <span class="population-text">11-40% of population</span>
-                            </div>
-                            <div class="quadrant-examples">
-                                <div class="example-role">Community Engagement</div>
-                                <div class="example-role">Customer Service</div>
-                                <div class="example-role">Elected Councillors</div>
-                            </div>
+                    <!-- Email Mode Selector -->
+                    <div class="email-mode-selector">
+                        <div class="mode-buttons">
+                            <button class="mode-button active" data-mode="analysis">
+                                <span class="mode-icon">📊</span>
+                                <span class="mode-label">Email Analysis</span>
+                                <span class="mode-desc">Analyze and improve your emails</span>
+                            </button>
+                            <button class="mode-button" data-mode="templates">
+                                <span class="mode-icon">📝</span>
+                                <span class="mode-label">Email Templates</span>
+                                <span class="mode-desc">Save and manage email templates</span>
+                            </button>
+                            <button class="mode-button" data-mode="simulation" disabled>
+                                <span class="mode-icon">💬</span>
+                                <span class="mode-label">Email Simulation</span>
+                                <span class="mode-desc">Coming Soon - Practice conversations</span>
+                            </button>
                         </div>
+                    </div>
 
-                        <!-- S Quadrant -->
-                        <div class="quadrant s-quadrant" data-type="S">
-                            <div class="quadrant-header">
-                                <div class="quadrant-icon">S</div>
-                                <div class="quadrant-title">Steadiness</div>
-                            </div>
-                            <div class="population-display">
-                                <div class="population-bar">
-                                    <div class="population-fill s-fill" style="width: 69%"></div>
-                                </div>
-                                <span class="population-text">69% of population</span>
-                            </div>
-                            <div class="quadrant-examples">
-                                <div class="example-role">Administrative Staff</div>
-                                <div class="example-role">Service Delivery</div>
-                                <div class="example-role">Policy Implementation</div>
-                            </div>
-                        </div>
+                    <!-- Email Analysis Mode -->
+                    <div class="email-mode-content active" id="analysis-mode">
+                        <div class="email-analysis-workspace">
+                            <!-- Left Side: Email Composer -->
+                            <div class="email-composer-section">
+                                <div class="composer-card">
+                                    <div class="composer-header">
+                                        <h3>📝 Compose Email</h3>
+                                        <div class="composer-actions-header">
+                                            <button class="btn btn-secondary btn-sm" id="loadTemplateBtn">
+                                                📋 Load Template
+                                            </button>
+                                            <button class="btn btn-secondary btn-sm" id="clearEmailBtn">
+                                                🗑️ Clear
+                                            </button>
+                                        </div>
+                                    </div>
 
-                        <!-- C Quadrant -->
-                        <div class="quadrant c-quadrant" data-type="C">
-                            <div class="quadrant-header">
-                                <div class="quadrant-icon">C</div>
-                                <div class="quadrant-title">Conscientiousness</div>
-                            </div>
-                            <div class="population-display">
-                                <div class="population-bar">
-                                    <div class="population-fill c-fill" style="width: 17%"></div>
+                                    <div class="composer-form">
+                                        <div class="form-row">
+                                            <div class="form-field">
+                                                <label for="emailRecipient">To:</label>
+                                                <select id="emailRecipient" class="form-input">
+                                                    <option value="">Select colleague...</option>
+                                                    <!-- Will be populated from your existing colleague library -->
+                                                </select>
+                                            </div>
+                                            <div class="form-field">
+                                                <label for="emailSubject">Subject:</label>
+                                                <input type="text" id="emailSubject" class="form-input"
+                                                       placeholder="Enter email subject">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-field">
+                                            <label for="emailContent">Email Content:</label>
+                                            <textarea id="emailContent" class="form-textarea" rows="12"
+                                                      placeholder="Dear [Name],
+
+I hope this email finds you well.
+
+[Your message here]
+
+Best regards,
+[Your name]"></textarea>
+                                        </div>
+
+                                        <div class="composer-actions">
+                                            <button class="btn btn-primary" id="analyzeEmailBtn">
+                                                📊 Analyze Email
+                                            </button>
+                                            <button class="btn btn-secondary" id="saveAsTemplateBtn">
+                                                💾 Save as Template
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="population-text">17% of population</span>
                             </div>
-                            <div class="quadrant-examples">
-                                <div class="example-role">Budget Analysts</div>
-                                <div class="example-role">Engineers</div>
-                                <div class="example-role">Compliance Officers</div>
+
+                            <!-- Right Side: Analysis Results -->
+                            <div class="email-analysis-section">
+                                <!-- Colleague Info Panel -->
+                                <div class="colleague-info-panel" id="colleagueInfoPanel" style="display: none;">
+                                    <div class="panel-header">
+                                        <h4>👤 Recipient Profile</h4>
+                                    </div>
+                                    <div class="panel-content">
+                                        <div class="colleague-avatar" id="colleagueAvatar">SC</div>
+                                        <div class="colleague-details">
+                                            <h5 id="colleagueName">Sarah Chen</h5>
+                                            <p id="colleagueRole">Community Engagement Officer</p>
+                                            <div class="colleague-disc">
+                                                <span class="disc-badge" id="colleagueDisc">I-Type</span>
+                                                <span class="disc-description">People-focused, collaborative</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Analysis Results Panel -->
+                                <div class="analysis-results-panel" id="analysisResultsPanel" style="display: none;">
+                                    <div class="panel-header">
+                                        <h4>📊 Analysis Results</h4>
+                                        <button class="close-btn" id="closeAnalysisBtn">×</button>
+                                    </div>
+
+                                    <div class="analysis-content">
+                                        <!-- Overall Score -->
+                                        <div class="overall-score-section">
+                                            <div class="score-circle">
+                                                <span class="score-number" id="overallScore">8.5</span>
+                                                <span class="score-label">Overall</span>
+                                            </div>
+                                            <div class="score-description">
+                                                <h5>Communication Effectiveness</h5>
+                                                <p id="overallFeedback">Great collaborative tone for this recipient!</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- DISC Compatibility -->
+                                        <div class="disc-analysis-section">
+                                            <h5>🎭 DISC Compatibility</h5>
+                                            <div class="disc-scores">
+                                                <div class="disc-score-item">
+                                                    <div class="disc-icon d-type">D</div>
+                                                    <div class="disc-details">
+                                                        <span class="disc-score" id="discScoreD">7</span>
+                                                        <span class="disc-feedback" id="discFeedbackD">Good directness</span>
+                                                    </div>
+                                                </div>
+                                                <div class="disc-score-item">
+                                                    <div class="disc-icon i-type">I</div>
+                                                    <div class="disc-details">
+                                                        <span class="disc-score" id="discScoreI">9</span>
+                                                        <span class="disc-feedback" id="discFeedbackI">Excellent engagement</span>
+                                                    </div>
+                                                </div>
+                                                <div class="disc-score-item">
+                                                    <div class="disc-icon s-type">S</div>
+                                                    <div class="disc-details">
+                                                        <span class="disc-score" id="discScoreS">8</span>
+                                                        <span class="disc-feedback" id="discFeedbackS">Respectful tone</span>
+                                                    </div>
+                                                </div>
+                                                <div class="disc-score-item">
+                                                    <div class="disc-icon c-type">C</div>
+                                                    <div class="disc-details">
+                                                        <span class="disc-score" id="discScoreC">6</span>
+                                                        <span class="disc-feedback" id="discFeedbackC">Add more details</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Suggestions -->
+                                        <div class="suggestions-section">
+                                            <h5>💡 Improvement Suggestions</h5>
+                                            <div class="suggestions-list" id="suggestionsList">
+                                                <!-- Suggestions will be populated here -->
+                                            </div>
+                                        </div>
+
+                                        <!-- Quick Tips -->
+                                        <div class="quick-tips-section">
+                                            <h5>🎯 Quick Tips for This Colleague</h5>
+                                            <div class="tips-list" id="quickTipsList">
+                                                <!-- Tips will be populated here -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="analysis-actions">
+                                        <button class="btn btn-primary btn-sm" id="exportAnalysisBtn">
+                                            📄 Export Analysis
+                                        </button>
+                                        <button class="btn btn-secondary btn-sm" id="improveEmailBtn">
+                                            ✨ Apply Suggestions
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Getting Started Panel (shown initially) -->
+                                <div class="getting-started-panel" id="gettingStartedPanel">
+                                    <div class="panel-content">
+                                        <div class="getting-started-icon">📧</div>
+                                        <h4>Get Started with Email Analysis</h4>
+                                        <p>Write an email and select a colleague to get personalized communication insights.</p>
+
+                                        <div class="features-preview">
+                                            <div class="feature-item">
+                                                <span class="feature-icon">🎭</span>
+                                                <span class="feature-text">DISC Compatibility Analysis</span>
+                                            </div>
+                                            <div class="feature-item">
+                                                <span class="feature-icon">📊</span>
+                                                <span class="feature-text">Communication Effectiveness Scoring</span>
+                                            </div>
+                                            <div class="feature-item">
+                                                <span class="feature-icon">💡</span>
+                                                <span class="feature-text">Personalized Improvement Suggestions</span>
+                                            </div>
+                                            <div class="feature-item">
+                                                <span class="feature-icon">🎯</span>
+                                                <span class="feature-text">NSW Council Context Awareness</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="quadrant-insights">
-                        <div class="insight-panel" id="insightPanel">
-                            <h4>💡 NSW Local Government Insights</h4>
-                            <p>Click on any quadrant above to explore specific insights for that DISC type in NSW councils.</p>
-                            <div class="insight-stats">
-                                <div class="stat-item">
-                                    <span class="stat-number">69%</span>
-                                    <span class="stat-label">S-types form the backbone of council operations</span>
+                    <!-- Email Templates Mode -->
+                    <div class="email-mode-content" id="templates-mode">
+                        <div class="templates-workspace">
+                            <div class="templates-header">
+                                <h3>📝 Email Templates Library</h3>
+                                <div class="templates-actions">
+                                    <button class="btn btn-primary" id="createTemplateBtn">
+                                        ➕ Create New Template
+                                    </button>
+                                    <button class="btn btn-secondary" id="importTemplatesBtn">
+                                        📂 Import Templates
+                                    </button>
                                 </div>
-                                <div class="stat-item">
-                                    <span class="stat-number">43</span>
-                                    <span class="stat-label">Median age in NSW councils</span>
+                            </div>
+
+                            <div class="templates-search">
+                                <input type="text" class="search-input" placeholder="Search templates..." id="templateSearch">
+                                <select class="filter-select" id="templateFilter">
+                                    <option value="">All Categories</option>
+                                    <option value="budget">Budget & Finance</option>
+                                    <option value="policy">Policy Updates</option>
+                                    <option value="project">Project Management</option>
+                                    <option value="meeting">Meeting Requests</option>
+                                </select>
+                            </div>
+
+                            <div class="templates-grid" id="templatesGrid">
+                                <!-- Templates will be loaded here -->
+                            </div>
+
+                            <div class="empty-state templates-empty" id="templatesEmpty">
+                                <h4>No email templates yet</h4>
+                                <p>Create your first template to build your professional email library</p>
+                                <button class="btn btn-primary" id="createFirstTemplateBtn">
+                                    Create First Template
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulation Mode (Coming Soon) -->
+                    <div class="email-mode-content" id="simulation-mode">
+                        <div class="coming-soon-panel">
+                            <div class="coming-soon-content">
+                                <h3>💬 Email Simulation</h3>
+                                <p>Practice email conversations with AI colleagues</p>
+                                <div class="coming-soon-features">
+                                    <div class="feature">✨ Real-time conversation simulation</div>
+                                    <div class="feature">📈 Live feedback and coaching</div>
+                                    <div class="feature">🎯 Scenario-based practice sessions</div>
                                 </div>
+                                <p><strong>Coming Soon!</strong> We're working on this exciting feature.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Chat Screen -->
-            <div id="chatScreen" class="chat-screen">
-                <div class="chat-header">
-                    <div class="chat-info">
-                        <div class="participant-avatar" id="participantAvatar">CS</div>
-                        <div class="chat-details">
-                            <h3 id="participantName">Practice Session</h3>
-                            <p id="scenarioDescription">Preparing conversation...</p>
-                        </div>
-                    </div>
-                    <div>
-                        <button class="secondary-button" id="endConversation">End Session</button>
-                    </div>
-                </div>
-
-                <div class="messages-area" id="messagesArea">
-                    <!-- Messages will be added here dynamically -->
-                </div>
-
-                <div class="input-area">
-                    <div class="input-container">
-                        <textarea class="message-input" id="messageInput" placeholder="Type your response..." rows="1" disabled></textarea>
-                        <button class="send-button" id="sendButton" disabled>
-                            <span>Send</span>
-                        </button>
-                    </div>
-                </div>
             </div>
 
             <div class="success-message" id="successMessage">
@@ -467,107 +725,136 @@
             <div class="error-message" id="errorMessage">
                 ❌ Error starting conversation
             </div>
+
         </main>
-    </div>
 
-    <!-- Enhanced Custom Character Modal -->
-    <div class="modal-overlay" id="customCharacterModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Create Your Custom Colleague</h3>
-                <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.5rem;">Build a realistic virtual version of someone from your workplace</p>
+        <!-- Chat Screen -->
+        <div id="chatScreen" class="chat-screen">
+            <div class="chat-header">
+                <div class="chat-info">
+                    <div class="participant-avatar" id="participantAvatar">CS</div>
+                    <div class="chat-details">
+                        <h3 id="participantName">Practice Session</h3>
+                        <p id="scenarioDescription">Preparing conversation...</p>
+                    </div>
+                </div>
+                <div>
+                    <button class="secondary-button" id="endConversation">End Session</button>
+                </div>
             </div>
 
-            <!-- Character Creation Form -->
-            <div id="characterCreationForm">
-                <!-- Basic Information -->
-                <div class="form-section">
-                    <h4 class="section-title">👤 Basic Information</h4>
+            <div class="messages-area" id="messagesArea">
+                <!-- Messages will be added here dynamically -->
+            </div>
 
-                    <div class="form-row">
-                        <div class="form-group" style="flex: 2;">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" class="form-input" id="customName" placeholder="e.g., David Morrison">
+            <div class="input-area">
+                <div class="input-container">
+                    <textarea class="message-input" id="messageInput" placeholder="Type your response..." rows="1" disabled></textarea>
+                    <button class="send-button" id="sendButton" disabled>
+                        <span>Send</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Custom Character Modal -->
+        <div class="modal-overlay" id="customCharacterModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Create Your Custom Colleague</h3>
+                    <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.5rem;">Build a realistic virtual version of someone from your workplace</p>
+                </div>
+
+                <!-- Character Creation Form -->
+                <div id="characterCreationForm">
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h4 class="section-title">👤 Basic Information</h4>
+
+                        <div class="form-row">
+                            <div class="form-group" style="flex: 2;">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-input" id="customName" placeholder="e.g., David Morrison">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label class="form-label">Job Title/Role</label>
+                                <input type="text" class="form-input" id="customRole" placeholder="e.g., Senior Engineer">
+                            </div>
                         </div>
-                        <div class="form-group" style="flex: 1;">
-                            <label class="form-label">Job Title/Role</label>
-                            <input type="text" class="form-input" id="customRole" placeholder="e.g., Senior Engineer">
+                    </div>
+
+                    <!-- Workplace Behavior -->
+                    <div class="form-section">
+                        <h4 class="section-title">🏢 Workplace Behavior</h4>
+
+                        <div class="form-group">
+                            <label class="form-label">How do they typically behave in meetings?</label>
+                            <textarea class="form-input form-textarea" id="customPersonality" placeholder="e.g., Speaks first, asks lots of questions, interrupts when excited, focuses on technical details..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">What motivates them most?</label>
+                            <textarea class="form-input form-textarea" id="customMotivations" placeholder="e.g., Recognition for achievements, job security, solving complex problems..."></textarea>
                         </div>
                     </div>
                 </div>
 
-                <!-- Workplace Behavior -->
-                <div class="form-section">
-                    <h4 class="section-title">🏢 Workplace Behavior</h4>
-
-                    <div class="form-group">
-                        <label class="form-label">How do they typically behave in meetings?</label>
-                        <textarea class="form-input form-textarea" id="customPersonality" placeholder="e.g., Speaks first, asks lots of questions, interrupts when excited, focuses on technical details..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">What motivates them most?</label>
-                        <textarea class="form-input form-textarea" id="customMotivations" placeholder="e.g., Recognition for achievements, job security, solving complex problems..."></textarea>
-                    </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="cancelCustomCharacter">Cancel</button>
+                    <button class="btn btn-primary" id="saveCustomCharacter">
+                        💾 Create Character
+                    </button>
                 </div>
             </div>
+        </div>
 
-            <div class="modal-actions">
-                <button class="btn btn-secondary" id="cancelCustomCharacter">Cancel</button>
-                <button class="btn btn-primary" id="saveCustomCharacter">
-                    💾 Create Character
-                </button>
+        <!-- Custom Scenario Modal -->
+        <div class="modal-overlay" id="customScenarioModal">
+            <div class="modal-content" style="max-width: 600px;">
+                <div class="modal-header">
+                    <h3 class="modal-title">Create Your Custom Scenario</h3>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Scenario Title</label>
+                    <input type="text" class="form-input" id="customScenarioTitle" placeholder="e.g., Budget Approval Meeting - Q2 Infrastructure Spend">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Meeting Context & Background</label>
+                    <textarea class="form-input form-textarea" id="customScenarioContext" placeholder="Describe the situation leading up to this meeting. What decisions need to be made? What's happened before? What are the stakes?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Your Role & Objective</label>
+                    <textarea class="form-input form-textarea" id="customScenarioObjective" placeholder="What's your position in this meeting? What are you trying to achieve? What approach do you plan to take?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Expected Challenges</label>
+                    <textarea class="form-input form-textarea" id="customScenarioChallenges" placeholder="What resistance or difficulties do you anticipate? What objections might come up?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Meeting Type</label>
+                    <select class="form-input" id="customScenarioType">
+                        <option value="budget_review">Budget Review</option>
+                        <option value="project_planning">Project Planning</option>
+                        <option value="performance_discussion">Performance Discussion</option>
+                        <option value="policy_decision">Policy Decision</option>
+                        <option value="stakeholder_negotiation">Stakeholder Negotiation</option>
+                        <option value="crisis_management">Crisis Management</option>
+                        <option value="vendor_meeting">Vendor/Contractor Meeting</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="cancelCustomScenario">Cancel</button>
+                    <button class="btn btn-primary" id="saveCustomScenario">Create Scenario</button>
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- Custom Scenario Modal -->
-    <div class="modal-overlay" id="customScenarioModal">
-        <div class="modal-content" style="max-width: 600px;">
-            <div class="modal-header">
-                <h3 class="modal-title">Create Your Custom Scenario</h3>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Scenario Title</label>
-                <input type="text" class="form-input" id="customScenarioTitle" placeholder="e.g., Budget Approval Meeting - Q2 Infrastructure Spend">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Meeting Context & Background</label>
-                <textarea class="form-input form-textarea" id="customScenarioContext" placeholder="Describe the situation leading up to this meeting. What decisions need to be made? What's happened before? What are the stakes?"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Your Role & Objective</label>
-                <textarea class="form-input form-textarea" id="customScenarioObjective" placeholder="What's your position in this meeting? What are you trying to achieve? What approach do you plan to take?"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Expected Challenges</label>
-                <textarea class="form-input form-textarea" id="customScenarioChallenges" placeholder="What resistance or difficulties do you anticipate? What objections might come up?"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Meeting Type</label>
-                <select class="form-input" id="customScenarioType">
-                    <option value="budget_review">Budget Review</option>
-                    <option value="project_planning">Project Planning</option>
-                    <option value="performance_discussion">Performance Discussion</option>
-                    <option value="policy_decision">Policy Decision</option>
-                    <option value="stakeholder_negotiation">Stakeholder Negotiation</option>
-                    <option value="crisis_management">Crisis Management</option>
-                    <option value="vendor_meeting">Vendor/Contractor Meeting</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-
-            <div class="modal-actions">
-                <button class="btn btn-secondary" id="cancelCustomScenario">Cancel</button>
-                <button class="btn btn-primary" id="saveCustomScenario">Create Scenario</button>
-            </div>
-        </div>
-    </div>
 
 <script>
 // ============================================
@@ -616,7 +903,466 @@ function showErrorMessage(message) {
         }, 6000);
     }
 }
+// ============================================
+// GOOGLE CLOUD TTS INTEGRATION FOR CONVERSATION TRAINER
+// Add this code to your existing index.html JavaScript section
+// ============================================
 
+// Global variables for TTS management
+let currentTTSAudio = null;
+let isSpeaking = false;
+let voiceEnabled = true; // User can toggle this
+
+// ============================================
+// GOOGLE CLOUD TEXT-TO-SPEECH FUNCTIONS
+// ============================================
+
+/**
+ * Main function to speak AI responses using Google Cloud TTS
+ * @param {string} text - Text to be spoken
+ * @param {string} personalityType - The personality type for voice selection
+ * @param {Object} options - Optional settings for speech
+ */
+async function speakWithGoogleTTS(text, personalityType = null, options = {}) {
+    // Check if voice is enabled and we have an API key
+    if (!voiceEnabled || !CONFIG?.GOOGLE_TTS_API_KEY || CONFIG.GOOGLE_TTS_API_KEY === 'YOUR_API_KEY_HERE') {
+        debugLog('⚠️ Google TTS not available, falling back to browser TTS');
+        fallbackToBrowserTTS(text, personalityType);
+        return;
+    }
+
+    try {
+        debugLog('🗣️ Speaking with Google TTS:', { text: text.substring(0, 50) + '...', personality: personalityType });
+
+        // Stop any current audio
+        stopCurrentTTS();
+
+        // Get voice configuration for personality
+        const voiceConfig = getVoiceForPersonality(personalityType);
+
+        // Prepare the request
+        const requestBody = {
+            input: { text: cleanTextForTTS(text) },
+            voice: {
+                name: voiceConfig.name,
+                languageCode: voiceConfig.languageCode
+            },
+            audioConfig: {
+                ...CONFIG.AUDIO_CONFIG,
+                ...options // Allow override of default settings
+            }
+        };
+
+        debugLog('📤 TTS Request:', requestBody);
+
+        // Show speaking indicator
+        updateTTSStatus('speaking', `Speaking as ${voiceConfig.description}...`);
+
+        // Make API request
+        const response = await fetch(`${CONFIG.GOOGLE_TTS_ENDPOINT}?key=${CONFIG.GOOGLE_TTS_API_KEY}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (!response.ok) {
+            throw new Error(`TTS API Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        if (data.audioContent) {
+            // Convert base64 audio to playable audio
+            await playTTSAudio(data.audioContent, text);
+        } else {
+            throw new Error('No audio content received from Google TTS');
+        }
+
+    } catch (error) {
+        debugLog('❌ Google TTS error:', error);
+
+        // Fallback to browser TTS
+        if (CONFIG.FEATURES?.fallbackToBrowserTTS) {
+            debugLog('🔄 Falling back to browser TTS');
+            fallbackToBrowserTTS(text, personalityType);
+        } else {
+            updateTTSStatus('error', `TTS Error: ${error.message}`);
+        }
+    }
+}
+
+/**
+ * Get the appropriate voice configuration for a personality type
+ * @param {string} personalityType - The personality type
+ * @returns {Object} Voice configuration object
+ */
+function getVoiceForPersonality(personalityType) {
+    // Handle saved colleagues
+    if (personalityType && personalityType.startsWith('saved_colleague_') && customCharacterData) {
+        // For saved colleagues, we can use their DISC type or default
+        debugLog('🎭 Using voice for saved colleague:', customCharacterData.name);
+        // Default to professional Australian voice for custom characters
+        return CONFIG.DISC_VOICES.custom_character;
+    }
+
+    // Get voice from configuration or use default
+    const voiceConfig = CONFIG.DISC_VOICES[personalityType] || CONFIG.DISC_VOICES.custom_character;
+
+    debugLog('🎵 Selected voice:', { personality: personalityType, voice: voiceConfig });
+
+    return voiceConfig;
+}
+
+/**
+ * Clean and prepare text for TTS
+ * @param {string} text - Raw text
+ * @returns {string} Cleaned text suitable for TTS
+ */
+function cleanTextForTTS(text) {
+    return text
+        // Remove markdown formatting
+        .replace(/\*\*(.*?)\*\*/g, '$1')     // Bold text
+        .replace(/\*(.*?)\*/g, '$1')         // Italic text
+        .replace(/`(.*?)`/g, '$1')           // Code blocks
+
+        // Clean up common chat artifacts
+        .replace(/https?:\/\/[^\s]+/g, 'link')  // Replace URLs
+        .replace(/@\w+/g, '')                   // Remove mentions
+        .replace(/#\w+/g, '')                   // Remove hashtags
+
+        // Fix common abbreviations for better pronunciation
+        .replace(/\bNSW\b/g, 'New South Wales')
+        .replace(/\bCouncil\b/g, 'Council')
+        .replace(/\bCEO\b/g, 'C E O')
+        .replace(/\bCFO\b/g, 'C F O')
+        .replace(/\bIT\b/g, 'I T')
+
+        // Ensure proper sentence ending
+        .trim()
+        .replace(/([^.!?])$/, '$1.');
+}
+
+/**
+ * Convert base64 audio to blob and play it
+ * @param {string} base64Audio - Base64 encoded audio from Google TTS
+ * @param {string} originalText - Original text for debugging
+ */
+async function playTTSAudio(base64Audio, originalText) {
+    try {
+        // Convert base64 to blob
+        const audioBlob = base64ToBlob(base64Audio, 'audio/mp3');
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        // Create audio element
+        currentTTSAudio = new Audio(audioUrl);
+        isSpeaking = true;
+
+        // Set up event handlers
+        currentTTSAudio.onended = function() {
+            debugLog('✅ TTS playback completed');
+            isSpeaking = false;
+            updateTTSStatus('idle', 'Voice ready');
+
+            // Clean up
+            URL.revokeObjectURL(audioUrl);
+            currentTTSAudio = null;
+        };
+
+        currentTTSAudio.onerror = function(error) {
+            debugLog('❌ TTS audio playback error:', error);
+            isSpeaking = false;
+            updateTTSStatus('error', 'Audio playback failed');
+            currentTTSAudio = null;
+        };
+
+        // Start playback
+        await currentTTSAudio.play();
+        debugLog('🔊 TTS audio playing');
+
+    } catch (error) {
+        debugLog('❌ Audio playback error:', error);
+        isSpeaking = false;
+        updateTTSStatus('error', 'Audio playback failed');
+        throw error;
+    }
+}
+
+/**
+ * Stop any currently playing TTS audio
+ */
+function stopCurrentTTS() {
+    if (currentTTSAudio) {
+        currentTTSAudio.pause();
+        currentTTSAudio = null;
+    }
+
+    // Also stop browser TTS as fallback
+    if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+    }
+
+    isSpeaking = false;
+    updateTTSStatus('idle', 'Voice ready');
+}
+
+/**
+ * Toggle voice on/off
+ */
+function toggleVoice() {
+    voiceEnabled = !voiceEnabled;
+    debugLog(`🔊 Voice ${voiceEnabled ? 'enabled' : 'disabled'}`);
+
+    if (!voiceEnabled) {
+        stopCurrentTTS();
+    }
+
+    // Update UI if voice toggle button exists
+    const voiceToggle = document.getElementById('voiceToggle');
+    if (voiceToggle) {
+        voiceToggle.textContent = voiceEnabled ? '🔊 Voice On' : '🔇 Voice Off';
+        voiceToggle.className = voiceEnabled ? 'voice-enabled' : 'voice-disabled';
+    }
+
+    updateTTSStatus('info', voiceEnabled ? 'Voice enabled' : 'Voice disabled');
+}
+
+// ============================================
+// FALLBACK TO BROWSER TTS
+// ============================================
+
+/**
+ * Fallback to browser TTS if Google TTS fails
+ * @param {string} text - Text to speak
+ * @param {string} personalityType - Personality for voice selection
+ */
+function fallbackToBrowserTTS(text, personalityType) {
+    if (!window.speechSynthesis) {
+        debugLog('❌ No TTS available');
+        return;
+    }
+
+    try {
+        // Stop any current speech
+        window.speechSynthesis.cancel();
+
+        // Create utterance
+        const utterance = new SpeechSynthesisUtterance(cleanTextForTTS(text));
+
+        // Try to select appropriate browser voice
+        const voices = window.speechSynthesis.getVoices();
+        const australianVoice = voices.find(voice =>
+            voice.lang.includes('en-AU') || voice.name.toLowerCase().includes('australia')
+        );
+
+        if (australianVoice) {
+            utterance.voice = australianVoice;
+        }
+
+        // Configure speech parameters
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        utterance.volume = 1.0;
+
+        // Event handlers
+        utterance.onstart = function() {
+            isSpeaking = true;
+            updateTTSStatus('speaking', 'Speaking (browser voice)...');
+        };
+
+        utterance.onend = function() {
+            isSpeaking = false;
+            updateTTSStatus('idle', 'Voice ready');
+        };
+
+        utterance.onerror = function(event) {
+            debugLog('❌ Browser TTS error:', event.error);
+            isSpeaking = false;
+            updateTTSStatus('error', 'Speech failed');
+        };
+
+        // Start speaking
+        window.speechSynthesis.speak(utterance);
+        debugLog('🔊 Browser TTS speaking');
+
+    } catch (error) {
+        debugLog('❌ Browser TTS fallback error:', error);
+        updateTTSStatus('error', 'All TTS methods failed');
+    }
+}
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+
+/**
+ * Convert base64 string to Blob
+ * @param {string} base64 - Base64 encoded data
+ * @param {string} mimeType - MIME type for the blob
+ * @returns {Blob} Blob object
+ */
+function base64ToBlob(base64, mimeType) {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
+}
+
+/**
+ * Update TTS status display
+ * @param {string} status - Status type: 'speaking', 'idle', 'error', 'info'
+ * @param {string} message - Status message
+ */
+function updateTTSStatus(status, message) {
+    // Update status indicator if it exists
+    const statusElement = document.getElementById('ttsStatus');
+    if (statusElement) {
+        statusElement.className = `tts-status ${status}`;
+        statusElement.textContent = message;
+        statusElement.style.display = 'block';
+
+        // Auto-hide non-critical messages
+        if (status === 'idle' || status === 'info') {
+            setTimeout(() => {
+                statusElement.style.display = 'none';
+            }, 3000);
+        }
+    }
+
+    // Console log for debugging
+    debugLog(`🎤 TTS Status: ${status} - ${message}`);
+}
+
+// ============================================
+// INTEGRATION WITH EXISTING CHAT SYSTEM
+// ============================================
+
+/**
+ * Enhanced addAIMessage function that includes TTS
+ * Replace your existing addAIMessage function with this one
+ */
+function addAIMessageWithTTS(content) {
+    // First add the message to chat (existing functionality)
+    addAIMessage(content);
+
+    // Then speak it if voice is enabled
+    if (voiceEnabled && content.trim()) {
+        // Small delay to let the message appear first
+        setTimeout(() => {
+            speakWithGoogleTTS(content, appState.selectedPersonality);
+        }, 500);
+    }
+}
+
+/**
+ * Initialize TTS system
+ * Call this in your existing initializeApp() function
+ */
+function initializeTTS() {
+    debugLog('🎤 Initializing TTS system');
+
+    // Check configuration
+    if (!CONFIG) {
+        debugLog('❌ Configuration not loaded');
+        return;
+    }
+
+    // Log available voices
+    debugLog('🎭 Available DISC voices:', Object.keys(CONFIG.DISC_VOICES));
+
+    // Add voice toggle button to chat interface if it doesn't exist
+    addVoiceControls();
+
+    // Test API key if provided
+    if (CONFIG.GOOGLE_TTS_API_KEY && CONFIG.GOOGLE_TTS_API_KEY !== 'YOUR_API_KEY_HERE') {
+        testGoogleTTSConnection();
+    } else {
+        debugLog('⚠️ Google TTS API key not configured');
+        updateTTSStatus('info', 'Enter API key for premium voices');
+    }
+
+    debugLog('✅ TTS system initialized');
+}
+
+/**
+ * Add voice control buttons to the chat interface
+ */
+function addVoiceControls() {
+    const chatHeader = document.querySelector('.chat-header');
+    if (!chatHeader) return;
+
+    // Check if controls already exist
+    if (document.getElementById('voiceControls')) return;
+
+    const voiceControls = document.createElement('div');
+    voiceControls.id = 'voiceControls';
+    voiceControls.innerHTML = `
+        <button id="voiceToggle" class="voice-enabled" onclick="toggleVoice()">
+            🔊 Voice On
+        </button>
+        <div id="ttsStatus" class="tts-status idle" style="display: none;">
+            Voice ready
+        </div>
+    `;
+
+    // Add some basic styling
+    voiceControls.style.cssText = `
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-left: auto;
+    `;
+
+    chatHeader.appendChild(voiceControls);
+}
+
+/**
+ * Test Google TTS API connection
+ */
+async function testGoogleTTSConnection() {
+    try {
+        const response = await fetch(`https://texttospeech.googleapis.com/v1/voices?key=${CONFIG.GOOGLE_TTS_API_KEY}`);
+
+        if (response.ok) {
+            debugLog('✅ Google TTS API connected successfully');
+            updateTTSStatus('success', 'Premium voices ready');
+        } else {
+            throw new Error(`API test failed: ${response.status}`);
+        }
+    } catch (error) {
+        debugLog('❌ Google TTS API test failed:', error);
+        updateTTSStatus('error', 'API connection failed - using browser voices');
+    }
+}
+
+// ============================================
+// DEVELOPMENT HELPERS
+// ============================================
+
+// Make functions available globally for debugging
+window.speakWithGoogleTTS = speakWithGoogleTTS;
+window.stopCurrentTTS = stopCurrentTTS;
+window.toggleVoice = toggleVoice;
+window.testTTS = function(text = 'G\'day! This is a test of the Google Cloud Text-to-Speech integration.') {
+    speakWithGoogleTTS(text, appState.selectedPersonality || 'infrastructure_engineer');
+};
+
+console.log(`
+🎤 Google TTS Integration Loaded!
+
+Development commands:
+- testTTS()                    // Test current personality voice
+- testTTS('custom text')       // Test with custom text
+- toggleVoice()               // Toggle voice on/off
+- stopCurrentTTS()            // Stop current speech
+- debugConfig()               // View configuration
+`);
 // ============================================
 // STORAGE FUNCTIONS
 // ============================================
@@ -1459,7 +2205,7 @@ async function startConversation() {
 
             updateChatHeader();
             addSystemMessage('Practice session started. Your conversation partner is ready.');
-            addAIMessage(data.opening_message);
+            addAIMessageWithTTS(data.opening_message);
 
             debugLog('🎉 Conversation started successfully');
 
@@ -1519,7 +2265,7 @@ async function sendMessage() {
         debugLog('Message response', data);
 
         if (data.success) {
-            addAIMessage(data.ai_response);
+            addAIMessageWithTTS(data.ai_response);
 
             appState.conversationHistory.push({
                 sender: 'user',
@@ -2460,6 +3206,7 @@ function initializeApp() {
     loadSavedScenarios();
 
     debugLog('✅ Full application initialized with tab system');
+    initializeTTS();
 }
 
 // Initialize Application
@@ -3139,7 +3886,2212 @@ window.addEventListener('load', function() {
         }
     }, 1000);
 });
+// ============================================
+// EMAIL PRACTICE MODULE FUNCTIONS
+// ============================================
+
+// Email module state
+let emailState = {
+    currentMode: 'analysis',
+    selectedColleague: null,
+    analysisResults: null,
+    emailTemplates: {},
+    isAnalyzing: false
+};
+
+// Initialize email module
+function initializeEmailModule() {
+    debugLog('📧 Initializing Email Practice module');
+
+    try {
+        // Load email templates from storage
+        loadEmailTemplates();
+
+        // Populate colleague dropdowns with existing colleagues
+        populateEmailColleagueSelectors();
+
+        // Set up email-specific event listeners
+        setupEmailEventListeners();
+
+        // Update tab count
+        updateEmailTabCount();
+
+        debugLog('✅ Email module initialized successfully');
+    } catch (error) {
+        debugLog('❌ Error initializing email module:', error);
+    }
+}
+
+// Set up email-specific event listeners
+function setupEmailEventListeners() {
+    debugLog('🔧 Setting up email event listeners');
+
+    try {
+        // Mode switching buttons
+        document.querySelectorAll('.mode-button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (!this.disabled) {
+                    const mode = this.dataset.mode;
+                    switchEmailMode(mode);
+                }
+            });
+        });
+
+        // Email recipient selection
+        const emailRecipient = document.getElementById('emailRecipient');
+        if (emailRecipient) {
+            emailRecipient.addEventListener('change', handleRecipientSelection);
+        }
+
+        // Email analysis button
+        const analyzeBtn = document.getElementById('analyzeEmailBtn');
+        if (analyzeBtn) {
+            analyzeBtn.addEventListener('click', analyzeEmail);
+        }
+
+        // Clear email button
+        const clearBtn = document.getElementById('clearEmailBtn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', clearEmailComposer);
+        }
+
+        // Close analysis button
+        const closeAnalysisBtn = document.getElementById('closeAnalysisBtn');
+        if (closeAnalysisBtn) {
+            closeAnalysisBtn.addEventListener('click', closeAnalysisResults);
+        }
+
+        // Save as template button
+        const saveTemplateBtn = document.getElementById('saveAsTemplateBtn');
+        if (saveTemplateBtn) {
+            saveTemplateBtn.addEventListener('click', saveCurrentEmailAsTemplate);
+        }
+
+        // Export analysis button
+        const exportBtn = document.getElementById('exportAnalysisBtn');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', exportAnalysisResults);
+        }
+
+        // Apply suggestions button
+        const improveBtn = document.getElementById('improveEmailBtn');
+        if (improveBtn) {
+            improveBtn.addEventListener('click', applyEmailSuggestions);
+        }
+
+        debugLog('✅ Email event listeners set up successfully');
+    } catch (error) {
+        debugLog('❌ Error setting up email event listeners:', error);
+    }
+}
+
+// Switch email modes (analysis, templates, simulation)
+function switchEmailMode(mode) {
+    debugLog(`📧 Switching to email mode: ${mode}`);
+
+    try {
+        // Update mode buttons
+        document.querySelectorAll('.mode-button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+
+        // Update mode content
+        document.querySelectorAll('.email-mode-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.getElementById(`${mode}-mode`).classList.add('active');
+
+        emailState.currentMode = mode;
+
+        // Mode-specific initialization
+        if (mode === 'templates') {
+            loadEmailTemplatesUI();
+        }
+
+        debugLog(`✅ Switched to email mode: ${mode}`);
+    } catch (error) {
+        debugLog('❌ Error switching email mode:', error);
+    }
+}
+
+// Populate colleague selector dropdowns with existing colleagues
+function populateEmailColleagueSelectors() {
+    debugLog('👥 Populating email colleague selectors');
+
+    try {
+        const colleagues = getStoredColleagues();
+        const selector = document.getElementById('emailRecipient');
+
+        if (selector) {
+            // Clear existing options (keep first placeholder)
+            selector.innerHTML = '<option value="">Select colleague...</option>';
+
+            // Add stored colleagues
+            Object.values(colleagues).forEach(colleague => {
+                const option = document.createElement('option');
+                option.value = colleague.id;
+                option.textContent = `${colleague.name} (${colleague.role})`;
+                option.dataset.colleagueData = JSON.stringify(colleague);
+                selector.appendChild(option);
+            });
+
+            debugLog(`✅ Added ${Object.keys(colleagues).length} colleagues to email selector`);
+        }
+    } catch (error) {
+        debugLog('❌ Error populating colleague selectors:', error);
+    }
+}
+
+// Handle recipient selection
+function handleRecipientSelection(event) {
+    const selectedValue = event.target.value;
+
+    if (selectedValue) {
+        try {
+            // Get colleague data from the selected option
+            const selectedOption = event.target.selectedOptions[0];
+            const colleagueData = JSON.parse(selectedOption.dataset.colleagueData);
+
+            emailState.selectedColleague = colleagueData;
+
+            // Show colleague info panel
+            displayColleagueInfo(colleagueData);
+
+            debugLog('👤 Selected colleague:', colleagueData.name);
+        } catch (error) {
+            debugLog('❌ Error handling recipient selection:', error);
+        }
+    } else {
+        // Hide colleague info panel
+        const colleaguePanel = document.getElementById('colleagueInfoPanel');
+        if (colleaguePanel) {
+            colleaguePanel.style.display = 'none';
+        }
+        emailState.selectedColleague = null;
+    }
+}
+
+// Display colleague information in the side panel
+function displayColleagueInfo(colleague) {
+    try {
+        const panel = document.getElementById('colleagueInfoPanel');
+        const avatar = document.getElementById('colleagueAvatar');
+        const name = document.getElementById('colleagueName');
+        const role = document.getElementById('colleagueRole');
+        const disc = document.getElementById('colleagueDisc');
+
+        if (panel && avatar && name && role && disc) {
+            // Generate avatar initials
+            const initials = colleague.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+
+            // Determine DISC type (simple heuristic based on personality)
+            const discType = inferDISCType(colleague.personality || '');
+
+            // Update panel content
+            avatar.textContent = initials;
+            name.textContent = colleague.name;
+            role.textContent = colleague.role;
+            disc.textContent = `${discType}-Type`;
+
+            // Show the panel
+            panel.style.display = 'block';
+
+            debugLog('✅ Displayed colleague info for:', colleague.name);
+        }
+    } catch (error) {
+        debugLog('❌ Error displaying colleague info:', error);
+    }
+}
+
+// Simple DISC type inference based on personality keywords
+function inferDISCType(personalityText) {
+    const text = personalityText.toLowerCase();
+
+    const discPatterns = {
+        'D': ['direct', 'decisive', 'results', 'action', 'challenge', 'fast', 'leadership'],
+        'I': ['people', 'social', 'enthusiasm', 'team', 'collaborate', 'communicate', 'engaging'],
+        'S': ['patient', 'support', 'steady', 'reliable', 'consensus', 'stable', 'consistent'],
+        'C': ['detail', 'accurate', 'analytical', 'systematic', 'quality', 'data', 'precise']
+    };
+
+    let scores = { D: 0, I: 0, S: 0, C: 0 };
+
+    // Count pattern matches
+    Object.entries(discPatterns).forEach(([type, patterns]) => {
+        patterns.forEach(pattern => {
+            if (text.includes(pattern)) {
+                scores[type]++;
+            }
+        });
+    });
+
+    // Return highest scoring type, default to 'I' if tie/no matches
+    const maxScore = Math.max(...Object.values(scores));
+    if (maxScore === 0) return 'I'; // Default to I-type
+
+    return Object.keys(scores).find(key => scores[key] === maxScore) || 'I';
+}
+
+// ============================================
+// ENHANCED EMAIL ANALYSIS - FRONTEND
+// Replace your existing analyzeEmail() function with this
+// ============================================
+
+/**
+ * Enhanced email analysis using backend Claude API
+ * Replaces the mock analysis with real AI assessment
+ */
+async function analyzeEmailEnhanced() {
+    const recipientId = document.getElementById('emailRecipient').value;
+    const subject = document.getElementById('emailSubject').value.trim();
+    const content = document.getElementById('emailContent').value.trim();
+
+    // Validation
+    if (!content) {
+        showErrorMessage('Please enter email content to analyze');
+        return;
+    }
+
+    if (emailState.isAnalyzing) {
+        debugLog('⚠️ Analysis already in progress');
+        return;
+    }
+
+    try {
+        emailState.isAnalyzing = true;
+        debugLog('🤖 Starting enhanced email analysis with Claude API via backend');
+
+        // Show loading state
+        const analyzeBtn = document.getElementById('analyzeEmailBtn');
+        const originalText = analyzeBtn.innerHTML;
+        analyzeBtn.innerHTML = '⏳ Analyzing with AI...';
+        analyzeBtn.disabled = true;
+
+        // Hide getting started panel
+        const gettingStartedPanel = document.getElementById('gettingStartedPanel');
+        if (gettingStartedPanel) {
+            gettingStartedPanel.style.display = 'none';
+        }
+
+        // Prepare email data for backend
+        const emailData = {
+            subject: subject,
+            content: content,
+            colleague: emailState.selectedColleague,
+            analysis_type: emailState.analysisType || 'outgoing',
+            context: 'NSW Local Government workplace communication'
+        };
+
+        debugLog('📤 Sending email data to backend:', emailData);
+
+        // Call backend API for analysis
+        const response = await fetch(`${CONFIG.BACKEND_API_URL}/api/email/analyze`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(emailData)
+        });
+
+        debugLog('📥 Backend response status:', response.status);
+
+        if (!response.ok) {
+            const errorData = await response.text();
+            debugLog('❌ Backend error response:', errorData);
+            throw new Error(`Backend analysis failed (${response.status}): ${errorData}`);
+        }
+
+        const analysisResults = await response.json();
+        debugLog('✅ Backend analysis results:', analysisResults);
+
+        // Convert backend format to frontend format if needed
+        const formattedResults = formatAnalysisForUI(analysisResults);
+
+        // Display results using existing UI functions
+        displayEnhancedAnalysisResults(formattedResults);
+
+        // Store results
+        emailState.analysisResults = formattedResults;
+
+        debugLog('✅ Enhanced email analysis completed successfully');
+        showSuccessMessage(
+            `Email analysis completed! ${analysisResults.claude_powered !== false ?
+                'Powered by Claude AI for professional insights.' :
+                'Using enhanced pattern analysis (Claude temporarily unavailable).'}`
+        );
+
+    } catch (error) {
+        debugLog('❌ Enhanced email analysis error:', error);
+
+        // Show user-friendly error message
+        let errorMessage = 'Email analysis failed. ';
+        if (error.message.includes('Failed to fetch')) {
+            errorMessage += 'Please check your internet connection and try again.';
+        } else if (error.message.includes('500')) {
+            errorMessage += 'Analysis service temporarily unavailable. Please try again later.';
+        } else {
+            errorMessage += 'Please try again or contact support if the problem persists.';
+        }
+
+        showErrorMessage(errorMessage);
+
+        // Fallback to basic frontend analysis if backend completely fails
+        try {
+            debugLog('🔄 Attempting frontend fallback analysis');
+            const fallbackResults = generateBasicFrontendAnalysis(emailData);
+            displayEnhancedAnalysisResults(fallbackResults);
+            emailState.analysisResults = fallbackResults;
+            showSuccessMessage('Analysis completed using basic pattern matching (AI service unavailable).');
+        } catch (fallbackError) {
+            debugLog('❌ Fallback analysis also failed:', fallbackError);
+        }
+
+    } finally {
+        // Restore button state
+        emailState.isAnalyzing = false;
+        const analyzeBtn = document.getElementById('analyzeEmailBtn');
+        if (analyzeBtn) {
+            analyzeBtn.innerHTML = '📊 Analyze Email';
+            analyzeBtn.disabled = false;
+        }
+    }
+}
+
+/**
+ * Format backend analysis results for frontend UI
+ */
+function formatAnalysisForUI(backendResults) {
+    // If already in correct format, return as-is
+    if (backendResults.overall_score !== undefined) {
+        return backendResults;
+    }
+
+    // Convert any different backend format to expected frontend format
+    return {
+        overall_score: backendResults.score || backendResults.overall_assessment?.effectiveness_score || 5,
+        overall_feedback: backendResults.feedback || backendResults.overall_feedback || 'Analysis completed',
+
+        code_compliance: backendResults.code_compliance || {
+            status: 'compliant',
+            issues: [],
+            risk_level: 'low'
+        },
+
+        disc_scores: backendResults.disc_scores || {
+            D: 6, I: 6, S: 6, C: 6
+        },
+
+        disc_feedback: backendResults.disc_feedback || {
+            D: 'Assessment completed',
+            I: 'Assessment completed',
+            S: 'Assessment completed',
+            C: 'Assessment completed'
+        },
+
+        suggestions: backendResults.suggestions || [],
+        strengths: backendResults.strengths || [],
+        quick_tips: backendResults.quick_tips || generateDefaultQuickTips(),
+
+        analysis_timestamp: backendResults.analysis_timestamp || new Date().toISOString(),
+        analysis_type: backendResults.analysis_type || 'outgoing',
+        claude_powered: backendResults.claude_powered !== false
+    };
+}
+
+/**
+ * Generate basic frontend analysis as ultimate fallback
+ */
+function generateBasicFrontendAnalysis(emailData) {
+    const content = emailData.content || '';
+    const subject = emailData.subject || '';
+
+    // Basic pattern checks
+    const hasGreeting = /\b(hi|hello|dear|good morning|good afternoon)\b/i.test(content);
+    const hasClosing = /\b(regards|thanks|sincerely|best|cheers)\b/i.test(content);
+    const hasPoliteness = /\b(please|thank you|would you|could you)\b/i.test(content);
+
+    // Check for problematic patterns
+    const problematicPatterns = [
+        /\b(stupid|idiot|moron|pathetic|ridiculous)\b/i,
+        /[A-Z]{4,}/g, // ALL CAPS
+        /!{3,}/g // Multiple exclamation marks
+    ];
+
+    const hasProblems = problematicPatterns.some(pattern => pattern.test(content));
+
+    // Calculate score
+    let score = 5;
+    if (hasGreeting) score += 0.5;
+    if (hasClosing) score += 0.5;
+    if (hasPoliteness) score += 1;
+    if (subject && subject.length > 5) score += 0.5;
+    if (hasProblems) score -= 3; // Significant penalty
+
+    score = Math.max(1, Math.min(10, score));
+
+    const suggestions = [];
+    if (hasProblems) {
+        suggestions.push({
+            type: 'critical',
+            category: 'Professional Standards',
+            text: 'Review language for professional appropriateness - some phrases may be inappropriate',
+            impact: 'High',
+            reason: 'Professional workplace communication requires respectful language'
+        });
+    }
+    if (!hasGreeting) {
+        suggestions.push({
+            type: 'improvement',
+            category: 'Structure',
+            text: 'Consider adding a professional greeting',
+            impact: 'Medium',
+            reason: 'Greetings help establish a respectful tone'
+        });
+    }
+    if (!hasClosing) {
+        suggestions.push({
+            type: 'improvement',
+            category: 'Structure',
+            text: 'Add a professional closing',
+            impact: 'Medium',
+            reason: 'Professional closings complete the communication'
+        });
+    }
+
+    return {
+        overall_score: Math.round(score * 10) / 10,
+        overall_feedback: hasProblems ?
+            'This email contains language that may not meet professional standards.' :
+            'Basic structure analysis completed. For detailed insights, please try again when the AI service is available.',
+
+        code_compliance: {
+            status: hasProblems ? 'concerning' : 'compliant',
+            issues: hasProblems ? ['Potentially inappropriate language detected'] : [],
+            risk_level: hasProblems ? 'high' : 'low'
+        },
+
+        disc_scores: { D: score, I: score, S: score, C: score },
+        disc_feedback: {
+            D: 'Basic assessment only',
+            I: 'Basic assessment only',
+            S: 'Basic assessment only',
+            C: 'Basic assessment only'
+        },
+
+        suggestions: suggestions,
+        strengths: hasGreeting && hasClosing ? ['Good email structure'] : [],
+        quick_tips: [
+            {
+                icon: '🤖',
+                text: 'AI Analysis Unavailable',
+                detail: 'This is a basic pattern analysis. Try again later for AI-powered insights.'
+            }
+        ],
+
+        analysis_timestamp: new Date().toISOString(),
+        analysis_type: emailData.analysis_type || 'outgoing',
+        claude_powered: false,
+        fallback_analysis: true
+    };
+}
+
+/**
+ * Generate default quick tips
+ */
+function generateDefaultQuickTips() {
+    return [
+        {
+            icon: '📧',
+            text: 'Professional Email Best Practices',
+            detail: 'Use clear subject lines, professional greetings, and respectful closings'
+        },
+        {
+            icon: '⏰',
+            text: 'Response Timing',
+            detail: 'Council staff typically respond within 24-48 hours to professional emails'
+        },
+        {
+            icon: '🎯',
+            text: 'Clear Communication',
+            detail: 'Be specific about what actions are needed and when'
+        }
+    ];
+}
+
+// ============================================
+// UPDATE EXISTING FUNCTION REFERENCES
+// ============================================
+
+// Update your existing email analysis button handler
+// Find where analyzeEmail is called and replace with analyzeEmailEnhanced
+
+// If you have an existing setupEmailEventListeners function, update it:
+function updateEmailAnalysisButtonHandler() {
+    const analyzeBtn = document.getElementById('analyzeEmailBtn');
+    if (analyzeBtn) {
+        // Remove old event listeners
+        analyzeBtn.replaceWith(analyzeBtn.cloneNode(true));
+
+        // Add new event listener with enhanced function
+        const newAnalyzeBtn = document.getElementById('analyzeEmailBtn');
+        newAnalyzeBtn.addEventListener('click', analyzeEmailEnhanced);
+
+        debugLog('✅ Enhanced email analysis button handler updated');
+    }
+}
+
+// Add this to your initialization code
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for other initialization to complete
+    setTimeout(() => {
+        updateEmailAnalysisButtonHandler();
+        debugLog('🤖 Enhanced email analysis system ready');
+    }, 1000);
+});
+
+// ============================================
+// BACKEND CONNECTION TESTING
+// ============================================
+
+/**
+ * Test the backend email analysis endpoint
+ */
+async function testBackendEmailAnalysis() {
+    try {
+        debugLog('🧪 Testing backend email analysis endpoint');
+
+        const response = await fetch(`${CONFIG.BACKEND_API_URL}/api/email/test`);
+        const result = await response.json();
+
+        if (response.ok) {
+            debugLog('✅ Backend email analysis test successful:', result);
+            console.log('Backend Test Results:', result);
+            return true;
+        } else {
+            debugLog('❌ Backend email analysis test failed:', result);
+            console.log('Backend Test Failed:', result);
+            return false;
+        }
+    } catch (error) {
+        debugLog('❌ Backend email analysis test error:', error);
+        console.log('Backend Test Error:', error);
+        return false;
+    }
+}
+
+// Make test function available globally
+window.testBackendEmailAnalysis = testBackendEmailAnalysis;
+
+debugLog('🚀 Enhanced Email Analysis Frontend Module Loaded!');
+debugLog('🧪 Use testBackendEmailAnalysis() to test the complete pipeline.');
+
+// Display analysis results in the panel
+function displayAnalysisResults(results) {
+    try {
+        // Update overall score
+        document.getElementById('overallScore').textContent = results.overall_score;
+        document.getElementById('overallFeedback').textContent = results.overall_feedback;
+
+        // Update DISC scores
+        Object.entries(results.disc_scores).forEach(([type, score]) => {
+            const scoreElement = document.getElementById(`discScore${type}`);
+            const feedbackElement = document.getElementById(`discFeedback${type}`);
+
+            if (scoreElement) scoreElement.textContent = score;
+            if (feedbackElement) feedbackElement.textContent = results.disc_feedback[type];
+        });
+
+        // Update suggestions
+        const suggestionsList = document.getElementById('suggestionsList');
+        if (suggestionsList) {
+            suggestionsList.innerHTML = '';
+            results.suggestions.forEach(suggestion => {
+                const item = document.createElement('div');
+                item.className = `suggestion-item ${suggestion.type}`;
+                item.textContent = suggestion.text;
+                suggestionsList.appendChild(item);
+            });
+        }
+
+        // Update quick tips
+        const tipsList = document.getElementById('quickTipsList');
+        if (tipsList) {
+            tipsList.innerHTML = '';
+            results.quick_tips.forEach(tip => {
+                const item = document.createElement('div');
+                item.className = 'tip-item';
+                item.textContent = tip;
+                tipsList.appendChild(item);
+            });
+        }
+
+        // Show the analysis panel
+        const analysisPanel = document.getElementById('analysisResultsPanel');
+        if (analysisPanel) {
+            analysisPanel.style.display = 'block';
+            analysisPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        debugLog('✅ Analysis results displayed');
+    } catch (error) {
+        debugLog('❌ Error displaying analysis results:', error);
+    }
+}
+
+// Close analysis results panel
+function closeAnalysisResults() {
+    const analysisPanel = document.getElementById('analysisResultsPanel');
+    const gettingStartedPanel = document.getElementById('gettingStartedPanel');
+
+    if (analysisPanel) {
+        analysisPanel.style.display = 'none';
+    }
+
+    if (gettingStartedPanel) {
+        gettingStartedPanel.style.display = 'block';
+    }
+
+    emailState.analysisResults = null;
+    debugLog('📊 Analysis results panel closed');
+}
+
+// Clear email composer
+function clearEmailComposer() {
+    if (confirm('Are you sure you want to clear the email? This cannot be undone.')) {
+        document.getElementById('emailSubject').value = '';
+        document.getElementById('emailContent').value = '';
+        document.getElementById('emailRecipient').value = '';
+
+        // Hide panels
+        const colleaguePanel = document.getElementById('colleagueInfoPanel');
+        const analysisPanel = document.getElementById('analysisResultsPanel');
+        const gettingStartedPanel = document.getElementById('gettingStartedPanel');
+
+        if (colleaguePanel) colleaguePanel.style.display = 'none';
+        if (analysisPanel) analysisPanel.style.display = 'none';
+        if (gettingStartedPanel) gettingStartedPanel.style.display = 'block';
+
+        emailState.selectedColleague = null;
+        emailState.analysisResults = null;
+
+        debugLog('📧 Email composer cleared');
+    }
+}
+
+// Save current email as template
+function saveCurrentEmailAsTemplate() {
+    const subject = document.getElementById('emailSubject').value.trim();
+    const content = document.getElementById('emailContent').value.trim();
+
+    if (!subject || !content) {
+        showErrorMessage('Please enter both subject and content to save as template');
+        return;
+    }
+
+    const templateTitle = prompt('Enter a name for this email template:', subject);
+    if (!templateTitle) return;
+
+    try {
+        const template = {
+            title: templateTitle,
+            subject: subject,
+            content: content,
+            category: 'general',
+            created: new Date().toISOString(),
+            usage_count: 0
+        };
+
+        const templateId = saveEmailTemplateToStorage(template);
+
+        showSuccessMessage(`Email template "${templateTitle}" saved successfully!`);
+        updateEmailTabCount();
+        debugLog('✅ Email template saved:', templateTitle);
+
+    } catch (error) {
+        debugLog('❌ Error saving email template:', error);
+        showErrorMessage('Failed to save email template. Please try again.');
+    }
+}
+
+// Export analysis results
+function exportAnalysisResults() {
+    if (!emailState.analysisResults) {
+        showErrorMessage('No analysis results to export');
+        return;
+    }
+
+    try {
+        const exportData = {
+            email_subject: document.getElementById('emailSubject').value,
+            recipient: emailState.selectedColleague?.name || 'Unknown',
+            analysis_date: new Date().toISOString(),
+            results: emailState.analysisResults
+        };
+
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(dataBlob);
+        link.download = `email_analysis_${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+
+        showSuccessMessage('Analysis results exported successfully!');
+        debugLog('✅ Analysis results exported');
+
+    } catch (error) {
+        debugLog('❌ Error exporting analysis results:', error);
+        showErrorMessage('Failed to export analysis results.');
+    }
+}
+
+// Apply email suggestions (placeholder)
+//function applyEmailSuggestions() {
+//    showSuccessMessage('Suggestion application feature coming soon!');
+//    debugLog('💡 Apply suggestions clicked (feature pending)');
+//}
+
+// Storage functions for email templates
+function loadEmailTemplates() {
+    try {
+        const stored = localStorage.getItem('conversation_trainer_email_templates');
+        emailState.emailTemplates = stored ? JSON.parse(stored) : {};
+        debugLog(`📧 Loaded ${Object.keys(emailState.emailTemplates).length} email templates`);
+    } catch (error) {
+        debugLog('⚠️ Error loading email templates:', error);
+        emailState.emailTemplates = {};
+    }
+}
+
+function saveEmailTemplateToStorage(templateData) {
+    try {
+        const templateId = `template_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        templateData.id = templateId;
+
+        emailState.emailTemplates[templateId] = templateData;
+        localStorage.setItem('conversation_trainer_email_templates', JSON.stringify(emailState.emailTemplates));
+
+        debugLog('✅ Email template saved to storage:', templateData.title);
+        return templateId;
+    } catch (error) {
+        debugLog('❌ Error saving email template:', error);
+        throw error;
+    }
+}
+
+function loadEmailTemplatesUI() {
+    // Placeholder for template UI loading
+    debugLog('📝 Loading email templates UI (feature pending)');
+}
+
+function updateEmailTabCount() {
+    const templateCount = Object.keys(emailState.emailTemplates).length;
+    const emailTabCount = document.getElementById('emailTabCount');
+    if (emailTabCount) {
+        emailTabCount.textContent = templateCount;
+    }
+}
+
+// Integration with existing app initialization
+const originalInitializeTabs = initializeTabs;
+initializeTabs = function() {
+    originalInitializeTabs();
+
+    // Initialize email module
+    initializeEmailModule();
+
+    // Enhance existing tab switching to handle email tab
+    const originalSwitchToTab = switchToTab;
+    switchToTab = function(tabId) {
+        originalSwitchToTab(tabId);
+
+        if (tabId === 'email-practice') {
+            // Refresh colleague selectors when switching to email tab
+            populateEmailColleagueSelectors();
+        }
+    };
+};
+
+// Refresh email colleague selectors when colleagues are updated
+const originalSaveColleagueToStorage = saveColleagueToStorage;
+saveColleagueToStorage = function(colleagueData) {
+    const result = originalSaveColleagueToStorage(colleagueData);
+
+    // Refresh email selectors if email module is active
+    if (typeof populateEmailColleagueSelectors === 'function') {
+        populateEmailColleagueSelectors();
+    }
+
+    return result;
+};
+// ============================================
+// MISSING FUNCTIONS - Add this before your enhanced analysis code
+// ============================================
+
+function calculateDISCCompatibility(discScores, collegeDISC) {
+    const typeWeights = {
+        'D': { D: 1.0, I: 0.6, S: 0.4, C: 0.7 },
+        'I': { D: 0.6, I: 1.0, S: 0.8, C: 0.5 },
+        'S': { D: 0.4, I: 0.8, S: 1.0, C: 0.7 },
+        'C': { D: 0.7, I: 0.5, S: 0.7, C: 1.0 }
+    };
+
+    const weights = typeWeights[collegeDISC] || typeWeights['I'];
+
+    let totalCompatibility = 0;
+    let totalWeight = 0;
+
+    Object.entries(discScores).forEach(([type, score]) => {
+        const weight = weights[type];
+        totalCompatibility += score * weight;
+        totalWeight += weight;
+    });
+
+    return Math.round((totalCompatibility / totalWeight) * 10) / 10;
+}
+
+function generateDISCRecommendations(discScores, colleague, collegeDISC) {
+    const recommendations = {
+        D: '',
+        I: '',
+        S: '',
+        C: ''
+    };
+
+    // Generate recommendations based on scores and colleague type
+    if (discScores.D < 7 && collegeDISC === 'D') {
+        recommendations.D = 'Be more direct and action-oriented';
+    } else {
+        recommendations.D = discScores.D >= 7 ? 'Good directness level' : 'Consider being more decisive';
+    }
+
+    if (discScores.I < 7 && collegeDISC === 'I') {
+        recommendations.I = 'Add more collaborative and engaging language';
+    } else {
+        recommendations.I = discScores.I >= 7 ? 'Great engaging tone' : 'Could be more interactive';
+    }
+
+    if (discScores.S < 7 && collegeDISC === 'S') {
+        recommendations.S = 'Use more supportive and respectful language';
+    } else {
+        recommendations.S = discScores.S >= 7 ? 'Respectful and supportive' : 'Consider a gentler approach';
+    }
+
+    if (discScores.C < 7 && collegeDISC === 'C') {
+        recommendations.C = 'Include more specific details and data';
+    } else {
+        recommendations.C = discScores.C >= 7 ? 'Good level of detail' : 'Add more supporting information';
+    }
+
+    return recommendations;
+}
+
+function analyzeProfessionalTone(content, subject) {
+    // Simple professional tone analysis
+    const professionalWords = ['please', 'thank you', 'regards', 'sincerely', 'appreciate', 'professional'];
+    const casualWords = ['hey', 'hi there', 'thanks!', 'cheers', 'cool', 'awesome'];
+
+    const contentLower = content.toLowerCase();
+    const professionalCount = professionalWords.filter(word => contentLower.includes(word)).length;
+    const casualCount = casualWords.filter(word => contentLower.includes(word)).length;
+
+    let score = 7; // Base professional score
+    score += professionalCount * 0.5;
+    score -= casualCount * 0.8;
+
+    return Math.max(1, Math.min(10, Math.round(score * 10) / 10));
+}
+// ============================================
+// ENHANCED EMAIL ANALYSIS SYSTEM
+// Add this to your existing JavaScript in index.html
+// ============================================
+
+// Enhanced analysis algorithm - replace your existing generateMockAnalysis function
+function generateAdvancedEmailAnalysis(content, subject, colleague) {
+    debugLog('🔍 Running advanced email analysis');
+
+    const analysis = {
+        content: content,
+        subject: subject,
+        colleague: colleague,
+        metrics: analyzeWritingMetrics(content, subject),
+        discAnalysis: analyzeForDISC(content, colleague),
+        suggestions: generateSmartSuggestions(content, subject, colleague),
+        improvements: generateImprovements(content, colleague),
+        professionalScore: analyzeProfessionalTone(content, subject)
+    };
+
+    return analysis;
+}
+
+// ============================================
+// WRITING METRICS ANALYSIS
+// ============================================
+function analyzeWritingMetrics(content, subject) {
+    const words = content.split(/\s+/).filter(word => word.length > 0);
+    const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 0);
+    const avgWordsPerSentence = words.length / sentences.length;
+
+    // Readability analysis (simple Flesch reading ease approximation)
+    const avgSentenceLength = avgWordsPerSentence;
+    const readabilityScore = Math.max(0, Math.min(100,
+        206.835 - (1.015 * avgSentenceLength) - (84.6 * (getSyllableCount(content) / words.length))
+    ));
+
+    // Professional language check
+    const casualWords = ['hey', 'hi', 'thanks!', 'cheers', 'cool', 'awesome', 'yeah'];
+    const formalWords = ['please', 'thank you', 'regards', 'sincerely', 'appreciate'];
+    const casualCount = casualWords.filter(word => content.toLowerCase().includes(word)).length;
+    const formalCount = formalWords.filter(word => content.toLowerCase().includes(word)).length;
+
+    // Action clarity
+    const actionWords = ['please', 'could you', 'would you', 'by', 'deadline', 'urgent', 'asap'];
+    const hasDeadline = /\b(by|before|until|deadline)\b/i.test(content);
+    const hasCallToAction = actionWords.some(word => content.toLowerCase().includes(word));
+
+    return {
+        wordCount: words.length,
+        sentenceCount: sentences.length,
+        avgSentenceLength: Math.round(avgSentenceLength * 10) / 10,
+        readabilityScore: Math.round(readabilityScore),
+        readabilityLevel: getReadabilityLevel(readabilityScore),
+        professionalTone: calculateProfessionalTone(casualCount, formalCount),
+        actionClarity: calculateActionClarity(hasDeadline, hasCallToAction),
+        subjectEffectiveness: analyzeSubject(subject)
+    };
+}
+
+function getSyllableCount(text) {
+    // Simple syllable counting (not perfect but good enough)
+    return text.toLowerCase().match(/[aeiouy]+/g)?.length || 1;
+}
+
+function getReadabilityLevel(score) {
+    if (score >= 80) return 'Very Easy';
+    if (score >= 70) return 'Easy';
+    if (score >= 60) return 'Standard';
+    if (score >= 50) return 'Somewhat Difficult';
+    if (score >= 30) return 'Difficult';
+    return 'Very Difficult';
+}
+
+function calculateProfessionalTone(casualCount, formalCount) {
+    const total = casualCount + formalCount;
+    if (total === 0) return { score: 7, level: 'Neutral', advice: 'Consider adding more engaging language' };
+
+    const formalRatio = formalCount / total;
+    if (formalRatio > 0.7) return { score: 9, level: 'Very Professional', advice: 'Excellent professional tone' };
+    if (formalRatio > 0.4) return { score: 8, level: 'Professional', advice: 'Good balance of professional language' };
+    if (formalRatio > 0.2) return { score: 6, level: 'Semi-Professional', advice: 'Could be more formal for council communication' };
+    return { score: 4, level: 'Too Casual', advice: 'Use more professional language for workplace emails' };
+}
+
+function calculateActionClarity(hasDeadline, hasCallToAction) {
+    if (hasDeadline && hasCallToAction) return { score: 9, level: 'Very Clear', advice: 'Excellent action clarity' };
+    if (hasCallToAction) return { score: 7, level: 'Clear', advice: 'Consider adding specific deadlines' };
+    if (hasDeadline) return { score: 6, level: 'Somewhat Clear', advice: 'Add clearer action requests' };
+    return { score: 4, level: 'Unclear', advice: 'Add specific actions and deadlines' };
+}
+
+function analyzeSubject(subject) {
+    if (!subject || subject.length < 3) {
+        return { score: 2, advice: 'Add a descriptive subject line' };
+    }
+    if (subject.length > 50) {
+        return { score: 6, advice: 'Subject line is quite long - consider shortening' };
+    }
+    if (/\b(urgent|asap|important)\b/i.test(subject)) {
+        return { score: 7, advice: 'Good use of priority indicators' };
+    }
+    if (subject.includes('?')) {
+        return { score: 8, advice: 'Question format is engaging' };
+    }
+    return { score: 7, advice: 'Subject line looks good' };
+}
+
+// ============================================
+// ENHANCED DISC ANALYSIS
+// ============================================
+function analyzeForDISC(content, colleague) {
+    const collegeDISC = inferDISCType(colleague.personality || '');
+    const contentStyle = analyzeContentStyle(content);
+
+    const discScores = {
+        D: calculateDScore(content, contentStyle, collegeDISC),
+        I: calculateIScore(content, contentStyle, collegeDISC),
+        S: calculateSScore(content, contentStyle, collegeDISC),
+        C: calculateCScore(content, contentStyle, collegeDISC)
+    };
+
+    const compatibility = calculateDISCCompatibility(discScores, collegeDISC);
+
+    return {
+        scores: discScores,
+        compatibility: compatibility,
+        colleagueDISC: collegeDISC,
+        recommendations: generateDISCRecommendations(discScores, colleague, collegeDISC)
+    };
+}
+
+function analyzeContentStyle(content) {
+    const directWords = ['need', 'must', 'require', 'immediately', 'deadline'];
+    const socialWords = ['team', 'together', 'collaborate', 'excited', 'great'];
+    const supportWords = ['help', 'support', 'comfortable', 'gradual', 'step'];
+    const analyticalWords = ['data', 'analysis', 'details', 'specific', 'accurate'];
+
+    return {
+        directness: directWords.filter(word => content.toLowerCase().includes(word)).length,
+        sociability: socialWords.filter(word => content.toLowerCase().includes(word)).length,
+        supportiveness: supportWords.filter(word => content.toLowerCase().includes(word)).length,
+        analytical: analyticalWords.filter(word => content.toLowerCase().includes(word)).length
+    };
+}
+
+function calculateDScore(content, style, collegeDISC) {
+    let score = 5; // Base score
+    score += style.directness * 0.8;
+    score += content.includes('!') ? 1 : 0;
+    score += /\b(now|urgent|asap)\b/i.test(content) ? 1 : 0;
+
+    // Adjust for colleague's DISC type
+    if (collegeDISC === 'D') score += 1;
+    if (collegeDISC === 'S') score -= 0.5; // Too direct for S-types
+
+    return Math.min(10, Math.max(1, Math.round(score * 10) / 10));
+}
+
+function calculateIScore(content, style, collegeDISC) {
+    let score = 5;
+    score += style.sociability * 1.2;
+    score += /\b(we|us|team|together)\b/i.test(content) ? 1.5 : 0;
+    score += content.includes('excited') || content.includes('looking forward') ? 1 : 0;
+
+    if (collegeDISC === 'I') score += 1.5;
+    if (collegeDISC === 'C') score -= 0.5; // Too social for C-types
+
+    return Math.min(10, Math.max(1, Math.round(score * 10) / 10));
+}
+
+function calculateSScore(content, style, collegeDISC) {
+    let score = 5;
+    score += style.supportiveness * 1.0;
+    score += /\b(please|thank|appreciate|comfortable)\b/i.test(content) ? 1.5 : 0;
+    score += content.includes('when convenient') || content.includes('no rush') ? 1 : 0;
+
+    if (collegeDISC === 'S') score += 1.5;
+    if (collegeDISC === 'D') score -= 0.5; // Too gentle for D-types
+
+    return Math.min(10, Math.max(1, Math.round(score * 10) / 10));
+}
+
+function calculateCScore(content, style, collegeDISC) {
+    let score = 5;
+    score += style.analytical * 1.0;
+    score += /\b(data|analysis|report|details|specific)\b/i.test(content) ? 1.5 : 0;
+    score += content.includes('attached') || content.includes('documentation') ? 1 : 0;
+
+    if (collegeDISC === 'C') score += 1.5;
+    if (collegeDISC === 'I') score -= 0.5; // Too analytical for I-types
+
+    return Math.min(10, Math.max(1, Math.round(score * 10) / 10));
+}
+
+// ============================================
+// SMART SUGGESTIONS GENERATOR
+// ============================================
+function generateSmartSuggestions(content, subject, colleague) {
+    const suggestions = [];
+    const metrics = analyzeWritingMetrics(content, subject);
+    const collegeDISC = inferDISCType(colleague.personality || '');
+
+    // Subject line suggestions
+    if (!subject || subject.length < 5) {
+        suggestions.push({
+            type: 'critical',
+            category: 'Subject Line',
+            text: 'Add a clear, descriptive subject line',
+            impact: 'High',
+            reason: 'Subject lines help recipients prioritize and find emails later'
+        });
+    }
+
+    // Readability suggestions
+    if (metrics.avgSentenceLength > 20) {
+        suggestions.push({
+            type: 'improvement',
+            category: 'Readability',
+            text: 'Break up long sentences for better clarity',
+            impact: 'Medium',
+            reason: 'Shorter sentences are easier to understand and act upon'
+        });
+    }
+
+    // DISC-specific suggestions
+    const discSuggestions = generateDISCSpecificSuggestions(content, colleague, collegeDISC);
+    suggestions.push(...discSuggestions);
+
+    // Professional tone suggestions
+    if (metrics.professionalTone.score < 6) {
+        suggestions.push({
+            type: 'improvement',
+            category: 'Professional Tone',
+            text: metrics.professionalTone.advice,
+            impact: 'Medium',
+            reason: 'Professional language builds credibility in council communications'
+        });
+    }
+
+    // Action clarity suggestions
+    if (metrics.actionClarity.score < 7) {
+        suggestions.push({
+            type: 'improvement',
+            category: 'Action Clarity',
+            text: metrics.actionClarity.advice,
+            impact: 'High',
+            reason: 'Clear actions and deadlines prevent confusion and delays'
+        });
+    }
+
+    return suggestions;
+}
+
+function generateDISCSpecificSuggestions(content, colleague, discType) {
+    const suggestions = [];
+    const roleSuggestions = getRoleBasedSuggestions(colleague.role, discType);
+
+    switch (discType) {
+        case 'D':
+            if (!content.includes('deadline') && !content.includes('by')) {
+                suggestions.push({
+                    type: 'disc',
+                    category: 'DISC - Dominance',
+                    text: `Add clear deadlines - ${colleague.name} appreciates direct timelines`,
+                    impact: 'High',
+                    reason: 'D-types prefer action-oriented communication with specific outcomes'
+                });
+            }
+            break;
+
+        case 'I':
+            if (!/\b(we|team|collaboration)\b/i.test(content)) {
+                suggestions.push({
+                    type: 'disc',
+                    category: 'DISC - Influence',
+                    text: `Use collaborative language - try "we" or "team" to engage ${colleague.name}`,
+                    impact: 'Medium',
+                    reason: 'I-types respond well to inclusive, relationship-focused communication'
+                });
+            }
+            break;
+
+        case 'S':
+            if (!content.includes('please') && !content.includes('appreciate')) {
+                suggestions.push({
+                    type: 'disc',
+                    category: 'DISC - Steadiness',
+                    text: `Add supportive language like "please" or "I appreciate" for ${colleague.name}`,
+                    impact: 'Medium',
+                    reason: 'S-types value respectful, considerate communication'
+                });
+            }
+            break;
+
+        case 'C':
+            if (!/\b(data|details|analysis|specific)\b/i.test(content)) {
+                suggestions.push({
+                    type: 'disc',
+                    category: 'DISC - Conscientiousness',
+                    text: `Include specific details or data - ${colleague.name} values accuracy`,
+                    impact: 'High',
+                    reason: 'C-types prefer factual, detailed information for decision-making'
+                });
+            }
+            break;
+    }
+
+    // Add role-specific suggestions
+    if (roleSuggestions) {
+        suggestions.push(...roleSuggestions);
+    }
+
+    return suggestions;
+}
+
+function getRoleBasedSuggestions(role, discType) {
+    const roleMap = {
+        'Business Analyst': [
+            {
+                type: 'role',
+                category: 'Role-Specific',
+                text: 'Reference data or analysis when possible - aligns with their analytical focus',
+                impact: 'Medium',
+                reason: 'Business analysts appreciate evidence-based communication'
+            }
+        ],
+        'Community Engagement Officer': [
+            {
+                type: 'role',
+                category: 'Role-Specific',
+                text: 'Consider mentioning community impact or stakeholder benefits',
+                impact: 'Medium',
+                reason: 'Community officers focus on public value and engagement'
+            }
+        ],
+        'Senior Engineer': [
+            {
+                type: 'role',
+                category: 'Role-Specific',
+                text: 'Include technical specifications or implementation details if relevant',
+                impact: 'Medium',
+                reason: 'Engineers need technical context for effective collaboration'
+            }
+        ]
+    };
+
+    return roleMap[role] || [];
+}
+
+// ============================================
+// IMPROVEMENT GENERATOR
+// ============================================
+function generateImprovements(content, colleague) {
+    const improvements = [];
+    const discType = inferDISCType(colleague.personality || '');
+
+    // Generate improved versions of key phrases
+    const improvements_map = {
+        'D': {
+            'let me know': 'please confirm by [date]',
+            'when you can': 'by [specific date]',
+            'if possible': 'required for project completion'
+        },
+        'I': {
+            'I need': 'we could really benefit from',
+            'you should': 'what do you think about',
+            'this is important': 'this would help our team succeed'
+        },
+        'S': {
+            'I need this now': 'when you have a moment, could you please help with',
+            'you must': 'would you be comfortable with',
+            'immediately': 'at your earliest convenience'
+        },
+        'C': {
+            'this should work': 'based on the analysis, this approach would',
+            'I think': 'the data suggests',
+            'probably': 'according to our specifications'
+        }
+    };
+
+    // Find phrases that could be improved
+    const typeImprovements = improvements_map[discType] || {};
+    Object.keys(typeImprovements).forEach(phrase => {
+        if (content.toLowerCase().includes(phrase.toLowerCase())) {
+            improvements.push({
+                original: phrase,
+                improved: typeImprovements[phrase],
+                reason: `Better matches ${colleague.name}'s ${discType}-type communication style`
+            });
+        }
+    });
+
+    return improvements;
+}
+
+// ============================================
+// REPLACE EXISTING ANALYSIS FUNCTION
+// ============================================
+
+// Replace your existing analyzeEmail function with this enhanced version
+async function analyzeEmailEnhanced() {
+    const recipientId = document.getElementById('emailRecipient').value;
+    const subject = document.getElementById('emailSubject').value.trim();
+    const content = document.getElementById('emailContent').value.trim();
+
+    // Validation
+    if (!content) {
+        showErrorMessage('Please enter email content to analyze');
+        return;
+    }
+
+    if (!recipientId) {
+        showErrorMessage('Please select a recipient for targeted analysis');
+        return;
+    }
+
+    if (emailState.isAnalyzing) {
+        debugLog('⚠️ Analysis already in progress');
+        return;
+    }
+
+    try {
+        emailState.isAnalyzing = true;
+        debugLog('📊 Starting enhanced email analysis');
+
+        // Show loading state
+        const analyzeBtn = document.getElementById('analyzeEmailBtn');
+        const originalText = analyzeBtn.innerHTML;
+        analyzeBtn.innerHTML = '⏳ Analyzing...';
+        analyzeBtn.disabled = true;
+
+        // Hide getting started panel
+        const gettingStartedPanel = document.getElementById('gettingStartedPanel');
+        if (gettingStartedPanel) {
+            gettingStartedPanel.style.display = 'none';
+        }
+
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 2500));
+
+        // Run enhanced analysis
+        const analysisResults = generateAdvancedEmailAnalysis(content, subject, emailState.selectedColleague);
+
+        // Display enhanced results
+        displayEnhancedAnalysisResults(analysisResults);
+
+        // Store results
+        emailState.analysisResults = analysisResults;
+
+        debugLog('✅ Enhanced email analysis completed');
+        showSuccessMessage('Email analysis completed with enhanced insights!');
+
+    } catch (error) {
+        debugLog('❌ Email analysis error:', error);
+        showErrorMessage('Email analysis failed. Please try again.');
+    } finally {
+        // Restore button
+        emailState.isAnalyzing = false;
+        const analyzeBtn = document.getElementById('analyzeEmailBtn');
+        analyzeBtn.innerHTML = '📊 Analyze Email';
+        analyzeBtn.disabled = false;
+    }
+}
+// ============================================
+// ENHANCED EMAIL ANALYSIS WITH BACKEND INTEGRATION
+// Add this function to your index.html
+// ============================================
+
+async function analyzeEmailEnhanced() {
+    console.log('🚀 ENHANCED FUNCTION CALLED - USING BACKEND CLAUDE API!');
+
+    const recipientId = document.getElementById('emailRecipient').value;
+    const subject = document.getElementById('emailSubject').value.trim();
+    const content = document.getElementById('emailContent').value.trim();
+
+    // Validation
+    if (!content) {
+        showErrorMessage('Please enter email content to analyze');
+        return;
+    }
+
+    if (emailState.isAnalyzing) {
+        debugLog('⚠️ Analysis already in progress');
+        return;
+    }
+
+    try {
+        emailState.isAnalyzing = true;
+        debugLog('🤖 Starting enhanced email analysis with Claude API via backend');
+
+        // Show loading state
+        const analyzeBtn = document.getElementById('analyzeEmailBtn');
+        const originalText = analyzeBtn.innerHTML;
+        analyzeBtn.innerHTML = '⏳ Analyzing with AI...';
+        analyzeBtn.disabled = true;
+
+        // Hide getting started panel
+        const gettingStartedPanel = document.getElementById('gettingStartedPanel');
+        if (gettingStartedPanel) {
+            gettingStartedPanel.style.display = 'none';
+        }
+
+        // Prepare email data for backend
+        const emailData = {
+            subject: subject,
+            content: content,
+            colleague: emailState.selectedColleague,
+            analysis_type: emailState.analysisType || 'outgoing',
+            context: 'NSW Local Government workplace communication'
+        };
+
+        debugLog('📤 Sending email data to backend:', emailData);
+
+        // Call backend API for analysis (using your existing API_BASE_URL)
+        const response = await fetch(`${API_BASE_URL}/api/email/analyze`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(emailData)
+        });
+
+        debugLog('📥 Backend response status:', response.status);
+
+        if (!response.ok) {
+            const errorData = await response.text();
+            debugLog('❌ Backend error response:', errorData);
+            throw new Error(`Backend analysis failed (${response.status}): ${errorData}`);
+        }
+
+        const analysisResults = await response.json();
+        debugLog('✅ Backend analysis results:', analysisResults);
+
+        // Convert backend format to frontend format if needed
+        const formattedResults = formatBackendAnalysisForUI(analysisResults);
+
+        // Display results using your existing displayAnalysisResults function
+        displayAnalysisResults(formattedResults);
+
+        // Store results
+        emailState.analysisResults = formattedResults;
+
+        debugLog('✅ Enhanced email analysis completed successfully');
+        showSuccessMessage(
+            `Email analysis completed! ${analysisResults.claude_powered !== false ?
+                'Powered by Claude AI for professional insights.' :
+                'Using enhanced pattern analysis.'}`
+        );
+
+    } catch (error) {
+        debugLog('❌ Enhanced email analysis error:', error);
+
+        // Fallback to basic analysis if backend fails
+        try {
+            debugLog('🔄 Attempting frontend fallback analysis');
+            const fallbackResults = generateBasicFallbackAnalysis(emailData);
+            displayAnalysisResults(fallbackResults);
+            emailState.analysisResults = fallbackResults;
+            showSuccessMessage('Analysis completed using basic pattern matching (backend unavailable).');
+        } catch (fallbackError) {
+            debugLog('❌ Fallback analysis also failed:', fallbackError);
+            showErrorMessage('Email analysis failed. Please try again.');
+        }
+
+    } finally {
+        // Restore button state
+        emailState.isAnalyzing = false;
+        const analyzeBtn = document.getElementById('analyzeEmailBtn');
+        if (analyzeBtn) {
+            analyzeBtn.innerHTML = '📊 Analyze Email';
+            analyzeBtn.disabled = false;
+        }
+    }
+}
+
+// Format backend analysis results for your existing UI
+function formatBackendAnalysisForUI(backendResults) {
+    // If already in correct format, return as-is
+    if (backendResults.overall_score !== undefined && backendResults.disc_scores !== undefined) {
+        return backendResults;
+    }
+
+    // Convert backend format to match your existing displayAnalysisResults function
+    return {
+        overall_score: backendResults.overall_score || 5,
+        overall_feedback: backendResults.overall_feedback || 'Analysis completed',
+
+        // Convert code compliance to format expected by UI
+        code_compliance: backendResults.code_compliance || {
+            status: 'compliant',
+            issues: [],
+            risk_level: 'low'
+        },
+
+        // Create DISC scores (your backend should provide these)
+        disc_scores: backendResults.disc_scores || {
+            D: backendResults.overall_score || 6,
+            I: backendResults.overall_score || 6,
+            S: backendResults.overall_score || 6,
+            C: backendResults.overall_score || 6
+        },
+
+        // Create DISC feedback
+        disc_feedback: backendResults.disc_feedback || {
+            D: 'Analysis completed with Claude AI',
+            I: 'Analysis completed with Claude AI',
+            S: 'Analysis completed with Claude AI',
+            C: 'Analysis completed with Claude AI'
+        },
+
+        suggestions: backendResults.suggestions || [],
+        strengths: backendResults.strengths || [],
+        quick_tips: backendResults.quick_tips || [
+            `Professional communication analysis completed`,
+            'Review feedback for improvement opportunities'
+        ],
+
+        analysis_timestamp: backendResults.analysis_timestamp || new Date().toISOString(),
+        analysis_type: backendResults.analysis_type || 'outgoing',
+        claude_powered: backendResults.claude_powered !== false
+    };
+}
+
+// Basic fallback analysis for when backend is completely unavailable
+function generateBasicFallbackAnalysis(emailData) {
+    const content = emailData.content || '';
+
+    // Check for problematic patterns - CODE OF CONDUCT VIOLATIONS
+    const problematicPatterns = [
+        /\b(stupid|idiot|moron|pathetic|ridiculous)\b/i,
+        /\b(just do it|just approve|just fix)\b/i,
+        /[A-Z]{4,}/g, // ALL CAPS
+        /!{3,}/g // Multiple exclamation marks
+    ];
+
+    const hasProblems = problematicPatterns.some(pattern => pattern.test(content));
+
+    // Basic professional structure checks
+    const hasGreeting = /\b(hi|hello|dear|good morning|good afternoon)\b/i.test(content);
+    const hasClosing = /\b(regards|thanks|sincerely|best|cheers)\b/i.test(content);
+    const hasPoliteness = /\b(please|thank you|would you|could you)\b/i.test(content);
+
+    // Calculate score with heavy penalty for CODE OF CONDUCT violations
+    let score = 5;
+    if (hasGreeting) score += 0.5;
+    if (hasClosing) score += 0.5;
+    if (hasPoliteness) score += 1;
+    if (hasProblems) score -= 4; // HEAVY PENALTY for inappropriate language
+
+    score = Math.max(1, Math.min(10, score));
+
+    const suggestions = [];
+    if (hasProblems) {
+        suggestions.push({
+            type: 'critical',
+            text: 'CODE OF CONDUCT VIOLATION: This email contains inappropriate language that violates Lake Macquarie Council professional communication standards and must be revised before sending'
+        });
+    }
+
+    if (!hasGreeting) {
+        suggestions.push({
+            type: 'improvement',
+            text: 'Consider adding a professional greeting'
+        });
+    }
+
+    if (!hasClosing) {
+        suggestions.push({
+            type: 'improvement',
+            text: 'Add a professional closing'
+        });
+    }
+
+    return {
+        overall_score: Math.round(score * 10) / 10,
+        overall_feedback: hasProblems ?
+            'CODE OF CONDUCT VIOLATION: This email contains inappropriate language that violates Lake Macquarie Council professional communication standards.' :
+            'Basic structure analysis completed. For detailed professional insights, Claude AI analysis is recommended.',
+
+        disc_scores: {
+            D: score,
+            I: score,
+            S: score,
+            C: score
+        },
+
+        disc_feedback: {
+            D: hasProblems ? 'Inappropriate demanding language violates professional standards' : 'Basic assessment completed',
+            I: hasProblems ? 'Language not suitable for collaborative workplace relationships' : 'Basic assessment completed',
+            S: hasProblems ? 'Disrespectful tone inappropriate for supportive work environment' : 'Basic assessment completed',
+            C: hasProblems ? 'Unprofessional language violates quality communication standards' : 'Basic assessment completed'
+        },
+
+        suggestions: suggestions,
+
+        quick_tips: hasProblems ? [
+            'Review Lake Macquarie Council Code of Conduct for professional communication standards',
+            'Use respectful, professional language in all workplace communications',
+            'Consider if this message is necessary and appropriate before sending'
+        ] : [
+            'Email structure appears reasonable',
+            'For detailed professional communication analysis, ensure backend is available'
+        ],
+
+        analysis_timestamp: new Date().toISOString(),
+        claude_powered: false,
+        fallback_analysis: true
+    };
+}
+
+// ============================================
+// UPDATE BUTTON TO USE NEW FUNCTION
+// ============================================
+
+// Force the analyze button to use the enhanced function
+// Add this at the end of your JavaScript section
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        const btn = document.getElementById('analyzeEmailBtn');
+        if (btn) {
+            console.log('🔧 Updating analyze button to use enhanced function');
+
+            // Remove all existing event listeners by cloning the button
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+
+            // Add new event listener for enhanced function
+            document.getElementById('analyzeEmailBtn').addEventListener('click', analyzeEmailEnhanced);
+
+            console.log('✅ Button now uses analyzeEmailEnhanced with Claude backend!');
+        } else {
+            console.log('❌ Analyze button not found');
+        }
+    }, 2000); // Wait 2 seconds for page to fully load
+});
+
+// Update the existing analyze button to use the enhanced function
+function updateAnalyzeButtonHandler() {
+    const analyzeBtn = document.getElementById('analyzeEmailBtn');
+    if (analyzeBtn) {
+        // Remove old event listener and add new one
+        analyzeBtn.removeEventListener('click', analyzeEmail);
+        analyzeBtn.addEventListener('click', analyzeEmailEnhanced);
+        debugLog('✅ Updated analyze button to use enhanced analysis');
+    }
+}
+
+// Call this after the page loads to update the button
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(updateAnalyzeButtonHandler, 1000);
+});
+// ============================================
+// ENHANCED ANALYSIS DISPLAY SYSTEM
+// Add this to your existing JavaScript after the enhanced analysis
+// ============================================
+
+// Enhanced display function - replaces displayAnalysisResults
+function displayEnhancedAnalysisResults(analysis) {
+    try {
+        debugLog('🎨 Displaying enhanced analysis results');
+
+        // Calculate overall score from multiple metrics
+        const overallScore = calculateOverallScore(analysis);
+
+        // Update overall score section
+        updateOverallScoreSection(overallScore, analysis);
+
+        // Update DISC compatibility section
+        updateDISCSection(analysis.discAnalysis);
+
+        // Update suggestions with enhanced categories
+        updateSuggestionsSection(analysis.suggestions);
+
+        // Add new metrics section
+        addMetricsSection(analysis.metrics);
+
+        // Update quick tips with role-specific advice
+        updateQuickTipsSection(analysis);
+
+        // Show the analysis panel
+        const analysisPanel = document.getElementById('analysisResultsPanel');
+        if (analysisPanel) {
+            analysisPanel.style.display = 'block';
+            analysisPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        debugLog('✅ Enhanced analysis results displayed');
+    } catch (error) {
+        debugLog('❌ Error displaying enhanced analysis results:', error);
+    }
+}
+
+function calculateOverallScore(analysis) {
+    const weights = {
+        disc: 0.3,        // 30% - DISC compatibility
+        readability: 0.2,  // 20% - How easy to read
+        professional: 0.2, // 20% - Professional tone
+        actionClarity: 0.2, // 20% - Clear actions
+        subjectLine: 0.1   // 10% - Subject effectiveness
+    };
+
+    const discAverage = (analysis.discAnalysis.scores.D + analysis.discAnalysis.scores.I +
+                        analysis.discAnalysis.scores.S + analysis.discAnalysis.scores.C) / 4;
+
+    const readabilityScore = Math.min(10, analysis.metrics.readabilityScore / 10);
+    const professionalScore = analysis.metrics.professionalTone.score;
+    const actionScore = analysis.metrics.actionClarity.score;
+    const subjectScore = analysis.metrics.subjectEffectiveness.score;
+
+    const totalScore = (discAverage * weights.disc) +
+                      (readabilityScore * weights.readability) +
+                      (professionalScore * weights.professional) +
+                      (actionScore * weights.actionClarity) +
+                      (subjectScore * weights.subjectLine);
+
+    return {
+        score: Math.round(totalScore * 10) / 10,
+        breakdown: {
+            disc: Math.round(discAverage * 10) / 10,
+            readability: Math.round(readabilityScore * 10) / 10,
+            professional: professionalScore,
+            actionClarity: actionScore,
+            subject: subjectScore
+        }
+    };
+}
+
+function updateOverallScoreSection(overallScore, analysis) {
+    const scoreElement = document.getElementById('overallScore');
+    const feedbackElement = document.getElementById('overallFeedback');
+
+    if (scoreElement) scoreElement.textContent = overallScore.score;
+
+    if (feedbackElement) {
+        let feedback = '';
+        if (overallScore.score >= 8.5) {
+            feedback = `Excellent email for ${analysis.colleague.name}! Your communication style aligns well with their preferences.`;
+        } else if (overallScore.score >= 7) {
+            feedback = `Good communication approach. A few tweaks could make this even more effective for ${analysis.colleague.name}.`;
+        } else if (overallScore.score >= 6) {
+            feedback = `Solid foundation. Consider the suggestions below to better match ${analysis.colleague.name}'s communication style.`;
+        } else {
+            feedback = `This email could be significantly improved for better impact with ${analysis.colleague.name}.`;
+        }
+        feedbackElement.textContent = feedback;
+    }
+
+    // Update score circle color based on score
+    const scoreCircle = document.querySelector('.score-circle');
+    if (scoreCircle) {
+        scoreCircle.className = 'score-circle';
+        if (overallScore.score >= 8) scoreCircle.classList.add('score-excellent');
+        else if (overallScore.score >= 7) scoreCircle.classList.add('score-good');
+        else if (overallScore.score >= 6) scoreCircle.classList.add('score-fair');
+        else scoreCircle.classList.add('score-needs-work');
+    }
+}
+
+function updateDISCSection(discAnalysis) {
+    // Update DISC scores
+    Object.entries(discAnalysis.scores).forEach(([type, score]) => {
+        const scoreElement = document.getElementById(`discScore${type}`);
+        const feedbackElement = document.getElementById(`discFeedback${type}`);
+
+        if (scoreElement) scoreElement.textContent = score;
+        if (feedbackElement && discAnalysis.recommendations[type]) {
+            feedbackElement.textContent = discAnalysis.recommendations[type];
+        }
+    });
+}
+
+function updateSuggestionsSection(suggestions) {
+    const suggestionsList = document.getElementById('suggestionsList');
+    if (!suggestionsList) return;
+
+    suggestionsList.innerHTML = '';
+
+    // Group suggestions by category
+    const grouped = suggestions.reduce((acc, suggestion) => {
+        const category = suggestion.category || 'General';
+        if (!acc[category]) acc[category] = [];
+        acc[category].push(suggestion);
+        return acc;
+    }, {});
+
+    // Display grouped suggestions
+    Object.entries(grouped).forEach(([category, categoryItems]) => {
+        const categoryHeader = document.createElement('div');
+        categoryHeader.className = 'suggestion-category-header';
+        categoryHeader.innerHTML = `<strong>${category}</strong>`;
+        suggestionsList.appendChild(categoryHeader);
+
+        categoryItems.forEach(suggestion => {
+            const item = document.createElement('div');
+            item.className = `suggestion-item ${suggestion.type}`;
+
+            const impactBadge = getImpactBadge(suggestion.impact);
+
+            item.innerHTML = `
+                <div class="suggestion-content">
+                    <div class="suggestion-text">${suggestion.text}</div>
+                    <div class="suggestion-reason">${suggestion.reason}</div>
+                </div>
+                <div class="suggestion-meta">
+                    ${impactBadge}
+                </div>
+            `;
+
+            suggestionsList.appendChild(item);
+        });
+    });
+}
+
+function getImpactBadge(impact) {
+    const badges = {
+        'High': '<span class="impact-badge high">High Impact</span>',
+        'Medium': '<span class="impact-badge medium">Medium Impact</span>',
+        'Low': '<span class="impact-badge low">Low Impact</span>'
+    };
+    return badges[impact] || '';
+}
+
+function addMetricsSection(metrics) {
+    // Find the suggestions section
+    const suggestionsSection = document.querySelector('.suggestions-section');
+    if (!suggestionsSection) return;
+
+    // Remove any existing metrics section
+    const existingMetrics = document.getElementById('metricsSection');
+    if (existingMetrics) existingMetrics.remove();
+
+    // Create new metrics section
+    const metricsSection = document.createElement('div');
+    metricsSection.id = 'metricsSection';
+    metricsSection.className = 'metrics-section';
+    metricsSection.innerHTML = `
+        <h5>📊 Writing Metrics</h5>
+        <div class="metrics-grid">
+            <div class="metric-item">
+                <div class="metric-value">${metrics.readabilityScore}</div>
+                <div class="metric-label">Readability Score</div>
+                <div class="metric-sublabel">(${metrics.readabilityLevel})</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-value">${metrics.wordCount}</div>
+                <div class="metric-label">Word Count</div>
+                <div class="metric-sublabel">${getWordCountAdvice(metrics.wordCount)}</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-value">${metrics.professionalTone.score}/10</div>
+                <div class="metric-label">Professional Tone</div>
+                <div class="metric-sublabel">${metrics.professionalTone.level}</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-value">${metrics.actionClarity.score}/10</div>
+                <div class="metric-label">Action Clarity</div>
+                <div class="metric-sublabel">${metrics.actionClarity.level}</div>
+            </div>
+        </div>
+    `;
+
+    // Insert before suggestions section
+    suggestionsSection.parentNode.insertBefore(metricsSection, suggestionsSection);
+}
+
+function getWordCountAdvice(wordCount) {
+    if (wordCount < 50) return 'Very Brief';
+    if (wordCount < 150) return 'Concise';
+    if (wordCount < 300) return 'Appropriate';
+    if (wordCount < 500) return 'Detailed';
+    return 'Very Long';
+}
+
+function updateQuickTipsSection(analysis) {
+    const tipsList = document.getElementById('quickTipsList');
+    if (!tipsList) return;
+
+    tipsList.innerHTML = '';
+
+    const tips = generateRoleSpecificTips(analysis.colleague, analysis.discAnalysis.colleagueDISC);
+
+    tips.forEach(tip => {
+        const item = document.createElement('div');
+        item.className = 'tip-item';
+        item.innerHTML = `
+            <div class="tip-icon">${tip.icon}</div>
+            <div class="tip-content">
+                <div class="tip-text">${tip.text}</div>
+                <div class="tip-detail">${tip.detail}</div>
+            </div>
+        `;
+        tipsList.appendChild(item);
+    });
+}
+
+function generateRoleSpecificTips(colleague, discType) {
+    const baseTips = {
+        'D': {
+            icon: '🎯',
+            text: 'Be direct and results-focused',
+            detail: 'D-types appreciate concise communication with clear outcomes'
+        },
+        'I': {
+            icon: '🤝',
+            text: 'Use collaborative and engaging language',
+            detail: 'I-types respond well to enthusiasm and team-oriented messaging'
+        },
+        'S': {
+            icon: '🛡️',
+            text: 'Be respectful and provide context',
+            detail: 'S-types value relationship-building and gradual changes'
+        },
+        'C': {
+            icon: '📊',
+            text: 'Include facts, data, and specific details',
+            detail: 'C-types need accurate information to make informed decisions'
+        }
+    };
+
+    const tips = [baseTips[discType] || baseTips['I']];
+
+    // Add role-specific tips
+    const roleTips = {
+        'Business Analyst': {
+            icon: '📈',
+            text: 'Reference data and analytical insights when possible',
+            detail: 'Business analysts appreciate evidence-based communication'
+        },
+        'Community Engagement Officer': {
+            icon: '🏘️',
+            text: 'Consider mentioning community or stakeholder benefits',
+            detail: 'Community officers focus on public value and engagement outcomes'
+        },
+        'Senior Engineer': {
+            icon: '⚙️',
+            text: 'Include technical context and implementation details',
+            detail: 'Engineers need sufficient technical information for effective collaboration'
+        }
+    };
+
+    if (roleTips[colleague.role]) {
+        tips.push(roleTips[colleague.role]);
+    }
+
+    // Add timing tip
+    tips.push({
+        icon: '⏰',
+        text: `${colleague.name} typically responds within 24-48 hours`,
+        detail: 'Based on typical council communication patterns'
+    });
+
+    return tips;
+}
+
+// ============================================
+// APPLY SUGGESTIONS FUNCTIONALITY
+// ============================================
+
+function setupApplySuggestionsFeature() {
+    const improveBtn = document.getElementById('improveEmailBtn');
+    if (improveBtn) {
+        improveBtn.addEventListener('click', applyEmailSuggestionsEnhanced);
+    }
+}
+
+async function applyEmailSuggestionsEnhanced() {
+    if (!emailState.analysisResults) {
+        showErrorMessage('No analysis results available to apply');
+        return;
+    }
+
+    debugLog('✨ Applying email suggestions');
+
+    try {
+        // Show loading state
+        const improveBtn = document.getElementById('improveEmailBtn');
+        const originalText = improveBtn.innerHTML;
+        improveBtn.innerHTML = '⏳ Improving...';
+        improveBtn.disabled = true;
+
+        // Get current email content
+        const emailContent = document.getElementById('emailContent');
+        const emailSubject = document.getElementById('emailSubject');
+        const currentContent = emailContent.value;
+        const currentSubject = emailSubject.value;
+
+        // Apply improvements
+        const improved = applyImprovements(currentContent, currentSubject, emailState.analysisResults);
+
+        // Show before/after comparison
+        await showImprovementComparison(currentContent, improved.content, currentSubject, improved.subject);
+
+        // Apply the improvements
+        emailContent.value = improved.content;
+        emailSubject.value = improved.subject;
+
+        // Show success message
+        showSuccessMessage('Email improved! Check the changes applied.');
+
+        debugLog('✅ Email improvements applied successfully');
+
+    } catch (error) {
+        debugLog('❌ Error applying suggestions:', error);
+        showErrorMessage('Error applying suggestions. Please try again.');
+    } finally {
+        // Restore button
+        const improveBtn = document.getElementById('improveEmailBtn');
+        improveBtn.innerHTML = '✨ Apply Suggestions';
+        improveBtn.disabled = false;
+    }
+}
+
+function applyImprovements(content, subject, analysisResults) {
+    let improvedContent = content;
+    let improvedSubject = subject;
+
+    const colleague = analysisResults.colleague;
+    const discType = analysisResults.discAnalysis.colleagueDISC;
+
+    // Apply DISC-specific improvements
+    improvedContent = applyDISCImprovements(improvedContent, discType);
+
+    // Apply professional tone improvements
+    improvedContent = applyProfessionalImprovements(improvedContent);
+
+    // Apply action clarity improvements
+    improvedContent = applyActionClarityImprovements(improvedContent);
+
+    // Improve subject line if needed
+    if (!subject || subject.length < 5) {
+        improvedSubject = generateImprovedSubject(content, colleague);
+    }
+
+    return {
+        content: improvedContent,
+        subject: improvedSubject
+    };
+}
+
+function applyDISCImprovements(content, discType) {
+    let improved = content;
+
+    const improvements = {
+        'D': [
+            { from: /let me know/gi, to: 'please confirm by [specific date]' },
+            { from: /when you can/gi, to: 'by [date needed]' },
+            { from: /if possible/gi, to: 'required for project completion' }
+        ],
+        'I': [
+            { from: /I need/gi, to: 'we could really benefit from' },
+            { from: /you should/gi, to: 'what do you think about' },
+            { from: /this is important/gi, to: 'this would help our team succeed' }
+        ],
+        'S': [
+            { from: /I need this now/gi, to: 'when you have a moment, could you please help with' },
+            { from: /you must/gi, to: 'would you be comfortable with' },
+            { from: /immediately/gi, to: 'at your earliest convenience' }
+        ],
+        'C': [
+            { from: /this should work/gi, to: 'based on our analysis, this approach would' },
+            { from: /I think/gi, to: 'the data suggests' },
+            { from: /probably/gi, to: 'according to our specifications' }
+        ]
+    };
+
+    const typeImprovements = improvements[discType] || [];
+    typeImprovements.forEach(improvement => {
+        improved = improved.replace(improvement.from, improvement.to);
+    });
+
+    return improved;
+}
+
+function applyProfessionalImprovements(content) {
+    let improved = content;
+
+    const professionalReplacements = [
+        { from: /hey/gi, to: 'Hi' },
+        { from: /thanks!/gi, to: 'Thank you.' },
+        { from: /cheers/gi, to: 'Best regards' },
+        { from: /cool/gi, to: 'excellent' },
+        { from: /awesome/gi, to: 'outstanding' },
+        { from: /yeah/gi, to: 'yes' }
+    ];
+
+    professionalReplacements.forEach(replacement => {
+        improved = improved.replace(replacement.from, replacement.to);
+    });
+
+    return improved;
+}
+
+function applyActionClarityImprovements(content) {
+    let improved = content;
+
+    // Add action clarity if missing
+    if (!/\b(please|could you|would you)\b/i.test(improved)) {
+        improved = improved.replace(/([.!?]\s*)$/m, '$1\n\nCould you please let me know your thoughts by [date]?');
+    }
+
+    return improved;
+}
+
+function generateImprovedSubject(content, colleague) {
+    // Extract key topics from content
+    const words = content.toLowerCase().split(/\s+/);
+    const keyWords = ['meeting', 'budget', 'project', 'review', 'update', 'request', 'approval'];
+    const foundKeys = keyWords.filter(key => words.includes(key));
+
+    if (foundKeys.length > 0) {
+        return `${foundKeys[0].charAt(0).toUpperCase() + foundKeys[0].slice(1)} Discussion - Input Needed`;
+    }
+
+    return `Discussion with ${colleague.name} - Please Review`;
+}
+
+async function showImprovementComparison(oldContent, newContent, oldSubject, newSubject) {
+    // Create a simple alert showing the changes (you could make this more sophisticated)
+    const changes = [];
+
+    if (oldSubject !== newSubject) {
+        changes.push(`Subject: "${oldSubject}" → "${newSubject}"`);
+    }
+
+    // Count word changes (simplified)
+    const oldWords = oldContent.split(' ').length;
+    const newWords = newContent.split(' ').length;
+
+    if (oldWords !== newWords) {
+        changes.push(`Content: ${Math.abs(newWords - oldWords)} words ${newWords > oldWords ? 'added' : 'changed'}`);
+    }
+
+    if (changes.length > 0) {
+        debugLog('📝 Changes applied:', changes);
+    }
+
+    // Small delay to show the process
+    await new Promise(resolve => setTimeout(resolve, 1000));
+}
+
+// ============================================
+// INITIALIZATION
+// ============================================
+
+// Initialize enhanced features when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        setupApplySuggestionsFeature();
+        debugLog('✅ Enhanced email analysis features initialized');
+    }, 1500);
+});
+
+debugLog('🎨 Enhanced Display & Apply Suggestions System Loaded!');
+debugLog('📧 Enhanced Email Analysis System Loaded!');
+debugLog('📧 Email Practice Module JavaScript Loaded');
 debugLog('🎨 Professional Conversation Trainer Loaded');
+
+// ============================================
+// SIMPLE APPLY SUGGESTIONS FIX
+// ============================================
+setTimeout(function() {
+    const btn = document.getElementById('improveEmailBtn');
+    if (btn) {
+        // Remove the button and recreate it to clear all listeners
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+
+        // Add simple working listener
+        newBtn.onclick = function() {
+            const content = document.getElementById('emailContent');
+            const subject = document.getElementById('emailSubject');
+
+            // Make simple improvements
+            let text = content.value;
+            text = text.replace(/hey/gi, 'Hi');
+            text = text.replace(/thanks!/gi, 'Thank you.');
+            text = text.replace(/\bi\b/g, 'I');
+
+            if (!text.includes('Best regards')) {
+                text += '\n\nBest regards';
+            }
+
+            content.value = text;
+            alert('Email improved! Check your changes.');
+        };
+
+        console.log('✅ Apply button fixed!');
+    }
+}, 4000);
 </script>
 </body>
 </html>
