@@ -1653,7 +1653,7 @@ function cancelCustomCharacter() {
 }
 
 function saveCustomCharacter() {
-    debugLog('💾 Attempting to save custom character');
+    debugLog('💾 Saving custom character');
 
     try {
         const nameInput = document.getElementById('customName');
@@ -1690,41 +1690,68 @@ function saveCustomCharacter() {
             return false;
         }
 
-        const characterData = {
-            name: name,
-            role: role,
-            personality: personality,
-            motivations: motivations || 'Professional success and recognition',
-            type: 'custom',
-            created: new Date().toISOString()
-        };
+        // Check if we're editing or creating new
+        const isEditing = window.editingColleagueId;
 
-        debugLog('✅ Character data created', characterData);
+        if (isEditing) {
+            // UPDATE existing colleague
+            const colleagues = getStoredColleagues();
+            const existingColleague = colleagues[window.editingColleagueId];
 
-        const colleagueId = saveColleagueToStorage(characterData);
-        characterData.id = colleagueId;
+            if (!existingColleague) {
+                throw new Error('Colleague to edit not found');
+            }
 
-        customCharacterData = characterData;
-        updateCustomCharacterCard(characterData);
+            // Update the colleague data
+            const updatedColleague = {
+                ...existingColleague,
+                name: name,
+                role: role,
+                personality: personality,
+                motivations: motivations,
+                updated: new Date().toISOString()
+            };
 
-        appState.selectedPersonality = 'custom_character';
-        debugLog('🎯 App state updated', appState);
+            colleagues[window.editingColleagueId] = updatedColleague;
+            localStorage.setItem('conversation_trainer_colleagues', JSON.stringify(colleagues));
 
-        const modal = document.getElementById('customCharacterModal');
-        if (modal) {
-            modal.style.display = 'none';
+            debugLog('✅ Colleague updated successfully:', name);
+            showSuccessMessage(`Colleague "${name}" updated successfully!`);
+
+        } else {
+            // CREATE new colleague (existing logic)
+            const characterData = {
+                name: name,
+                role: role,
+                personality: personality,
+                motivations: motivations,
+                type: 'custom',
+                created: new Date().toISOString()
+            };
+
+            const colleagueId = saveColleagueToStorage(characterData);
+            characterData.id = colleagueId;
+            customCharacterData = characterData;
+
+            debugLog('✅ New colleague created successfully:', name);
+            showSuccessMessage(`Custom colleague "${name}" created and saved!`);
         }
 
-        updateStartButton();
+        // Reset modal state
+        resetCustomCharacterModal();
 
-        debugLog('🎉 Custom character created successfully:', name);
-        showSuccessMessage(`Custom colleague "${name}" created and saved! You can now start a practice session.`);
+        // Close modal
+        document.getElementById('customCharacterModal').style.display = 'none';
+
+        // Refresh the UI
+        refreshColleaguesDisplay();
+        updateStorageCounts();
 
         return true;
 
     } catch (error) {
-        debugLog('💥 Error creating custom character:', error);
-        showErrorMessage(`Error creating custom character: ${error.message}`);
+        debugLog('💥 Error saving custom character:', error);
+        showErrorMessage(`Error saving colleague: ${error.message}`);
         return false;
     }
 }
@@ -3050,12 +3077,16 @@ function createSavedScenarioCard(scenario) {
                     <span class="metadata-item">Created: ${createdDate}</span>
                     <span class="metadata-item">Type: Custom</span>
                 </div>
+                // In createEnhancedColleagueCard function, replace the enhanced-actions div:
                 <div class="enhanced-actions">
                     <button class="action-btn primary" onclick="useColleagueForPractice('${colleague.id}')">
                         🚀 Use in Practice
                     </button>
                     <button class="action-btn secondary" onclick="editColleague('${colleague.id}')">
                         ✏️ Edit
+                    </button>
+                    <button class="action-btn danger" onclick="deleteColleague('${colleague.id}')">
+                        🗑️ Delete
                     </button>
                 </div>
             `;
@@ -3165,8 +3196,52 @@ function createSavedScenarioCard(scenario) {
 
         function editColleague(colleagueId) {
             debugLog('✏️ Editing colleague:', colleagueId);
-            // Future implementation
-            alert('Feature coming soon: Edit colleague in-place');
+
+            try {
+                // Get the colleague data
+                const colleagues = getStoredColleagues();
+                const colleague = colleagues[colleagueId];
+
+                if (!colleague) {
+                    showErrorMessage('Colleague not found');
+                    return;
+                }
+
+                debugLog('📝 Loading colleague data for editing:', colleague.name);
+
+                // Store the ID for updating instead of creating new
+                window.editingColleagueId = colleagueId;
+
+                // Populate the modal with existing data
+                document.getElementById('customName').value = colleague.name || '';
+                document.getElementById('customRole').value = colleague.role || '';
+                document.getElementById('customPersonality').value = colleague.personality || '';
+                document.getElementById('customMotivations').value = colleague.motivations || '';
+
+                // Update modal title
+                const modalTitle = document.querySelector('#customCharacterModal .modal-title');
+                if (modalTitle) {
+                    modalTitle.textContent = `Edit Colleague: ${colleague.name}`;
+                }
+
+                // Update save button text
+                const saveBtn = document.getElementById('saveCustomCharacter');
+                if (saveBtn) {
+                    saveBtn.innerHTML = '💾 Update Colleague';
+                }
+
+                // Show the modal
+                document.getElementById('customCharacterModal').style.display = 'block';
+
+                // Focus on name field
+                setTimeout(() => {
+                    document.getElementById('customName').focus();
+                }, 100);
+
+            } catch (error) {
+                debugLog('❌ Error editing colleague:', error);
+                showErrorMessage('Error loading colleague for editing');
+            }
         }
 
         function useScenarioForPractice(scenarioId) {
@@ -3181,6 +3256,78 @@ function createSavedScenarioCard(scenario) {
             // Future implementation
             alert('Feature coming soon: Edit scenario in-place');
         }
+        function deleteColleague(colleagueId) {
+            debugLog('🗑️ Delete colleague requested:', colleagueId);
+
+            try {
+                const colleagues = getStoredColleagues();
+                const colleague = colleagues[colleagueId];
+
+                if (!colleague) {
+                    showErrorMessage('Colleague not found');
+                    return;
+                }
+
+                // Confirm deletion
+                const confirmMessage = `Are you sure you want to delete "${colleague.name}"?\n\nThis action cannot be undone.`;
+                if (!confirm(confirmMessage)) {
+                    debugLog('❌ Colleague deletion cancelled by user');
+                    return;
+                }
+
+                // Delete from storage
+                delete colleagues[colleagueId];
+                localStorage.setItem('conversation_trainer_colleagues', JSON.stringify(colleagues));
+
+                debugLog('✅ Colleague deleted successfully:', colleague.name);
+                showSuccessMessage(`Colleague "${colleague.name}" deleted successfully`);
+
+                // Refresh the UI
+                refreshColleaguesDisplay();
+                updateStorageCounts();
+
+            } catch (error) {
+                debugLog('❌ Error deleting colleague:', error);
+                showErrorMessage('Error deleting colleague. Please try again.');
+            }
+        }
+        function resetCustomCharacterModal() {
+    // Reset editing state
+    window.editingColleagueId = null;
+
+    // Reset modal title
+    const modalTitle = document.querySelector('#customCharacterModal .modal-title');
+    if (modalTitle) {
+        modalTitle.textContent = 'Create Your Custom Colleague';
+    }
+
+    // Reset save button text
+    const saveBtn = document.getElementById('saveCustomCharacter');
+    if (saveBtn) {
+        saveBtn.innerHTML = '💾 Create Character';
+    }
+
+    // Clear form
+    clearCustomCharacterForm();
+}
+
+function refreshColleaguesDisplay() {
+    debugLog('🔄 Refreshing colleagues display');
+
+    // Refresh the My Colleagues tab if currently viewing it
+    const activeTab = document.querySelector('.tab-content.active');
+    if (activeTab && activeTab.id === 'my-colleagues-tab') {
+        loadColleaguesTab();
+    }
+
+    // Refresh colleague selectors in email module
+    if (typeof populateEmailColleagueSelectors === 'function') {
+        populateEmailColleagueSelectors();
+    }
+
+    // Update tab counts
+    updateTabCounts();
+}
 // ============================================
 // INITIALIZATION
 // ============================================
