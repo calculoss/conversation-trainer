@@ -4492,54 +4492,81 @@ debugLog('🧪 Use testBackendEmailAnalysis() to test the complete pipeline.');
 
 // Display analysis results in the panel
 function displayAnalysisResults(results) {
-    try {
-        // Update overall score
-        document.getElementById('overallScore').textContent = results.overall_score;
-        document.getElementById('overallFeedback').textContent = results.overall_feedback;
+    console.log('🎨 Displaying analysis results:', results);
 
-        // Update DISC scores
-        Object.entries(results.disc_scores).forEach(([type, score]) => {
+    try {
+        // Update overall score with Claude's actual result
+        const overallScoreElement = document.getElementById('overallScore');
+        const overallFeedbackElement = document.getElementById('overallFeedback');
+
+        if (overallScoreElement) {
+            overallScoreElement.textContent = results.overall_score || results.analysis?.overall_score || 5;
+        }
+        if (overallFeedbackElement) {
+            overallFeedbackElement.textContent = results.overall_feedback || results.analysis?.overall_feedback || 'Analysis completed';
+        }
+
+        // Update DISC scores with Claude's actual scores
+        const discScores = results.disc_scores || results.analysis?.disc_scores || {};
+        const discFeedback = results.disc_feedback || results.analysis?.disc_feedback || {};
+
+        Object.entries(discScores).forEach(([type, score]) => {
             const scoreElement = document.getElementById(`discScore${type}`);
             const feedbackElement = document.getElementById(`discFeedback${type}`);
 
             if (scoreElement) scoreElement.textContent = score;
-            if (feedbackElement) feedbackElement.textContent = results.disc_feedback[type];
+            if (feedbackElement && discFeedback[type]) {
+                feedbackElement.textContent = discFeedback[type];
+            }
         });
 
-        // Update suggestions
+        // Update suggestions with Claude's actual suggestions
         const suggestionsList = document.getElementById('suggestionsList');
         if (suggestionsList) {
             suggestionsList.innerHTML = '';
-            results.suggestions.forEach(suggestion => {
+            const suggestions = results.suggestions || results.analysis?.suggestions || [];
+
+            suggestions.forEach(suggestion => {
                 const item = document.createElement('div');
-                item.className = `suggestion-item ${suggestion.type}`;
-                item.textContent = suggestion.text;
+                item.className = 'suggestion-item improvement';
+                item.textContent = suggestion;
                 suggestionsList.appendChild(item);
             });
         }
 
-        // Update quick tips
+        // Update quick tips with Claude's actual tips
         const tipsList = document.getElementById('quickTipsList');
         if (tipsList) {
             tipsList.innerHTML = '';
-            results.quick_tips.forEach(tip => {
+            const tips = results.quick_tips || results.analysis?.quick_tips || [];
+
+            tips.forEach(tip => {
                 const item = document.createElement('div');
                 item.className = 'tip-item';
-                item.textContent = tip;
+                item.innerHTML = `
+                    <div class="tip-icon">💡</div>
+                    <div class="tip-content">
+                        <div class="tip-text">${tip}</div>
+                    </div>
+                `;
                 tipsList.appendChild(item);
             });
         }
 
         // Show the analysis panel
         const analysisPanel = document.getElementById('analysisResultsPanel');
+        const gettingStartedPanel = document.getElementById('gettingStartedPanel');
+
+        if (gettingStartedPanel) gettingStartedPanel.style.display = 'none';
         if (analysisPanel) {
             analysisPanel.style.display = 'block';
             analysisPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        debugLog('✅ Analysis results displayed');
+        console.log('✅ Claude analysis results properly displayed');
+
     } catch (error) {
-        debugLog('❌ Error displaying analysis results:', error);
+        console.error('❌ Error displaying analysis results:', error);
     }
 }
 
