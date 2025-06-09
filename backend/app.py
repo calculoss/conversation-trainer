@@ -13,7 +13,7 @@ import uuid  # ADDED: Missing import
 import requests  # ADDED: Missing import
 from datetime import datetime
 
-from claude_integration import ClaudeAPIClient  # Import your existing client
+
 import sys
 
 
@@ -594,87 +594,7 @@ Begin the conversation naturally, introducing yourself and your strategic perspe
         }), 500
 
 
-# ============================================
-# EMAIL ANALYSIS FLASK ROUTE
-# Add this to your existing Flask app (app.py)
-# ============================================
 
-
-
-# Initialize Claude client (add this near your other initializations)
-claude_client = ClaudeAPIClient()
-
-
-@app.route('/api/email/analyze', methods=['POST'])
-def analyze_email():
-    """
-    Analyze email content for professional effectiveness and compliance
-    """
-    try:
-        # Get request data
-        data = request.get_json()
-
-        if not data:
-            return jsonify({'error': 'No data provided'}), 400
-
-        # Extract email data
-        email_data = {
-            'subject': data.get('subject', ''),
-            'content': data.get('content', ''),
-            'colleague': data.get('colleague'),
-            'analysis_type': data.get('analysis_type', 'outgoing'),
-            'context': data.get('context', 'NSW Local Government workplace communication')
-        }
-
-        # Validate required fields
-        if not email_data['content'].strip():
-            return jsonify({'error': 'Email content is required'}), 400
-
-        print(f"📧 Analyzing {email_data['analysis_type']} email with Claude")
-
-        # Use your existing Claude client with new email analysis method
-        result = claude_client.analyze_email(email_data)
-
-        if result['success']:
-            print("✅ Email analysis completed successfully")
-            return jsonify(result['analysis'])
-        else:
-            print(f"❌ Email analysis failed: {result['error']}")
-            return jsonify({'error': result['error']}), 500
-
-    except Exception as e:
-        print(f"💥 Email analysis route error: {str(e)}")
-        return jsonify({'error': 'Analysis service temporarily unavailable'}), 500
-
-
-# Optional: Test endpoint to verify email analysis is working
-@app.route('/api/email/test', methods=['GET'])
-def test_email_analysis():
-    """Test endpoint for email analysis functionality"""
-    try:
-        # Test with a simple email
-        test_data = {
-            'subject': 'Test Email Analysis',
-            'content': 'Hello, this is a test email for the analysis system. Please review and provide feedback. Thanks!',
-            'analysis_type': 'outgoing'
-        }
-
-        result = claude_client.analyze_email(test_data)
-
-        return jsonify({
-            'test_status': 'success' if result['success'] else 'failed',
-            'claude_working': result.get('claude_powered', False),
-            'fallback_used': result.get('fallback_used', False),
-            'sample_analysis': result.get('analysis', {}).get('overall_score', 'No score'),
-            'message': 'Email analysis system is working'
-        })
-
-    except Exception as e:
-        return jsonify({
-            'test_status': 'failed',
-            'error': str(e),
-            'message': 'Email analysis system has issues'
-        }), 500
 
 # REPLACE the conversation_message function in your app.py with this fixed version:
 
