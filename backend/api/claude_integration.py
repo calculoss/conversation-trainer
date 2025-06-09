@@ -241,7 +241,7 @@ Respond in character. Keep your response natural and conversational (2-4 sentenc
                                   "C": "Analysis failed"},
                 "suggestions": ["Analysis service unavailable", "Please try again later"],
                 "quick_tips": ["practical communication tips"]
-}}
+}
 
     # ============================================
     # CONVERSATION ORCHESTRATOR
