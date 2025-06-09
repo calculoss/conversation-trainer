@@ -5276,9 +5276,11 @@ async function analyzeEmailEnhanced() {
 
         // Run enhanced analysis
         const analysisResults = generateAdvancedEmailAnalysis(content, subject, emailState.selectedColleague);
-
+        // Add this debug line before calling displayAnalysisResults
+        console.log('🔍 About to display - Raw Claude results:', analysisResults.analysis);
+        console.log('🔍 About to display - Formatted results:', formattedResults);
         // Display enhanced results
-        displayEnhancedAnalysisResults(analysisResults);
+        displayAnalysisResults(analysisResults.analysis);
 
         // Store results
         emailState.analysisResults = analysisResults;
